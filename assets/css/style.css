@@ -95,7 +95,7 @@ a {
 }
 
 .header .navbar .links li,
-.header .navbar .btn li {
+.header .btn li {
     padding-right: 20px;
 }
 
@@ -124,11 +124,11 @@ a {
   width: 100%;
 }
 
-.header .navbar .btn li {
+.header .btn li {
     padding-right: 10px;
 }
 
-.header .navbar .btn li a {
+.header .btn li a {
     padding: 7px 22px;
     border: var(--br-color-h-p) solid 1px;
     border-radius: 50px;
@@ -137,22 +137,22 @@ a {
     transition: all .35s ease-in-out;
 }
 
-.header .navbar .btn li a:hover {
+.header .btn li a:hover {
     box-shadow: var(--br-box-shadow);
 }
 
-.header .navbar .btn li .co-btn {
+.header .btn li .co-btn {
     color: #FFFFFF;
     background: var(--br-primary-color);
 }
 
-.header .navbar .btn li .lo-btn:hover {
+.header .btn li .lo-btn:hover {
     color: #FFFFFF;
     background: var(--br-primary-color);
 
 }
 
-.header .navbar .btn li a svg {
+.header .btn li a svg {
     margin-bottom: -3px ;
 }
 
@@ -788,7 +788,7 @@ section .wave {
     justify-content: space-between;
     align-items: center;
     margin-top: 60px;
-    margin: 0 100px;
+    margin: 0 100px 60px;
     direction: rtl;
 }
 
@@ -925,6 +925,7 @@ section .wave {
 .footer {
     margin: var(--br-matgin-width);
     direction: rtl;
+    border-top: #70757a 1px solid;
 }
 
 .footer .container {
