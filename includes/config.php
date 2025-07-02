@@ -1,0 +1,26 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+if (ob_get_level()) ob_clean();
+
+$host = 'localhost';
+$dbname = 'as_unlock';
+$username = 'root';
+$password = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+} catch (PDOException $e) {
+    // في حالة استخدام هذا الملف كمستقل، يمكنك إرجاع JSON
+    if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false) {
+        header('Content-Type: application/json');
+        die(json_encode(['success' => false, 'message' => 'Could not connect to the database']));
+    } else {
+        die("Could not connect to the database: " . $e->getMessage());
+    }
+}
+
+// لا تضع أي شيء بعد هذا السطر
