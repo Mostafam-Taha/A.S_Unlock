@@ -1,0 +1,851 @@
+:root {
+    --br-primary-color: linear-gradient(90deg, #1976D2, #42A5F5);
+    --br-color-h-p: #1976D2;
+    --br-sacn-color: #23234a;
+    --br-links-color: #495057;
+    --br-border-color: #dfe1e5;
+    --br-btn-padding: 7px 22px;
+    --br-box-shadow: 0px 0px 0px 5px #1976d254;
+    --br-dir-none: none;
+    --br-font-w-text: 400;
+    --br-matgin-width: 0 100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Tajawal", sans-serif;
+}
+
+*, ::after, ::before {
+    box-sizing: content-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+    font-weight: 500;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--br-sacn-color);
+}
+
+/* File Manager */
+.file-manager {
+    padding: 30px;
+}
+
+.file-manager .contanier .file-manager-one {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.file-manager .contanier .file-manager-one .bi-text h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.file-manager .contanier .file-manager-one .bi-btn {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.file-manager .contanier .file-manager-one .bi-btn .btn {
+    margin-right: 10px;
+    padding: var(--br-btn-padding);
+    border-radius: 25px;
+    text-align: center;
+    border: var(--br-color-h-p) 1px solid;
+    cursor: pointer;
+    outline: none;
+    transition: all .35s ease-in-out;
+}
+
+.file-manager .contanier .file-manager-one .bi-btn .btn:hover {
+    box-shadow: var(--br-box-shadow);
+}
+
+.file-manager .contanier .file-manager-one .bi-btn .btn svg {
+    margin: 0 5px -3px 0;
+}
+
+.file-manager .contanier .file-manager-one .bi-btn .star {
+    background: var(--br-color-h-p);
+    color: #dfe1e5;
+}
+
+.file-manager .contanier .file-manager-two {
+    padding: 15px 20px;
+    border: var(--br-border-color) 1px solid;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-manager .contanier .file-manager-two .your-storage p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+.progress-container {
+    position: relative;
+    width: 60px;
+    height: 60px;
+}
+
+.file-manager .contanier .file-manager-two .progress-circle {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.file-manager .contanier .file-manager-two .progress-circle-bg {
+    fill: none;
+    stroke: #e0f7fa;
+    stroke-width: 25;
+}
+
+.file-manager .contanier .file-manager-two .progress-circle-fill {
+    fill: none;
+    stroke: url(#gradient);
+    stroke-width: 20;
+    stroke-linecap: round;
+    stroke-dasharray: 565; /* محيط الدائرة (2 * π * 90) */
+    stroke-dashoffset: 282.5;
+    animation: progress 2s ease-out forwards;
+}
+
+.file-manager .contanier .file-manager-two .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: .9rem;
+    font-weight: 500;
+}
+/* 
+@keyframes progress {
+    from {
+        stroke-dashoffset: 565;
+    }
+    to {
+        stroke-dashoffset: 282.5;
+    }
+} */
+
+.file-manager .contanier .file-manager-three {
+    margin-top: 30px;
+}
+
+.file-manager .contanier .file-manager-three .folder {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 30px;
+}
+
+.file-manager .contanier .file-manager-three .folder .card-folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.file-manager .contanier .file-manager-three .folder .card-folder svg {
+    width: 35px;
+    height: 35px;
+    color: #ff8c00;
+    margin-bottom: 15px;
+}
+
+.file-manager .contanier .file-manager-three .folder .card-folder h3 {
+    font-weight: 550;
+}
+
+.file-manager .contanier .file-manager-three .folder .card-folder p {
+    font-size: 12px;
+}
+
+.file-manager .contanier .file-manager-for {
+    margin-top: 30px;
+}
+
+.file-manager .contanier .file-manager-for .file {
+    margin: 30px 0;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 30px;
+}
+
+.file-manager .contanier .file-manager-for .file .card-file {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.file-manager .contanier .file-manager-for .file .card-file i {
+    font-size: 40px;
+    color: #ea1300;
+}
+
+/* Wind - Style */
+.win-upload {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100vh;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    z-index: 1000;
+}
+
+.win-upload::-webkit-scrollbar {
+    display: none;
+}
+
+.win-upload .upload {
+    margin: 60px auto;
+    padding: 25px 15px;
+    width: 100%;
+    max-width: 650px;
+    background: #FFFFFF;
+    border: var(--br-border-color) 1px solid;
+    border-radius: 15px;
+    box-shadow: 0px 1px 3px 0px #ddd;
+}
+
+.win-upload .upload .upload-files-drag-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: var(--br-border-color) 1px solid;
+}
+
+.win-upload .upload .upload-files-drag-link h1 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.win-upload .upload .switch {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.win-upload .upload .switch .btn {
+    width: 50%;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-bottom:var(--br-border-color) 1px solid ;
+}
+
+.win-upload .upload .btn.active {
+    border-bottom: var(--br-color-h-p) 1px solid;
+}
+
+
+.win-upload .upload .row-one .input-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.win-upload .upload .row-one .input-upload label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: var(--br-border-color) dashed 1px;
+    border-radius: 15px;
+    width: 100%;
+    height: 250px;
+    padding: 35px;
+    box-sizing: border-box;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.win-upload .upload .row-one .input-upload label:hover {
+    border: var(--br-color-h-p) 1px dashed;
+}
+
+.win-upload .upload .row-one .input-upload svg {
+    width: 48px;
+    height: 48px;
+    color: var(--br-color-h-p);
+} 
+
+.win-upload .upload .row-one .input-upload h1 {
+    font-size: 22px;
+    margin-top: 20px;
+}
+
+.win-upload .upload .row-one .input-upload p {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.win-upload .upload .row-one .input-upload .file-input {
+    display: none;
+}
+
+.win-upload .upload .row-one .fill-rule-up {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.win-upload .upload .row-one .fill-rule-up .bi-file-earmark-medical-fill {
+    font-size: 18px;
+    margin-left: 10px;
+    padding: 7.5px 10px;
+    border: var(--br-border-color) 1px solid;
+    border-radius: 7.5px;
+    color: #495057;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .name {
+    font-weight: 550;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .rule {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .rule span {
+    margin-right: 10px;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .rule div {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .rule div .num-rule {
+    font-weight: 600;
+}
+
+.win-upload .upload .row-one .fill-rule-up .file-rule .rule-detiles .rule div p {
+    font-size: 12px;
+
+}
+
+.win-upload .upload .row-one .fill-rule-up .rule-upload  {
+    width: 100%;
+    height: 4px;
+    background-color: #e0f7fa;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.win-upload .upload .row-one .fill-rule-up .rule-upload .index-rule-fon {
+    width: 45%;
+    height: 100%;
+    border-radius: 2px;
+    background: var(--br-primary-color);
+    transition: width 0.3s ease;
+}
+.win-upload .upload .btn-drow {
+    width: 100%;
+    border-top: var(--br-border-color) 1px solid;
+    margin-top: 10px;
+}
+
+.win-upload .upload .btn-drow .true-upload {
+    padding: var(--br-btn-padding);
+    margin: 10px 0 0 0;
+    background-color: #1976D2;
+    color: #dfe1e5;
+    border: var(--br-dir-none);
+    outline: none;
+    border-radius: 7.5px;
+    cursor: pointer;
+}
+
+.win-upload .upload .row-two .links {
+    display: flex;
+    flex-direction: column;
+}
+
+.win-upload .upload .row-two .links input {
+    margin-bottom: 15px;
+    padding: var(--br-btn-padding);
+    border-radius: 10px;
+    border: var(--br-border-color) 1px solid;
+    outline: none;
+}
+
+.win-upload .upload .row-two .links textarea {
+    max-height: 250px;
+    min-height: 100px;
+    border-radius: 10px;
+    padding: var(--br-btn-padding);
+    border: var(--br-border-color) 1px solid;
+    resize:vertical;
+}
+
+.win-upload .upload .btn-drow .true-upload-lok {
+    padding: var(--br-btn-padding);
+    margin: 10px 0 0 0;
+    background-color: #1976D2;
+    color: #dfe1e5;
+    border: var(--br-dir-none);
+    outline: none;
+    border-radius: 7.5px;
+    cursor: pointer;
+}
+
+.win-upload .upload .btn-drow .done {
+    padding: var(--br-btn-padding);
+    margin: 10px 0 0 5px;
+    border: var(--br-dir-none);
+    outline: none;
+    border-radius: 7.5px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.win-upload .upload .btn-drow .done:hover {
+    background-color: #ea1300;
+    color: #e0f7fa;
+}
+
+/* Button styling */
+.win-upload .upload.btn.star {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+}
+
+.win-upload .upload .btn.star:hover {
+    background-color: #45a049;
+}
+
+/* Upload window styling */
+.win-upload {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.win-upload.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.upload {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ألوان مختلفة حسب نسبة الاستخدام */
+.progress-circle-fill.high-usage {
+    stroke: #f44336 !important; /* أحمر عندما تكون النسبة فوق 80% */
+}
+
+.progress-circle-fill.medium-usage {
+    stroke: #ff9800 !important;
+}
+
+.progress-circle-fill.low-usage {
+    stroke: url(#gradient) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* أنماط نافذة تفاصيل الملف */
+.file-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.file-details-modal .modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.file-details-modal .close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #777;
+}
+
+.file-details-modal .file-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.file-details-modal .file-header i {
+    font-size: 40px;
+    margin-left: 15px;
+    color: var(--br-color-h-p);
+}
+
+.file-details-modal .file-header h2 {
+    margin: 0;
+    font-size: 20px;
+    word-break: break-all;
+}
+
+.file-details-modal .file-info {
+    margin: 20px 0;
+}
+
+.file-details-modal .info-row {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.file-details-modal .info-label {
+    font-weight: bold;
+    width: 100px;
+    color: #555;
+}
+
+.file-details-modal .info-value {
+    flex: 1;
+    word-break: break-all;
+}
+
+.file-details-modal .file-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.file-details-modal .btn {
+    padding: 8px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+}
+
+.file-details-modal .btn-primary {
+    background-color: var(--br-color-h-p);
+    color: white;
+    border: none;
+}
+
+.file-details-modal .btn-secondary {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.file-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.close-modal {
+    float: left;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.file-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.file-header i {
+    font-size: 40px;
+    margin-left: 15px;
+    color: #4a6baf;
+}
+
+.file-info {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.info-label {
+    font-weight: bold;
+    width: 120px;
+    color: #555;
+}
+
+.info-value {
+    flex: 1;
+    color: #333;
+}
+
+.file-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-primary {
+    background-color: #4a6baf;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea.form-control {
+    min-height: 80px;
+}

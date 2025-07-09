@@ -1,0 +1,127 @@
+:root {
+    --br-primary-color: linear-gradient(90deg, #1976D2, #42A5F5);
+    --br-color-h-p: #1976D2;
+    --br-sacn-color: #23234a;
+    --br-btn-padding: 7px 22px;
+    --br-box-shadow: 0px 0px 0px 5px #1976d254;
+    --br-dir-none: none;
+    --br-font-w-text: 400;
+    --br-matgin-width: 0 100px;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    background-color: #f8f9fa;
+    color: var(--br-sacn-color);
+}
+
+.checkout-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.product-img {
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.plan-feature {
+    margin-bottom: 8px;
+    font-weight: var(--br-font-w-text);
+}
+
+.total-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    background: var(--br-primary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.payment-method {
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method:hover {
+    border-color: var(--br-color-h-p);
+    transform: translateY(-3px);
+}
+
+.payment-method.selected {
+    border-color: var(--br-color-h-p);
+    background-color: #f5f9ff;
+    box-shadow: var(--br-box-shadow);
+}
+
+.payment-method img {
+    height: 30px;
+    margin-left: 10px;
+}
+
+.receipt-upload {
+    border: 2px dashed #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    background-color: #f9f9f9;
+}
+
+.receipt-upload:hover {
+    border-color: var(--br-color-h-p);
+    background-color: #f5f9ff;
+}
+
+#receipt-preview {
+    max-width: 100%;
+    max-height: 200px;
+    display: none;
+    margin: 0 auto 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background: var(--br-primary-color);
+    border: none;
+    padding: var(--br-btn-padding);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+}
+
+.card-header {
+    background: var(--br-primary-color);
+    color: white;
+    font-weight: 500;
+}
+
+.alert-info {
+    background-color: #f5f9ff;
+    border-color: #d6e4ff;
+    color: var(--br-sacn-color);
+}
+
+@media (max-width: 768px) {
+    .checkout-container {
+        border-radius: 0;
+    }
+    
+    :root {
+        --br-matgin-width: 0 15px;
+    }
+}

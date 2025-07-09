@@ -1,0 +1,169 @@
+/* dark-mode.css */
+.dark-mode {
+    --bg-color: #0d0d0d;
+    --text-color: #dfdfdf;;
+    --border-color: #1a1a1a ;
+    --card-bg: #121212;
+    --hover-color: #3a3a3a;
+}
+
+.dark-mode body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode svg {
+    color: var(--text-color);
+}
+
+.dark-mode i {
+    color: var(--text-color);
+}
+
+.dark-mode button {
+    color: var(--text-color);
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: var(--text-color);
+}
+
+.dark-mode p {
+    color: var(--text-color);
+}
+
+.dark-mode span {
+    color: var(--text-color);
+}
+
+.dark-mode a {
+    color: var(--text-color);
+}
+
+.dark-mode li {
+    color: var(--text-color);
+}
+
+.dark-mode th {
+    color: var(--text-color);
+}
+
+.dark-mode td {
+    color: var(--text-color);
+}
+
+.dark-mode input {
+    background: none;
+    outline: none;
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode select {
+    background: none;
+}
+
+.dark-mode label {
+    color: var(--text-color);
+}
+
+.dark-mode textarea {
+    background: none;
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode hr {
+    background-color: var(--border-color);
+}
+
+/* Dashboard/ Product */
+
+.dark-mode .header-top {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .header-top .ht-sei .flex-pro-net .menu-profile hr {
+    background-color: var(--border-color);
+}
+
+.dark-mode .product {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .product .contanier .detail-order {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .product .contanier .detail-order .function-top-flex .flex-top .function-flex-left label {
+    background: none;
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .product .contanier .detail-order .function-top-flex .flex-top .function-flex-left label input {
+    background: none;
+}
+
+.dark-mode .prod-table tr:nth-child(even) {
+    background: none;
+} 
+
+.dark-mode .prod-table th,
+.dark-mode .prod-table td {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .view-btn {
+    background-color: #888888;
+} 
+
+.dark-mode .product-management-system .modal-content {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .product-management-system .close-btn {
+    color: var(--text-color);
+}
+.dark-mode .product-management-system .modal-header {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .product-management-system .complete-data-section {
+    border-top: var(--border-color);
+}
+
+.dark-mode .product-management-system .select select {
+    border: var(--border-color) 1px solid;
+    color: var(--text-color);
+}
+
+.dark-mode .product-management-system .plan-inputs input {
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .product-management-system .feature-input {
+    border: var(--border-color) 1px solid;
+    color: var(--text-color);
+}
+
+.dark-mode .custom-modal-content {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .custom-modal-header {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .custom-modal-footer {
+    border-top: var(--border-color) 1px solid;
+}
+
+.dark-mode .header-top .ht-sei .flex-pro-net .menu-profile.active {
+    background-color: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+/* أضف المزيد من العناصر حسب حاجة الموقع */
