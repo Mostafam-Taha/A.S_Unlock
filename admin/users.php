@@ -11,7 +11,6 @@ if (empty($_SESSION['admin_id'])) {
 
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,9 +41,10 @@ if (empty($_SESSION['admin_id'])) {
     <!-- Bootstrap CSS -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/users.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
 
-    <title>Dashboard</title>
+    <title>Dashboard - Users</title>
 </head>
 
 <body>
@@ -65,7 +65,7 @@ if (empty($_SESSION['admin_id'])) {
             <div class="un-order-list-app">
                 <span class="un-title">التطبيقات</span>
                 <ul class="app">
-                    <li><a href="orders.php">الطلبات</a></li>
+                    <li><a href="./products.php">الطلبات</a></li>
                     <li><a href="#">الفاتورة</a></li>
                     <li><a href="#">الاشتراكات</a></li>
                 </ul>
@@ -76,7 +76,7 @@ if (empty($_SESSION['admin_id'])) {
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="#">الموظفين</a></li>
                     <li><a href="#">الخدمات</a></li>
-                    <li><a href="products.php">المنتجات</a></li>
+                    <li><a href="#">المنتجات</a></li>
                     <li><a href="#">اراء العملاء</a></li>
                     <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
@@ -135,13 +135,89 @@ if (empty($_SESSION['admin_id'])) {
         </div>
         <!-- Dashboard Body -->
         <!-- Section Body -->
-        <!-- #Product -->
+        <!-- #Users -->
+        <section class="product">
+            <div class="contanier">
+                <h3>الطلبات</h3>
+                <div class="detail-order">
+                    <div class="function-top-flex">
+                        <div class="flex-top">
+                            <div class="function-flex-right">
+                                <button class="btn-plus" id="openProductModal" class="custom-btn"><i class="bi bi-plus"></i> اضافة مستخدم</button>
+                            </div>
+                            <div class="function-flex-left">
+                                <label for="search-table-product">
+                                    <i class="bi bi-search"></i>
+                                    <input type="search" name="search-table-product" id="search-table-product" placeholder="بحث عن المنتج...">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="prod-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>الاسم</th>
+                                        <th>البريد الإلكتروني</th>
+                                        <th>جوجل</th>
+                                        <th>حالة التحقق</th>
+                                        <th>تاريخ الإنشاء</th>
+                                        <th>الحالة</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    try {
+                                        $stmt = $pdo->query("SELECT * FROM users ORDER BY created_at DESC");
+                                        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        
+                                        foreach ($users as $user) {
+                                            echo "<tr>";
+                                            echo "<td>#".htmlspecialchars($user['id'])."</td>";
+                                            echo "<td>".htmlspecialchars($user['name'] ?? 'غير معروف')."</td>";
+                                            echo "<td>".htmlspecialchars($user['email'])."</td>";
+                                            echo "<td>".(!empty($user['google_id']) ? 'نعم' : 'لا')."</td>";
+                                            echo "<td>".($user['verified'] ? 'مفعل' : 'غير مفعل')."</td>";
+                                            echo "<td>".date('Y-m-d H:i', strtotime($user['created_at']))."</td>";
+                                            echo "<td>".($user['banned'] ? 'محظور' : 'نشط')."</td>";
+                                            echo '<td>
+                                                <div class="dropdown">
+                                                    <button class="dropdown-btn" onclick="toggleDropdown(this)"><i class="bi bi-three-dots"></i></button>
+                                                    <div class="dropdown-content">
+                                                        <button onclick="editUser('.$user['id'].')">تعديل</button>
+                                                        <button onclick="toggleBanUser('.$user['id'].', '.$user['banned'].')">'.($user['banned'] ? 'فك الحظر' : 'حظر').'</button>
+                                                        <button onclick="toggleUserStatus('.$user['id'].', '.$user['verified'].')">'.($user['verified'] ? 'تعطيل' : 'تفعيل').'</button>
+                                                    </div>
+                                                </div>
+                                            </td>';
+
+
+
+                                            echo "</tr>";
+                                        }
+                                        
+                                        if (empty($users)) {
+                                            echo "<tr><td colspan='7' style='text-align:center;'>لا توجد بيانات متاحة</td></tr>";
+                                        }
+                                    } catch (PDOException $e) {
+                                        echo "<tr><td colspan='7' style='text-align:center;color:red;'>خطأ في جلب البيانات: ".htmlspecialchars($e->getMessage())."</td></tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
     </div>
     <!--  -->
+    <script src="../assets/js/users.js"></script>
     <script src="../assets/js/dark-mode.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {

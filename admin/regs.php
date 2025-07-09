@@ -59,7 +59,7 @@
                 <div class="input-group">
                     <input type="password" id="password" placeholder="كلمة المرور" required 
                            oninput="checkPasswordStrength(this.value)">
-                    <i class="fas fa-lock"></i>
+                    <i style="display: none;" class="fas fa-lock"></i>
                     <div class="password-strength">
                         <div class="password-strength-bar" id="passwordBar"></div>
                     </div>
@@ -93,7 +93,7 @@
                 <p>هل لديك حساب بالفعل؟ <a href="logs.php">تسجيل الدخول</a></p>
             </div>
         </div>
-        <div class="signup-image-section"></div>
+        <!-- <div class="signup-image-section"></div> -->
     </div>
     <script src="../assets/js/logs_admin.js"></script>
 </body>
