@@ -67,12 +67,12 @@ $(document).ready(function() {
         const isLink = file.link_url !== null;
         const iconClass = getFileIcon(isLink ? 'link' : file.file_type, isLink);
         
-        // تنسيق حجم الملف إذا كان ملفًا وليس رابطًا
+        // تنسيق حجم الملف
         const fileSize = isLink ? 
             (file.link_size ? file.link_size + ' MB' : 'غير محدد') : 
             formatFileSize(file.file_size);
         
-        // إنشاء محتوى نافذة التفاصيل
+        // إنشاء محتوى نافذة التفاصيل مع إضافة خيارات التعديل والحذف
         const detailsContent = `
             <div class="file-details-modal">
                 <div class="modal-content">
@@ -94,10 +94,10 @@ $(document).ready(function() {
                             <span class="info-label">تاريخ الرفع:</span>
                             <span class="info-value">${new Date(file.upload_date).toLocaleString()}</span>
                         </div>
-                        ${file.description ? `
+                        ${file.description || file.link_description ? `
                         <div class="info-row">
                             <span class="info-label">الوصف:</span>
-                            <span class="info-value">${file.description}</span>
+                            <span class="info-value">${isLink ? file.link_description : file.description}</span>
                         </div>
                         ` : ''}
                     </div>
@@ -114,6 +114,43 @@ $(document).ready(function() {
                         <button class="btn btn-secondary copy-link" data-url="${isLink ? file.link_url : file.file_path}">
                             <i class="bi bi-clipboard"></i> نسخ الرابط
                         </button>
+                        <button class="btn btn-warning edit-file" data-id="${file.id}">
+                            <i class="bi bi-pencil"></i> تعديل
+                        </button>
+                        <button class="btn btn-danger delete-file" data-id="${file.id}" data-path="${isLink ? '' : file.file_path}">
+                            <i class="bi bi-trash"></i> حذف
+                        </button>
+                    </div>
+                    
+                    <!-- نموذج التعديل (مخفي بشكل افتراضي) -->
+                    <div class="edit-form" style="display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                        <h4>تعديل ${isLink ? 'الرابط' : 'الملف'}</h4>
+                        <div class="form-group">
+                            <label>اسم ${isLink ? 'الرابط' : 'الملف'}</label>
+                            <input type="text" class="form-control name-input" value="${isLink ? file.link_name : file.file_name}">
+                        </div>
+                        <div class="form-group">
+                            <label>الوصف</label>
+                            <textarea class="form-control description-input">${isLink ? (file.link_description || '') : (file.description || '')}</textarea>
+                        </div>
+                        ${isLink ? `
+                        <div class="form-group">
+                            <label>رابط URL</label>
+                            <input type="text" class="form-control url-input" value="${file.link_url}">
+                        </div>
+                        <div class="form-group">
+                            <label>حجم الرابط (MB)</label>
+                            <input type="number" class="form-control size-input" value="${file.link_size || ''}">
+                        </div>
+                        ` : ''}
+                        <div class="form-actions" style="margin-top: 15px;">
+                            <button class="btn btn-success save-changes" data-id="${file.id}">
+                                <i class="bi bi-check"></i> حفظ التغييرات
+                            </button>
+                            <button class="btn btn-secondary cancel-edit">
+                                <i class="bi bi-x"></i> إلغاء
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,6 +172,66 @@ $(document).ready(function() {
                 console.error('Failed to copy:', err);
                 alert('فشل في نسخ الرابط');
             });
+        });
+        
+        // حدث زر التعديل
+        $('.edit-file').click(function() {
+            $(this).closest('.modal-content').find('.edit-form').show();
+            $(this).hide();
+        });
+        
+        // حدث إلغاء التعديل
+        $('.cancel-edit').click(function() {
+            $(this).closest('.modal-content').find('.edit-form').hide();
+            $(this).closest('.modal-content').find('.edit-file').show();
+        });
+        
+        // حدث حفظ التغييرات
+        $('.save-changes').click(function() {
+            const fileId = $(this).data('id');
+            const modalContent = $(this).closest('.modal-content');
+            const isLink = modalContent.find('.url-input').length > 0;
+            
+            const data = {
+                id: fileId,
+                name: modalContent.find('.name-input').val(),
+                description: modalContent.find('.description-input').val()
+            };
+            
+            if (isLink) {
+                data.link_url = modalContent.find('.url-input').val();
+                data.link_size = modalContent.find('.size-input').val();
+            }
+            
+            $.post('../api/update_file.php', data, function(response) {
+                if (response.success) {
+                    alert('تم تحديث البيانات بنجاح');
+                    $('.file-details-modal').remove();
+                    loadFiles(); // إعادة تحميل القائمة
+                } else {
+                    alert('فشل في تحديث البيانات: ' + response.message);
+                }
+            }, 'json');
+        });
+        
+        // حدث زر الحذف
+        $('.delete-file').click(function() {
+            if (!confirm('هل أنت متأكد من حذف ' + (isLink ? 'الرابط' : 'الملف') + '؟ لن يمكنك استرجاعه بعد الحذف!')) {
+                return;
+            }
+            
+            const fileId = $(this).data('id');
+            const filePath = $(this).data('path');
+            
+            $.post('../api/delete_file.php', {id: fileId, path: filePath}, function(response) {
+                if (response.success) {
+                    alert('تم الحذف بنجاح');
+                    $('.file-details-modal').remove();
+                    loadFiles(); // إعادة تحميل القائمة
+                } else {
+                    alert('فشل في الحذف: ' + response.message);
+                }
+            }, 'json');
         });
         
         // إغلاق النافذة عند الضغط خارجها
