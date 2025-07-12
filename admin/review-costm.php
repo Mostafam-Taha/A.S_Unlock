@@ -42,11 +42,11 @@ if (empty($_SESSION['admin_id'])) {
     <!-- Bootstrap CSS -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/review-costm.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
 
-    <title>Dashboard</title>
+    <title>Dashboard - Customer opinions</title>
 </head>
-
 <body>
     <!-- Header -->
     <header class="header" id="mainHeader">
@@ -135,13 +135,70 @@ if (empty($_SESSION['admin_id'])) {
         </div>
         <!-- Dashboard Body -->
         <!-- Section Body -->
-        <!-- #Product -->
+        <!-- #Customer opinions -->
+        <?php
+        require_once '../includes/config.php'; // ملف الاتصال بقاعدة البيانات
+
+        // استعلام لاسترجاع العناصر
+        $stmt = $pdo->query("SELECT * FROM items ORDER BY created_at DESC");
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        ?>
+
+        <section class="customer-opinions">
+            <div class="contanier">
+                <div class="inbox">
+                    <div class="plus-add"><i class="bi bi-plus-lg"></i></div>
+                    <div class="deep-sec">
+                        <?php foreach ($items as $item): ?>
+                        <div class="card-inbox" 
+                            data-id="<?php echo $item['id']; ?>"
+                            data-name="<?php echo htmlspecialchars($item['name']); ?>"
+                            data-description="<?php echo htmlspecialchars($item['description']); ?>"
+                            data-image="<?php echo htmlspecialchars($item['image_path']); ?>"
+                            data-created="<?php echo $item['created_at']; ?>"
+                            data-featured="<?php echo $item['is_featured']; ?>">
+                            <div class="div-inbox">
+                                <div class="name"><?php echo htmlspecialchars($item['name']); ?></div>
+                                <span>
+                                    <?php 
+                                    $date = new DateTime($item['created_at']);
+                                    echo $date->format('Y-m-d H:i');
+                                    ?>
+                                </span>
+                            </div>
+                            <div class="dis"><p><?php echo htmlspecialchars($item['description']); ?></p></div>
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="view-date">
+                    <div class="view-data-castmer">
+                        <div class="icon">
+                            <span class="delete-btn" data-id=""><i class="bi bi-trash"></i>حذف</span>
+                            <span class="feature-btn" data-id=""><i class="bi bi-star"></i>تمييز</span>
+                        </div>
+                        <div class="db-name-data">
+                            <div class="username"><h3>اسم المستخدم</h3></div>
+                            <div class="text">
+                                <div class="dis"><span>وصف</span></div>
+                                <div class="img"><img src="" alt="" loading="lazy"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+    <!-- Win -->
+    <div class="win-add">
+        <div></div>
+    </div>
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
     </div>
     <!--  -->
+    <script src="../assets/js/review-costm.js"></script>
     <script src="../assets/js/dark-mode.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -180,6 +237,92 @@ if (empty($_SESSION['admin_id'])) {
                 }
             });
         });
+
+
+
+        document.querySelector('.plus-add').addEventListener('click', function() {
+            // إنشاء نافذة أو نموذج لإدخال البيانات
+            const modal = document.createElement('div');
+            modal.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+                    <div style="background: white; padding: 20px; border-radius: 8px; width: 400px;">
+                        <h2>Add New Item</h2>
+                        <form id="addItemForm" enctype="multipart/form-data">
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px;">Name</label>
+                                <input type="text" name="name" required style="width: 100%; padding: 8px;">
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px;">Description</label>
+                                <textarea name="description" style="width: 100%; padding: 8px; height: 100px;"></textarea>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px;">Image (will be converted to WEBP)</label>
+                                <input type="file" name="image" accept="image/*" required>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px;">Audio (Optional)</label>
+                                <input type="file" name="audio" accept="audio/*">
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <button type="button" id="cancelBtn" style="padding: 8px 15px; background: #ccc; border: none; border-radius: 4px;">Cancel</button>
+                                <button type="submit" style="padding: 8px 15px; background: #4CAF50; color: white; border: none; border-radius: 4px;">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // إلغاء النافذة
+            modal.querySelector('#cancelBtn').addEventListener('click', function() {
+                document.body.removeChild(modal);
+            });
+            
+            // إرسال النموذج
+            modal.querySelector('#addItemForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                
+                fetch('../api/save_item.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Item added successfully!');
+                        document.body.removeChild(modal);
+                        // يمكنك هنا تحديث الواجهة لعرض العنصر المضاف
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred: ' + error);
+                });
+            });
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cardInboxes = document.querySelectorAll('.card-inbox');
+        
+        cardInboxes.forEach(card => {
+            card.addEventListener('click', function() {
+                // هنا يمكنك تحديث قسم view-date بالبيانات المحددة
+                const name = this.querySelector('.name').textContent;
+                const description = this.querySelector('.dis p').textContent;
+                
+                document.querySelector('.username h3').textContent = name;
+                document.querySelector('.view-date .dis span').textContent = description;
+                
+                // يمكنك إضافة المزيد من التفاصيل حسب الحاجة
+            });
+        });
+    });
     </script>
 </body>
 </html>
