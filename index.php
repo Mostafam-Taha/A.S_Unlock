@@ -326,6 +326,48 @@
             </div>
         </div>
     </section>
+    <!-- Section - Customer opinions -->
+    <section class="testimonials">
+        <div class="title-te">
+            <h1>آراء العملاء</h1>
+            <p>نخبة من الخبراء والمتخصصين فى مجال التكنولوجيا</p>
+        </div>
+        <div class="contanier">
+            <div class="testimonials-container middle">
+                <?php
+                // استيراد ملف الإعدادات
+                require_once './includes/config.php';
+                
+                try {
+                    // استعلام لاسترجاع العناصر من قاعدة البيانات
+                    $stmt = $pdo->query("SELECT * FROM items");
+                    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // عرض كل عنصر في بطاقة شهادة
+                    foreach ($items as $item) {
+                        // التحقق من وجود صورة
+                        $imagePath = !empty($item['image_path']) ? $item['image_path'] : 'default.webp';
+                        
+                        echo '
+                        <div class="testimonial-card">
+                            <div class="client-img-container">
+                                <img src="./uploads/' . htmlspecialchars($imagePath) . '" alt="' . htmlspecialchars($item['name']) . '" class="client-img">
+                            </div>
+                            <div class="testimonial-content">
+                                <h3>' . htmlspecialchars($item['name']) . '</h3>
+                                <p>' . htmlspecialchars($item['description']) . '</p>
+                            </div>
+                        </div>';
+                    }
+                    
+                } catch (PDOException $e) {
+                    // في حالة حدوث خطأ، عرض رسالة خطأ
+                    echo '<div class="error-message">حدث خطأ في جلب البيانات: ' . htmlspecialchars($e->getMessage()) . '</div>';
+                }
+                ?>
+            </div>
+        </div>
+    </section>
     <!--  -->
     <!--  -->
     <!--  -->
