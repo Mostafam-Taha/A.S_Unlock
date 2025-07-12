@@ -1,9 +1,70 @@
 <?php
 session_start();
+
 // جلب رسائل الخطأ من الجلسة إن وجدت
 $error = $_SESSION['error'] ?? '';
+$login_error = $_SESSION['login_error'] ?? '';
 $old_email = $_SESSION['old_email'] ?? '';
-unset($_SESSION['error'], $_SESSION['old_email']);
+unset($_SESSION['error'], $_SESSION['login_error'], $_SESSION['old_email']);
+
+require_once '../includes/config.php';
+
+// إذا كان المستخدم مسجل الدخول بالفعل، توجيهه للصفحة الرئيسية
+if (isset($_SESSION['user_id'])) {
+    header('Location: ../index.php');
+    exit();
+}
+
+// معالجة بيانات تسجيل الدخول إذا تم إرسال النموذج
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'], $_POST['password'])) {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
+    
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch();
+        
+        if ($user && password_verify($password, $user['password'])) {
+            // التحقق من حالة الحظر
+            if ($user['banned']) {
+                $_SESSION['login_error'] = 'تم حظر حسابك. الرجاء التواصل مع الإدارة.';
+                $_SESSION['old_email'] = $email;
+                header('Location: login.php');
+                exit();
+            }
+            
+            // تسجيل الدخول الناجح
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_email'] = $user['email'];
+            $_SESSION['user_avatar'] = $user['avatar'];
+            
+            // تذكرني
+            if (isset($_POST['remember'])) {
+                $token = bin2hex(random_bytes(32));
+                $expiry = date('Y-m-d H:i:s', time() + 30 * 24 * 60 * 60); // 30 يوم
+                
+                $stmt = $pdo->prepare("UPDATE users SET remember_token = ?, token_expiry = ? WHERE id = ?");
+                $stmt->execute([$token, $expiry, $user['id']]);
+                
+                setcookie('remember_token', $token, time() + 30 * 24 * 60 * 60, '/', '', true, true);
+            }
+            
+            header('Location: checkout.php?product_id=12&plan_id=47&step=1');
+            exit();
+        } else {
+            $_SESSION['error'] = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+            $_SESSION['old_email'] = $email;
+            header('Location: login.php');
+            exit();
+        }
+    } catch (PDOException $e) {
+        $_SESSION['error'] = 'حدث خطأ في النظام. الرجاء المحاولة لاحقاً.';
+        header('Location: login.php');
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -272,9 +333,12 @@ unset($_SESSION['error'], $_SESSION['old_email']);
                 <?php if ($error): ?>
                 <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
                 <?php endif; ?>
+                <?php if ($login_error): ?>
+                <div class="alert alert-danger"><?= htmlspecialchars($login_error) ?></div>
+                <?php endif; ?>
             </div>
             
-            <form action="../includes/login-accounts.php" method="POST">
+            <form action="login.php" method="POST">
                 <div class="form-group">
                     <label for="email">البريد الإلكتروني</label>
                     <div class="input-with-icon">
@@ -358,7 +422,7 @@ unset($_SESSION['error'], $_SESSION['old_email']);
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    window.location.href = 'index.html';
+                    window.location.href = 'checkout.php?product_id=12&plan_id=47&step=1';
                 } else {
                     alert(data.message);
                 }
@@ -385,7 +449,7 @@ unset($_SESSION['error'], $_SESSION['old_email']);
                 } else {
                     return response.json().then(data => {
                         if (data.success) {
-                            window.location.href = 'index.html';
+                            window.location.href = 'checkout.php?product_id=12&plan_id=47&step=1';
                         } else {
                             alert(data.message);
                         }
