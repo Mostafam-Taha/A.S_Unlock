@@ -2,46 +2,60 @@
 session_start();
 require_once '../includes/config.php';
 
-// التحقق من تسجيل الدخول
 if (!isset($_SESSION['user_id'])) {
     $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
     header('Location: login.php');
     exit;
 }
 
-// جلب معرّفات المنتج والخطة من URL
 $product_id = isset($_GET['product_id']) ? (int)$_GET['product_id'] : 0;
 $plan_id = isset($_GET['plan_id']) ? (int)$_GET['plan_id'] : 0;
 $current_step = isset($_GET['step']) ? (int)$_GET['step'] : 1;
 
-// جلب بيانات المستخدم
 $user_id = $_SESSION['user_id'];
 $user_stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $user_stmt->execute([$user_id]);
 $user = $user_stmt->fetch(PDO::FETCH_ASSOC);
 
-// جلب بيانات المنتج
 $product = [];
 $product_stmt = $pdo->prepare("SELECT * FROM digital_products WHERE id = ?");
 $product_stmt->execute([$product_id]);
 $product = $product_stmt->fetch(PDO::FETCH_ASSOC);
 
-// جلب بيانات الخطة
 $plan = [];
 $plan_stmt = $pdo->prepare("SELECT * FROM product_plans WHERE id = ? AND product_id = ?");
 $plan_stmt->execute([$plan_id, $product_id]);
 $plan = $plan_stmt->fetch(PDO::FETCH_ASSOC);
 
-// إذا لم يتم العثور على المنتج أو الخطة
 if (empty($product) || empty($plan)) {
-    header("Location: 404.php");
+    header("Location: ../error/404.php");
     exit;
 }
 
-// تحويل ميزات الخطة من JSON إلى مصفوفة
 $plan_features = json_decode($plan['plan_features'], true);
 
-// معالجة إرسال النموذج حسب الخطوة الحالية
+if (!isset($_SESSION['checkout_data'])) {
+    $_SESSION['checkout_data'] = [];
+}
+
+if ($current_step > 1 && empty($_SESSION['checkout_data'])) {
+    $_SESSION['checkout_error'] = 'يجب إكمال بيانات الدفع أولاً';
+    header("Location: checkout.php?product_id=$product_id&plan_id=$plan_id&step=1");
+    exit;
+}
+
+if ($current_step > 2 && !isset($_SESSION['checkout_data']['payment_method'])) {
+    $_SESSION['checkout_error'] = 'يجب اختيار طريقة الدفع أولاً';
+    header("Location: checkout.php?product_id=$product_id&plan_id=$plan_id&step=1");
+    exit;
+}
+
+if ($current_step > 3 && (!isset($_SESSION['checkout_data']['phone_number']) || !isset($_SESSION['checkout_data']['email']))) {
+    $_SESSION['checkout_error'] = 'يجب إكمال بيانات الاتصال أولاً';
+    header("Location: checkout.php?product_id=$product_id&plan_id=$plan_id&step=2");
+    exit;
+}
+
 $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     switch ($current_step) {
@@ -61,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // التحقق من بيانات الاتصال
             $phone_number = $_POST['phone_number'] ?? '';
             $email = $_POST['email'] ?? '';
+            $subscription_email = $_POST['subscription_email'] ?? '';
             
             if (empty($phone_number) || !preg_match('/^01[0-9]{9}$/', $phone_number)) {
                 $errors[] = 'رقم الهاتف غير صالح';
@@ -70,15 +85,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $errors[] = 'البريد الإلكتروني غير صالح';
             }
             
+            if ($product['is_special_offer'] == 1 && !empty($subscription_email) && !filter_var($subscription_email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'بريد الاشتراك غير صالح';
+            }
+            
             if (empty($errors)) {
-                $_SESSION['checkout_data']['phone_number'] = $phone_number;
-                $_SESSION['checkout_data']['email'] = $email;
-                $current_step = 3;
-                header("Location: checkout.php?product_id=$product_id&plan_id=$plan_id&step=3");
-                exit;
+                // حفظ رقم الهاتف في جدول users
+                try {
+                    $update_stmt = $pdo->prepare("UPDATE users SET phone = ? WHERE id = ?");
+                    $update_stmt->execute([$phone_number, $user_id]);
+                    
+                    $_SESSION['checkout_data']['phone_number'] = $phone_number;
+                    $_SESSION['checkout_data']['email'] = $email;
+                    
+                    // حفظ بريد الاشتراك إذا كان موجوداً
+                    if ($product['is_special_offer'] == 1 && !empty($subscription_email)) {
+                        $_SESSION['checkout_data']['subscription_email'] = $subscription_email;
+                    }
+                    
+                    $current_step = 3;
+                    header("Location: checkout.php?product_id=$product_id&plan_id=$plan_id&step=3");
+                    exit;
+                } catch (PDOException $e) {
+                    $errors[] = 'حدث خطأ أثناء تحديث رقم الهاتف: ' . $e->getMessage();
+                }
             }
             break;
-            
+
         case 3:
             // التحقق من صورة الإيصال
             if (isset($_FILES['receipt_image']) && $_FILES['receipt_image']['error'] === UPLOAD_ERR_OK) {
@@ -111,8 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $stmt = $pdo->prepare("
                     INSERT INTO orders 
-                    (user_id, product_id, plan_id, payment_method, phone_number, email, receipt_image, amount) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    (user_id, product_id, plan_id, payment_method, phone_number, email, subscription_email, receipt_image, amount) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ");
                 $stmt->execute([
                     $user_id,
@@ -121,15 +154,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['checkout_data']['payment_method'],
                     $_SESSION['checkout_data']['phone_number'],
                     $_SESSION['checkout_data']['email'],
+                    $_SESSION['checkout_data']['subscription_email'] ?? null,
                     $_SESSION['checkout_data']['receipt_image'],
                     $plan['plan_price']
                 ]);
                 
                 // إرسال البريد الإلكتروني عبر EmailJS
-                // بعد إدراج الطلب في قاعدة البيانات
-                $order_id = $pdo->lastInsertId(); // الحصول على آخر ID تم إدراجه
-
-                // إرسال البريد الإلكتروني عبر EmailJS
+                $order_id = $pdo->lastInsertId();
                 $order_data = [
                     'order_id' => $order_id,
                     'order_link' => 'https://a.s-unlock.ct.ws/admin/order.php?id=' . $order_id,
@@ -139,16 +170,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'payment_method' => $_SESSION['checkout_data']['payment_method'] == 'vodafone_cash' ? 'فودافون كاش' : 'إنستاباي',
                     'phone_number' => $_SESSION['checkout_data']['phone_number'],
                     'email' => $_SESSION['checkout_data']['email'],
+                    'subscription_email' => $_SESSION['checkout_data']['subscription_email'] ?? '',
                     'receipt_image' => '../uploads/receipts/' . $_SESSION['checkout_data']['receipt_image'],
                     'order_date' => date('Y-m-d H:i:s')
                 ];
                 
-                // مسح بيانات الجلسة بعد الحفظ
                 unset($_SESSION['checkout_data']);
-                
-                // إرسال رسالة نجاح
                 $_SESSION['order_success'] = true;
-                $_SESSION['emailjs_data'] = $order_data; // تخزين البيانات للإرسال عبر JavaScript
+                $_SESSION['emailjs_data'] = $order_data;
                 
                 header('Location: ../client/order_confirmation.php');
                 exit;
@@ -159,146 +188,66 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-
-
-
-
-
-
-
-
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
 
-$stmt = $pdo->prepare("SELECT banned FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
-
 if ($user && $user['banned']) {
     session_unset();
     session_destroy();
-    
     $_SESSION['login_error'] = 'تم حظر حسابك. الرجاء التواصل مع الإدارة.';
     header('Location: login.php');
     exit();
 }
 ?>
-?>
+
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Primary -->
     <meta name="title" content="A.S UNLOCK" />
-    <meta name="description"
-        content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
-
-    <!-- Open Graph / Facebook -->
+    <meta name="description" content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://as_unlock.ct.ws" />
     <meta property="og:title" content="A.S UNLOCK" />
-    <meta property="og:description"
-        content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
+    <meta property="og:description" content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
     <meta property="og:image" content="https://as_unlock.ct.ws/" />
-
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://as_unlock.ct.ws/assets/image/favicon.ico" />
     <meta property="twitter:title" content="A.S UNLOCK" />
-    <meta property="twitter:description"
-        content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
+    <meta property="twitter:description" content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
     <meta property="twitter:image" content="https://as_unlock.ct.ws/assets/image/favicon.ico" />
-
-    <!-- Links -->
     <link rel="icon" type="image/x-icon" href="../assets/image/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/checkout.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="../assets/css/checkout.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode-index.css">
     <title>إتمام الطلب - <?= htmlspecialchars($product['product_name']) ?> - <?= htmlspecialchars($plan['plan_name']) ?></title>
-    <style>
-        /* إضافة أنماط لخطوات الدفع */
-        .step-progress {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        .step-progress::before {
-            content: '';
-            position: absolute;
-            top: 15px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #dee2e6;
-            z-index: 1;
-        }
-        .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        .step-number {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: #dee2e6;
-            color: #6c757d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .step.active .step-number {
-            background: #0d6efd;
-            color: white;
-        }
-        .step.completed .step-number {
-            background: #198754;
-            color: white;
-        }
-        .step-label {
-            font-size: 14px;
-            color: #6c757d;
-        }
-        .step.active .step-label {
-            color: #0d6efd;
-            font-weight: bold;
-        }
-        .step.completed .step-label {
-            color: #198754;
-        }
-        
-        /* إخفاء الخطوات غير النشطة */
-        .step-content {
-            display: none;
-        }
-        .step-content.active {
-            display: block;
-        }
-    </style>
 </head>
 <body>
+    <li style="display: none;" class="dark-mode-toggle"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16" /></svg></a></li>
     <div class="container py-5">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="checkout-container p-4">
+            <div class="col-lg-9">
+                <div class="checkout-container p-4 p-md-5">
                     <h2 class="text-center mb-4"><i class="bi bi-cart-check"></i> إتمام الطلب</h2>
                     
+                    <?php if (isset($_SESSION['checkout_error'])): ?>
+                        <div class="alert alert-danger alert-dismissible fade show mb-4">
+                            <?= htmlspecialchars($_SESSION['checkout_error']) ?>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <?php unset($_SESSION['checkout_error']); ?>
+                    <?php endif; ?>
+
                     <!-- شريط تقدم الخطوات -->
-                    <div class="step-progress">
+                    <div class="step-progress mb-5">
                         <div class="step <?= $current_step >= 1 ? 'active' : '' ?> <?= $current_step > 1 ? 'completed' : '' ?>">
                             <div class="step-number">1</div>
                             <div class="step-label">طريقة الدفع</div>
@@ -318,7 +267,7 @@ if ($user && $user['banned']) {
                     </div>
                     
                     <?php if (!empty($errors)): ?>
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger mb-4">
                             <ul class="mb-0">
                                 <?php foreach ($errors as $error): ?>
                                     <li><?= htmlspecialchars($error) ?></li>
@@ -328,18 +277,18 @@ if ($user && $user['banned']) {
                     <?php endif; ?>
                     
                     <!-- ملخص الطلب -->
-                    <div class="card border-primary mb-4">
-                        <div class="card-header bg-primary text-white">
-                            <h4><i class="bi bi-receipt"></i> ملخص الطلب</h4>
+                    <div class="card border-0 shadow-sm mb-5">
+                        <div class="card-header bg-transparent border-0 text-white py-3">
+                            <h4 class="mb-0"><i class="bi bi-receipt"></i> ملخص الطلب</h4>
                         </div>
-                        <div class="card-body">
-                            <div class="row">
+                        <div class="card-body py-4">
+                            <div class="row align-items-center">
                                 <div class="col-md-6">
-                                    <p><strong>المنتج:</strong> <?= htmlspecialchars($product['product_name']) ?></p>
-                                    <p><strong>الخطة:</strong> <?= htmlspecialchars($plan['plan_name']) ?></p>
+                                    <p class="mb-2"><strong><i class="bi bi-box-seam"></i> المنتج:</strong> <?= htmlspecialchars($product['product_name']) ?></p>
+                                    <p class="mb-0"><strong><i class="bi bi-stack"></i> الخطة:</strong> <?= htmlspecialchars($plan['plan_name']) ?></p>
                                 </div>
-                                <div class="col-md-6 text-end">
-                                    <p class="total-price">المجموع: <?= htmlspecialchars($plan['plan_price']) ?> جنيه</p>
+                                <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                                    <p class="total-price mb-0"><i class="bi bi-currency-pound"></i> المجموع: <?= htmlspecialchars($plan['plan_price']) ?> جنيه</p>
                                 </div>
                             </div>
                         </div>
@@ -349,11 +298,11 @@ if ($user && $user['banned']) {
                     <form id="payment-form" method="POST" enctype="multipart/form-data" class="step-content <?= $current_step == 1 ? 'active' : '' ?>">
                         <input type="hidden" name="step" value="1">
                         
-                        <h4 class="mb-3"><i class="bi bi-credit-card"></i> طريقة الدفع</h4>
+                        <h4 class="mb-4"><i class="bi bi-credit-card"></i> طريقة الدفع</h4>
                         
-                        <div class="row mb-4">
+                        <div class="row g-4 mb-4">
                             <div class="col-md-6">
-                                <div class="payment-method" onclick="selectPaymentMethod('vodafone_cash')">
+                                <div class="payment-method <?= isset($_SESSION['checkout_data']['payment_method']) && $_SESSION['checkout_data']['payment_method'] == 'vodafone_cash' ? 'selected' : '' ?>" onclick="selectPaymentMethod('vodafone_cash')">
                                     <input type="radio" id="vodafone_cash" name="payment_method" value="vodafone_cash" class="d-none" 
                                         <?= isset($_SESSION['checkout_data']['payment_method']) && $_SESSION['checkout_data']['payment_method'] == 'vodafone_cash' ? 'checked' : '' ?> required>
                                     <div class="d-flex align-items-center">
@@ -366,7 +315,7 @@ if ($user && $user['banned']) {
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="payment-method" onclick="selectPaymentMethod('instapay')">
+                                <div class="payment-method <?= isset($_SESSION['checkout_data']['payment_method']) && $_SESSION['checkout_data']['payment_method'] == 'instapay' ? 'selected' : '' ?>" onclick="selectPaymentMethod('instapay')">
                                     <input type="radio" id="instapay" name="payment_method" value="instapay" class="d-none"
                                         <?= isset($_SESSION['checkout_data']['payment_method']) && $_SESSION['checkout_data']['payment_method'] == 'instapay' ? 'checked' : '' ?>>
                                     <div class="d-flex align-items-center">
@@ -380,11 +329,11 @@ if ($user && $user['banned']) {
                             </div>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
-                            <a href="product.php?id=<?= $product_id ?>" class="btn btn-outline-secondary">
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="products.php?id=<?= $product_id ?>" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-arrow-right"></i> رجوع
                             </a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-arrow-left"></i> التالي
                             </button>
                         </div>
@@ -394,26 +343,56 @@ if ($user && $user['banned']) {
                     <form id="contact-form" method="POST" class="step-content <?= $current_step == 2 ? 'active' : '' ?>">
                         <input type="hidden" name="step" value="2">
                         
-                        <h4 class="mb-3"><i class="bi bi-person-lines-fill"></i> بيانات الاتصال</h4>
+                        <h4 class="mb-4"><i class="bi bi-person-lines-fill"></i> بيانات الاتصال</h4>
                         
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="phone_number" class="form-label">رقم الهاتف</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number" 
-                                placeholder="01XXXXXXXXX" required 
-                                value="<?= isset($_SESSION['checkout_data']['phone_number']) ? htmlspecialchars($_SESSION['checkout_data']['phone_number']) : htmlspecialchars($user['phone'] ?? '') ?>">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-phone"></i></span>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" 
+                                    placeholder="01XXXXXXXXX" required 
+                                    value="<?= isset($_SESSION['checkout_data']['phone_number']) ? htmlspecialchars($_SESSION['checkout_data']['phone_number']) : htmlspecialchars($user['phone'] ?? '') ?>">
+                            </div>
+                            <div class="form-text">يجب أن يبدأ بـ 01 ويتكون من 11 رقمًا</div>
                         </div>
                         
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="email" class="form-label">البريد الإلكتروني</label>
-                            <input type="email" class="form-control" id="email" name="email" required 
-                                value="<?= isset($_SESSION['checkout_data']['email']) ? htmlspecialchars($_SESSION['checkout_data']['email']) : htmlspecialchars($user['email'] ?? '') ?>">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input type="email" class="form-control" id="email" name="email" required 
+                                    value="<?= isset($_SESSION['checkout_data']['email']) ? htmlspecialchars($_SESSION['checkout_data']['email']) : htmlspecialchars($user['email'] ?? '') ?>">
+                            </div>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
-                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=1" class="btn btn-outline-secondary">
+                        <?php if ($product['is_special_offer'] == 1): ?>
+                            <div class="mb-4">
+                                <label for="subscription_email" class="form-label">بريد الاشتراك</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+                                    <input type="email" class="form-control" id="subscription_email" name="subscription_email" 
+                                        value="<?= isset($_SESSION['checkout_data']['subscription_email']) ? htmlspecialchars($_SESSION['checkout_data']['subscription_email']) : '' ?>">
+                                </div>
+                                <div class="form-text">سيتم استخدام هذا البريد لإرسال بيانات الاشتراك</div>
+                            </div>
+                            
+                            <?php if (!empty($product['instructions'])): ?>
+                                <div class="card mb-4 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <i class="bi bi-info-circle"></i> إرشادات مهمة
+                                    </div>
+                                    <div class="card-body">
+                                        <?= nl2br(htmlspecialchars($product['instructions'])) ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=1" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-arrow-right"></i> رجوع
                             </a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-arrow-left"></i> التالي
                             </button>
                         </div>
@@ -423,19 +402,23 @@ if ($user && $user['banned']) {
                     <form id="receipt-form" method="POST" enctype="multipart/form-data" class="step-content <?= $current_step == 3 ? 'active' : '' ?>">
                         <input type="hidden" name="step" value="3">
                         
-                        <h4 class="mb-3"><i class="bi bi-receipt"></i> إثبات الدفع</h4>
+                        <h4 class="mb-4"><i class="bi bi-receipt"></i> إثبات الدفع</h4>
                         
-                        <div class="alert alert-info">
-                            <h5><i class="bi bi-info-circle"></i> تعليمات الدفع:</h5>
+                        <div class="alert alert-info mb-4">
+                            <h5 class="d-flex align-items-center"><i class="bi bi-info-circle me-2"></i> تعليمات الدفع:</h5>
                             <?php if (isset($_SESSION['checkout_data']['payment_method'])): ?>
                                 <?php if ($_SESSION['checkout_data']['payment_method'] == 'vodafone_cash'): ?>
-                                    <p>1. افتح تطبيق فودافون كاش على هاتفك</p>
-                                    <p>2. أرسل المبلغ <strong><?= htmlspecialchars($plan['plan_price']) ?> جنيه</strong> إلى الرقم <strong>01012345678</strong></p>
-                                    <p>3. احفظ صورة إثبات التحويل وارفعها هنا</p>
+                                    <ol class="mb-0">
+                                        <li>افتح تطبيق فودافون كاش على هاتفك</li>
+                                        <li>أرسل المبلغ <strong><?= htmlspecialchars($plan['plan_price']) ?> جنيه</strong> إلى الرقم <strong> 01069062005</strong></li>
+                                        <li>احفظ صورة إثبات التحويل وارفعها هنا</li>
+                                    </ol>
                                 <?php else: ?>
-                                    <p>1. افتح تطبيق إنستاباي على هاتفك</p>
-                                    <p>2. أرسل المبلغ <strong><?= htmlspecialchars($plan['plan_price']) ?> جنيه</strong> إلى الرقم <strong>01012345678</strong></p>
-                                    <p>3. احفظ صورة إثبات التحويل وارفعها هنا</p>
+                                    <ol class="mb-0">
+                                        <li>افتح تطبيق إنستاباي على هاتفك</li>
+                                        <li>أرسل المبلغ <strong><?= htmlspecialchars($plan['plan_price']) ?> جنيه</strong> إلى الرقم <strong> 01069062005</strong></li>
+                                        <li>احفظ صورة إثبات التحويل وارفعها هنا</li>
+                                    </ol>
                                 <?php endif; ?>
                             <?php endif; ?>
                         </div>
@@ -443,19 +426,19 @@ if ($user && $user['banned']) {
                         <div class="mb-4">
                             <label class="form-label">صورة إثبات الدفع</label>
                             <div class="receipt-upload" onclick="document.getElementById('receipt_image').click()">
-                                <img id="receipt-preview" src="#" alt="Preview" class="img-fluid">
-                                <i class="bi bi-cloud-arrow-up" style="font-size: 2rem;"></i>
-                                <p class="mt-2">اضغط لرفع صورة الإيصال</p>
+                                <img id="receipt-preview" src="#" alt="Preview">
+                                <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem;"></i>
+                                <p class="mt-2 fw-bold">اضغط لرفع صورة الإيصال</p>
                                 <small class="text-muted">(JPG, PNG, GIF - الحد الأقصى 2MB)</small>
                             </div>
                             <input type="file" id="receipt_image" name="receipt_image" accept="image/*" class="d-none" required>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
-                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=2" class="btn btn-outline-secondary">
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=2" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-arrow-right"></i> رجوع
                             </a>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary px-4">
                                 <i class="bi bi-arrow-left"></i> التالي
                             </button>
                         </div>
@@ -465,26 +448,29 @@ if ($user && $user['banned']) {
                     <form id="confirm-form" method="POST" class="step-content <?= $current_step == 4 ? 'active' : '' ?>">
                         <input type="hidden" name="step" value="4">
                         
-                        <h4 class="mb-3"><i class="bi bi-check-circle"></i> تأكيد الطلب</h4>
+                        <h4 class="mb-4"><i class="bi bi-check-circle"></i> تأكيد الطلب</h4>
                         
-                        <div class="card mb-4">
-                            <div class="card-header bg-success text-white">
-                                <h5><i class="bi bi-check2-circle"></i> تأكيد معلومات الطلب</h5>
+                        <div class="card border-0 shadow-sm mb-4">
+                            <div class="card-header bg-transparent border-0 text-white py-3">
+                                <h5 class="mb-0"><i class="bi bi-check2-circle"></i> تأكيد معلومات الطلب</h5>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body py-4">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <p><strong>طريقة الدفع:</strong> 
+                                        <p class="mb-2"><strong><i class="bi bi-credit-card"></i> طريقة الدفع:</strong> 
                                             <?php if (isset($_SESSION['checkout_data']['payment_method'])): ?>
                                                 <?= $_SESSION['checkout_data']['payment_method'] == 'vodafone_cash' ? 'فودافون كاش' : 'إنستاباي' ?>
                                             <?php endif; ?>
                                         </p>
-                                        <p><strong>رقم الهاتف:</strong> <?= isset($_SESSION['checkout_data']['phone_number']) ? htmlspecialchars($_SESSION['checkout_data']['phone_number']) : '' ?></p>
-                                        <p><strong>البريد الإلكتروني:</strong> <?= isset($_SESSION['checkout_data']['email']) ? htmlspecialchars($_SESSION['checkout_data']['email']) : '' ?></p>
+                                        <p class="mb-2"><strong><i class="bi bi-phone"></i> رقم الهاتف:</strong> <?= isset($_SESSION['checkout_data']['phone_number']) ? htmlspecialchars($_SESSION['checkout_data']['phone_number']) : '' ?></p>
+                                        <p class="mb-0"><strong><i class="bi bi-envelope"></i> البريد الإلكتروني:</strong> <?= isset($_SESSION['checkout_data']['email']) ? htmlspecialchars($_SESSION['checkout_data']['email']) : '' ?></p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mt-3 mt-md-0">
                                         <?php if (isset($_SESSION['checkout_data']['receipt_image'])): ?>
-                                            <img src="../uploads/receipts/<?= htmlspecialchars($_SESSION['checkout_data']['receipt_image']) ?>" class="img-fluid rounded" style="max-height: 150px;">
+                                            <div class="border p-2 rounded text-center">
+                                                <img src="../uploads/receipts/<?= htmlspecialchars($_SESSION['checkout_data']['receipt_image']) ?>" class="img-fluid rounded" style="max-height: 150px;">
+                                                <p class="mt-2 small text-muted">صورة الإيصال</p>
+                                            </div>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -494,15 +480,15 @@ if ($user && $user['banned']) {
                         <div class="form-check mb-4">
                             <input class="form-check-input" type="checkbox" id="agree_terms" name="agree_terms" required>
                             <label class="form-check-label" for="agree_terms">
-                                أوافق على <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">الشروط والأحكام</a>
+                                أوافق على <a href="../client/policy-privacy.php" class="text-primary" data-bs-toggle="" data-bs-target="#termsModal">الشروط والأحكام</a>
                             </label>
                         </div>
                         
-                        <div class="d-flex justify-content-between">
-                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=3" class="btn btn-outline-secondary">
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="checkout.php?product_id=<?= $product_id ?>&plan_id=<?= $plan_id ?>&step=3" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-arrow-right"></i> رجوع
                             </a>
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-success px-4">
                                 <i class="bi bi-check-circle"></i> تأكيد الطلب
                             </button>
                         </div>
@@ -516,26 +502,26 @@ if ($user && $user['banned']) {
     <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="termsModalLabel">الشروط والأحكام</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <h5>شروط الاستخدام:</h5>
-                    <p>1. جميع المدفوعات غير قابلة للاسترداد بعد تأكيد الطلب.</p>
-                    <p>2. يتحمل العميل مسؤولية التأكد من صحة المعلومات المقدمة.</p>
-                    <p>3. يجب أن تكون صورة الإيصال واضحة وتظهر كافة التفاصيل.</p>
-                    <p>4. قد تستغرق معالجة الطلب حتى 24 ساعة عمل.</p>
-                    <p>5. يحق للشركة رفض أي طلب دون إبداء الأسباب.</p>
+                    <h5 class="mb-3">شروط الاستخدام:</h5>
+                    <ol>
+                        <li class="mb-2"><a href="../client/policy-privacy.html">الالتزام بالحماية: نحمي بياناتك الشخصية بأعلى المعايير الأمنية والقانونية.</a></li>
+                    </ol>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">موافق</button>
+                    <a class="btn" href="../client/policy-privacy.html">الذهاب</a>
                 </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/dark-mode.js"></script>
     <script>
         // اختيار طريقة الدفع
         function selectPaymentMethod(method) {
@@ -556,6 +542,9 @@ if ($user && $user['banned']) {
                     const preview = document.getElementById('receipt-preview');
                     preview.src = event.target.result;
                     preview.style.display = 'block';
+                    preview.nextElementSibling.style.display = 'none';
+                    preview.nextElementSibling.nextElementSibling.style.display = 'none';
+                    preview.nextElementSibling.nextElementSibling.nextElementSibling.style.display = 'none';
                 };
                 reader.readAsDataURL(file);
             }
@@ -579,3 +568,8 @@ if ($user && $user['banned']) {
     </script>
 </body>
 </html>
+
+
+<?php
+echo "سلام";
+?>

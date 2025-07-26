@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['order_success'])) {
-    header('Location: ../public/index.html');
+    header('Location: ../client/download.php');
     exit;
 }
 
@@ -47,6 +47,170 @@ unset($_SESSION['emailjs_data']);
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/checkout.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+     :root {
+    --br-primary-color: linear-gradient(90deg, #1976D2, #42A5F5);
+    --br-color-h-p: #1976D2;
+    --br-sacn-color: #23234a;
+    --br-links-color: #495057;
+    --br-border-color: #dfe1e5;
+    --br-btn-padding: 7px 22px;
+    --br-box-shadow: 0px 0px 0px 5px #1976d254;
+    --br-dir-none: none;
+    --br-font-w-text: 400;
+    --br-matgin-width: 0 100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Tajawal", sans-serif;
+}
+
+html, body {
+    height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+    font-weight: 500;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+    font-weight: var(--br-font-w-text);
+}
+
+a {
+    text-decoration: none;
+    color: var(--br-sacn-color);
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    margin: auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.alert-success {
+    background: var(--br-primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.alert-success h4 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.alert-success p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+}
+
+.alert-success .bi-check-circle {
+    font-size: 1.8rem;
+    vertical-align: middle;
+    margin-left: 0.5rem;
+}
+
+.card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.card-header {
+    background: var(--br-primary-color);
+    padding: 1.2rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+    text-align: right;
+}
+
+.card-body p {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: var(--br-sacn-color);
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--br-border-color);
+    padding-bottom: 0.5rem;
+}
+
+.card-body p:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.card-body p strong {
+    font-weight: 600;
+    color: var(--br-color-h-p);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .alert-success {
+        padding: 1rem;
+    }
+    
+    .card-body p {
+        flex-direction: column;
+        text-align: right;
+    }
+    
+    .card-body p strong {
+        margin-bottom: 0.3rem;
+    }
+}
+.btn-primary {
+    background: var(--br-primary-color);
+    border: none;
+    padding: var(--br-btn-padding);
+    border-radius: 6px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: var(--br-box-shadow);
+}
+    </style>
 </head>
 <body>
     <div class="container py-5">

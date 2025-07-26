@@ -40,7 +40,7 @@ if (empty($_SESSION['admin_id'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/review-costm.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
@@ -57,17 +57,15 @@ if (empty($_SESSION['admin_id'])) {
             <div class="un-order-list-sect">
                 <span class="un-title">التقارير</span>
                 <ul class="sect">
-                    <li><a href="#">نظرة عامة</a></li>
-                    <li><a href="#">التحاليل</a></li>
-                    <li><a href="#">أدارة مالية</a></li>
+                    <li><a href="dashboard.php">نظرة عامة</a></li>
+                    <li><a href="crypto.php">أدارة مالية</a></li>
                 </ul>
             </div>
             <div class="un-order-list-app">
                 <span class="un-title">التطبيقات</span>
                 <ul class="app">
                     <li><a href="orders.php">الطلبات</a></li>
-                    <li><a href="#">الفاتورة</a></li>
-                    <li><a href="#">الاشتراكات</a></li>
+                    <li><a href="add_links.php">أدارة اللينكات</a></li>
                 </ul>
             </div>
             <div class="un-order-list-page">
@@ -75,13 +73,13 @@ if (empty($_SESSION['admin_id'])) {
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الخدمات</a></li>
+                    <li><a href="#">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
                     <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
-                    <li><a href="#">الضمان</a></li>
-                    <li><a href="#">الأسئلة الشائعة</a></li>
+                    <li><a href="warranty.php">الضمان</a></li>
+                    <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
                 </ul>
             </div>
             <div class="un-order-list-spp">
@@ -118,11 +116,6 @@ if (empty($_SESSION['admin_id'])) {
                     </ul>
                 </div>
                 <div class="flex-se">
-                    <!-- <div class="for-search">
-                        <label for="search">
-                            <input type="search" name="search" id="search" placeholder="بحث ...">
-                        </label>
-                    </div> -->
                     <ul>
                         <li>
                             <button class="toggle-menu" aria-label="Toggle Menu">
@@ -136,53 +129,62 @@ if (empty($_SESSION['admin_id'])) {
         <!-- Dashboard Body -->
         <!-- Section Body -->
         <!-- #Customer opinions -->
-        <?php
-        require_once '../includes/config.php'; // ملف الاتصال بقاعدة البيانات
-
-        // استعلام لاسترجاع العناصر
-        $stmt = $pdo->query("SELECT * FROM items ORDER BY created_at DESC");
-        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        ?>
-
-        <section class="customer-opinions">
+        <section class="product">
             <div class="contanier">
-                <div class="inbox">
-                    <div class="plus-add"><i class="bi bi-plus-lg"></i></div>
-                    <div class="deep-sec">
-                        <?php foreach ($items as $item): ?>
-                        <div class="card-inbox" 
-                            data-id="<?php echo $item['id']; ?>"
-                            data-name="<?php echo htmlspecialchars($item['name']); ?>"
-                            data-description="<?php echo htmlspecialchars($item['description']); ?>"
-                            data-image="<?php echo htmlspecialchars($item['image_path']); ?>"
-                            data-created="<?php echo $item['created_at']; ?>"
-                            data-featured="<?php echo $item['is_featured']; ?>">
-                            <div class="div-inbox">
-                                <div class="name"><?php echo htmlspecialchars($item['name']); ?></div>
-                                <span>
-                                    <?php 
-                                    $date = new DateTime($item['created_at']);
-                                    echo $date->format('Y-m-d H:i');
+                <h3 style="margin-bottom: 10px;">آراء العملاء</h3>
+                <div class="detail-order">
+                    <div class="function-top-flex">
+                        <div class="flex-top">
+                            <div class="function-flex-right" style="position: relative;">
+                                <!-- <button id="exportBtn" class="btn-export"><i class="bi bi-download"></i> تصدير البيانات</button> -->
+                                <button class="btn-plus bi bi-plus-lg plus-add"></button>
+                            </div>
+                            <div class="function-flex-left">
+                                <label for="search-table-product">
+                                    <i class="bi bi-search"></i>
+                                    <input type="search" name="search-table-product" id="search-table-product" placeholder="بحث عن المنتج...">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="prod-table">
+                            <table id="itemsTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>الاسم</th>
+                                        <th>الوصف</th>
+                                        <th>التاريخ</th>
+                                        <th>مميز</th>
+                                        <th>الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    require_once '../includes/config.php';
+                                    
+                                    try {
+                                        $stmt = $pdo->query("SELECT * FROM items ORDER BY created_at DESC");
+                                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                            $shortDesc = strlen($row['description']) > 80 ? substr($row['description'], 0, 80) . '...' : $row['description'];
+                                            $featuredIcon = $row['is_featured'] ? 'bi-star-fill text-warning' : 'bi-star';
+                                            echo "<tr data-id='{$row['id']}'>
+                                                <td>#{$row['id']}</td>
+                                                <td>{$row['name']}</td>
+                                                <td>{$shortDesc}</td>
+                                                <td>" . date('d-m-Y', strtotime($row['created_at'])) . "</td>
+                                                <td><i class='bi {$featuredIcon} featured-icon' style='cursor:pointer; font-size:1.2rem;'></i></td>
+                                                <td>
+                                                    <a href='#' class='view-item' data-id='{$row['id']}'>view</a> | 
+                                                    <a href='#' class='delete-item' data-id='{$row['id']}'>حذف</a>
+                                                </td>
+                                            </tr>";
+                                        }
+                                    } catch (PDOException $e) {
+                                        echo "<tr><td colspan='6'>خطأ في تحميل البيانات: " . $e->getMessage() . "</td></tr>";
+                                    }
                                     ?>
-                                </span>
-                            </div>
-                            <div class="dis"><p><?php echo htmlspecialchars($item['description']); ?></p></div>
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="view-date">
-                    <div class="view-data-castmer">
-                        <div class="icon">
-                            <span class="delete-btn" data-id=""><i class="bi bi-trash"></i>حذف</span>
-                            <span class="feature-btn" data-id=""><i class="bi bi-star"></i>تمييز</span>
-                        </div>
-                        <div class="db-name-data">
-                            <div class="username"><h3>اسم المستخدم</h3></div>
-                            <div class="text">
-                                <div class="dis"><span>وصف</span></div>
-                                <div class="img"><img src="" alt="" loading="lazy"></div>
-                            </div>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -190,14 +192,53 @@ if (empty($_SESSION['admin_id'])) {
         </section>
     </main>
     <!-- Win -->
-    <div class="win-add">
-        <div></div>
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">تفاصيل العنصر</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="itemForm">
+                        <input type="hidden" id="itemId">
+                        <div class="mb-3">
+                            <label for="itemName" class="form-label">الاسم</label>
+                            <input type="text" class="form-control" id="itemName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="itemDescription" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="itemDescription" rows="5"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">الصورة</label>
+                            <div id="itemImageContainer"></div>
+                            <input type="file" class="form-control" id="itemImage" accept="image/*">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">الصوت (اختياري)</label>
+                            <div id="itemAudioContainer"></div>
+                            <input type="file" class="form-control" id="itemAudio" accept="audio/*">
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="isFeatured">
+                            <label class="form-check-label" for="isFeatured">وضع في العلامة المميزة</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="saveItem">حفظ التغييرات</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
     </div>
     <!--  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/review-costm.js"></script>
     <script src="../assets/js/dark-mode.js"></script>
     <script>
@@ -319,7 +360,6 @@ if (empty($_SESSION['admin_id'])) {
                 document.querySelector('.username h3').textContent = name;
                 document.querySelector('.view-date .dis span').textContent = description;
                 
-                // يمكنك إضافة المزيد من التفاصيل حسب الحاجة
             });
         });
     });

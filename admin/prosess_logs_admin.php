@@ -40,6 +40,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $remember = isset($_POST['remember']);
     
+    // جمع معلومات الجهاز
+    $deviceData = [
+        'device_model' => $_POST['device_model'] ?? null,
+        'ram' => $_POST['ram'] ?? null,
+        'storage' => $_POST['storage'] ?? null,
+        'processor' => $_POST['processor'] ?? null,
+        'os_version' => $_POST['os_version'] ?? null,
+        'location_coords' => $_POST['location_coords'] ?? null,
+        'battery_status' => $_POST['battery_status'] ?? null
+    ];
+    
     try {
         $stmt = $pdo->prepare("
             SELECT admin_id, username, password_hash 
@@ -52,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $admin = $stmt->fetch();
         
         if (!$admin || !password_verify($password, $admin['password_hash'])) {
-            logLoginAttempt($pdo, null, $username, false);
+            logLoginAttempt($pdo, null, $username, false, $deviceData);
             $error = 'اسم المستخدم أو كلمة المرور غير صحيحة';
             require 'logs.php';
             exit;
@@ -65,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             createRememberMeToken($pdo, $admin['admin_id']);
         }
         
-        logLoginAttempt($pdo, $admin['admin_id'], $username, true);
+        logLoginAttempt($pdo, $admin['admin_id'], $username, true, $deviceData);
         
         header('Location: dashboard.php');
         exit;
@@ -79,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require 'logs.php';
 
-function logLoginAttempt($pdo, $adminId, $username, $isSuccess) {
+function logLoginAttempt($pdo, $adminId, $username, $isSuccess, $deviceData = []) {
     $ip = $_SERVER['REMOTE_ADDR'];
     $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown';
     
@@ -88,9 +99,16 @@ function logLoginAttempt($pdo, $adminId, $username, $isSuccess) {
             admin_id, 
             username, 
             ip_address, 
-            user_agent, 
+            user_agent,
+            device_model,
+            ram,
+            storage,
+            processor,
+            os_version,
+            location_coords,
+            battery_status,
             is_success
-        ) VALUES (?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ");
     
     $stmt->execute([
@@ -98,6 +116,13 @@ function logLoginAttempt($pdo, $adminId, $username, $isSuccess) {
         $username,
         $ip,
         $userAgent,
+        $deviceData['device_model'] ?? null,
+        $deviceData['ram'] ?? null,
+        $deviceData['storage'] ?? null,
+        $deviceData['processor'] ?? null,
+        $deviceData['os_version'] ?? null,
+        $deviceData['location_coords'] ?? null,
+        $deviceData['battery_status'] ?? null,
         $isSuccess ? 1 : 0
     ]);
 }
@@ -114,7 +139,6 @@ function createRememberMeToken($pdo, $adminId) {
     
     $stmt->execute([$token, $expiry, $adminId]);
     
-    // تعيين كوكي لمدة 30 يوم
     setcookie('remember_token', $token, time() + (30 * 24 * 60 * 60), '/', '', true, true);
     setcookie('admin_id', $adminId, time() + (30 * 24 * 60 * 60), '/', '', true, true);
 }

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاركة الملفات</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="file-container">
+        <div class="file-header">
+            <h3><i class="fas fa-file-alt me-2"></i>مشاركة الملف</h3>
+        </div>
+        
+        <div class="file-body">
+            <p class="text-center mb-4">يمكنك مشاركة هذا الملف مع الآخرين عبر الروابط التالية:</p>
+            
+            <div class="share-link-container">
+                <div class="share-link">
+                    <i class="fas fa-link me-2"></i>
+                   https://as-unlock.ct.ws/client/share.php?id=182
+                </div>
+                <button class="btn-copy" id="copyBtn">
+                    <i class="fas fa-copy me-2"></i>نسخ الرابط
+                </button>
+            </div>
+            
+            <a href="#" class="btn-download" id="downloadBtn">
+                <i class="fas fa-download me-2"></i>تحميل الملف
+            </a>
+            
+            <div class="social-share">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=https://example.com/ns/client/share.php?id=182" target="_blank" class="social-icon facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/intent/tweet?url=https://example.com/ns/client/share.php?id=182" target="_blank" class="social-icon twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://wa.me/?text=https://example.com/ns/client/share.php?id=182" target="_blank" class="social-icon whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+       
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const link = 'https://as-unlock.ct.ws/client/share.php?id=182';
+            navigator.clipboard.writeText(link).then(() => {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i class="fas fa-check me-2"></i>تم النسخ';
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        });
+
+       
+        document.getElementById('downloadBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            const link = document.createElement('a');
+            link.href = 'https://example.com/ns/client/share.php?id=182&download=1';
+            link.download = '';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>
+</body>
+</html>

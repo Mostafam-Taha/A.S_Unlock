@@ -11,10 +11,8 @@ if (!$productId) {
 try {
     $stmt = $pdo->prepare("
         SELECT 
-            d.*,
-            p.plan_type, p.plan_name, p.plan_price, p.plan_features
+            d.*
         FROM digital_products d
-        LEFT JOIN product_plans p ON d.id = p.product_id
         WHERE d.id = ?
     ");
     $stmt->execute([$productId]);
@@ -27,8 +25,7 @@ try {
     
     // تحويل المميزات من JSON إلى مصفوفة
     $product['features'] = json_decode($product['features'], true) ?: [];
-    $product['plan_features'] = json_decode($product['plan_features'], true) ?: [];
-    
+
 } catch (PDOException $e) {
     die("خطأ في استرجاع بيانات المنتج: " . $e->getMessage());
 }
@@ -37,20 +34,47 @@ try {
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تعديل المنتج - <?= htmlspecialchars($product['product_name']) ?></title>
+    <!-- Primary -->
+    <meta name="title" content="A.S UNLOCK" />
+    <meta name="description"
+    content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://as_unlock.ct.ws" />
+    <meta property="og:title" content="A.S UNLOCK" />
+    <meta property="og:description"
+        content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
+    <meta property="og:image" content="https://as_unlock.ct.ws/" />
     
-    <!-- Bootstrap CSS -->
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://as_unlock.ct.ws/assets/image/favicon.ico" />
+    <meta property="twitter:title" content="A.S UNLOCK" />
+    <meta property="twitter:description"
+    content="A.S UNLOCK - خبراء فتح وإصلاح أجهزة التابلت بأحدث التقنيات. خدمات سريعة ومضمونة مع دعم على مدار الساعة." />
+    <meta property="twitter:image" content="https://as_unlock.ct.ws/assets/image/favicon.ico" />
+
+    <!-- Links -->
+    <link rel="icon" type="image/x-icon" href="../assets/image/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/dark-mode-index.css">
     
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
+    <title>تعديل المنتج - <?= htmlspecialchars($product['product_name']) ?></title>
     <style>
+        body {
+            font-family: "Tajawal", sans-serif;
+        }
+
         .feature-item {
             margin-bottom: 10px;
         }
@@ -94,6 +118,16 @@ try {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
+                                        <label for="service_type" class="form-label">نوع الخدمة</label>
+                                        <input type="text" class="form-control" id="service_type" name="service_type" 
+                                            value="<?= htmlspecialchars($product['service_type'] ?? '') ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
                                         <label for="product_image" class="form-label">صورة المنتج</label>
                                         <input type="file" class="form-control" id="product_image" name="product_image" accept="image/*">
                                         <?php if ($product['image_path']): ?>
@@ -105,9 +139,6 @@ try {
                                         <img id="imagePreview" class="image-preview img-thumbnail" src="#" alt="Preview">
                                     </div>
                                 </div>
-                            </div>
-                            
-                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="price" class="form-label">السعر</label>
@@ -115,6 +146,9 @@ try {
                                             value="<?= $product['price'] ?>" required>
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row mb-3">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="discount" class="form-label">الخصم (اختياري)</label>
@@ -131,11 +165,11 @@ try {
                             
                             <div class="form-group mb-3">
                                 <label for="instructions" class="form-label">إرشادات الاستخدام</label>
-                                <textarea class="form-control" id="instructions" name="instructions" rows="3"><?= htmlspecialchars($product['instructions']) ?></textarea>
+                                <textarea class="form-control" id="instructions" name="instructions" rows="3"><?= htmlspecialchars($product['instructions'] ?? '') ?></textarea>
                             </div>
                             
                             <!-- مميزات المنتج -->
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3" style="direction: ltr;">
                                 <label class="form-label">مميزات المنتج</label>
                                 <div id="featuresContainer">
                                     <?php foreach ($product['features'] as $index => $feature): ?>
@@ -175,70 +209,8 @@ try {
                                 </div>
                             </div>
                             
-                            <!-- قسم إكمال البيانات - الخطط -->
-                            <div class="card mb-3">
-                                <div class="card-header bg-secondary text-white">
-                                    <h4 class="card-title">إكمال البيانات - الخطط</h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group mb-3">
-                                        <label for="plan_type" class="form-label">نوع الخطة</label>
-                                        <select class="form-select" id="plan_type" name="plan_type">
-                                            <option value="1" <?= $product['plan_type'] == 1 ? 'selected' : '' ?>>الأساسية</option>
-                                            <option value="2" <?= $product['plan_type'] == 2 ? 'selected' : '' ?>>الاكثر طلبًا</option>
-                                            <option value="3" <?= $product['plan_type'] == 3 ? 'selected' : '' ?>>احترافية</option>
-                                            <option value="4" <?= $product['plan_type'] == 4 ? 'selected' : '' ?>>أخرى</option>
-                                        </select>
-                                        <div class="plan-icon">
-                                            <?php
-                                            $iconClass = '';
-                                            switch($product['plan_type']) {
-                                                case 1: $iconClass = 'bi-star-fill basic-plan'; break;
-                                                case 2: $iconClass = 'bi-gem popular-plan'; break;
-                                                case 3: $iconClass = 'bi-award pro-plan'; break;
-                                                default: $iconClass = 'bi-question-circle other-plan';
-                                            }
-                                            ?>
-                                            <i class="bi <?= $iconClass ?>" id="planIcon"></i>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="plan_name" class="form-label">اسم الخطة</label>
-                                                <input type="text" class="form-control" id="plan_name" name="plan_name" 
-                                                    value="<?= htmlspecialchars($product['plan_name']) ?>">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="plan_price" class="form-label">سعر الخطة</label>
-                                                <input type="number" step="0.01" class="form-control" id="plan_price" name="plan_price" 
-                                                    value="<?= $product['plan_price'] ?>">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">مميزات الخطة</label>
-                                        <div id="planFeaturesContainer">
-                                            <?php foreach ($product['plan_features'] as $index => $feature): ?>
-                                            <div class="feature-item input-group mb-2">
-                                                <input type="text" class="form-control" name="plan_features[]" value="<?= htmlspecialchars($feature) ?>">
-                                                <button type="button" class="btn btn-danger remove-plan-feature"><i class="bi bi-trash"></i></button>
-                                            </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                        <button type="button" id="addPlanFeature" class="btn btn-sm btn-primary mt-2">
-                                            <i class="bi bi-plus"></i> إضافة ميزة
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            
                             <div class="d-flex justify-content-between">
-                                <a href="products.php" class="btn btn-secondary">رجوع</a>
+                                <a href="../admin/products.php" class="btn btn-secondary">رجوع</a>
                                 <button type="submit" class="btn btn-primary">حفظ التعديلات</button>
                             </div>
                         </form>
@@ -251,6 +223,9 @@ try {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Custom JS -->
     <script>
     $(document).ready(function() {
         // معاينة الصورة عند التغيير
@@ -265,21 +240,6 @@ try {
             }
         });
         
-        // تغيير أيقونة الخطة
-        $('#plan_type').change(function() {
-            const planType = $(this).val();
-            let iconClass = '';
-            
-            switch(planType) {
-                case '1': iconClass = 'bi-star-fill basic-plan'; break;
-                case '2': iconClass = 'bi-gem popular-plan'; break;
-                case '3': iconClass = 'bi-award pro-plan'; break;
-                default: iconClass = 'bi-question-circle other-plan';
-            }
-            
-            $('#planIcon').removeClass().addClass('bi ' + iconClass);
-        });
-        
         // إضافة ميزة منتج
         $('#addFeature').click(function() {
             const newFeature = `
@@ -289,17 +249,6 @@ try {
                 </div>
             `;
             $('#featuresContainer').append(newFeature);
-        });
-        
-        // إضافة ميزة خطة
-        $('#addPlanFeature').click(function() {
-            const newFeature = `
-                <div class="feature-item input-group mb-2">
-                    <input type="text" class="form-control" name="plan_features[]" placeholder="أدخل ميزة الخطة">
-                    <button type="button" class="btn btn-danger remove-plan-feature"><i class="bi bi-trash"></i></button>
-                </div>
-            `;
-            $('#planFeaturesContainer').append(newFeature);
         });
         
         // إزالة ميزة (استخدام event delegation)
@@ -332,11 +281,11 @@ try {
                 data: formData,
                 processData: false,
                 contentType: false,
-                dataType: 'json', // أضف هذا السطر لتحديد نوع البيانات المتوقعة
-                success: function(result) { // تم تعديل المعلمة من response إلى result مباشرة
+                dataType: 'json',
+                success: function(result) {
                     if (result.success) {
                         alert(result.message);
-                        window.location.href = '../admin/dashboard.php';
+                        window.location.href = '../admin/products.php';
                     } else {
                         alert('حدث خطأ: ' + result.message);
                     }

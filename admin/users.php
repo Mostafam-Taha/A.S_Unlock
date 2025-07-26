@@ -39,7 +39,8 @@ if (empty($_SESSION['admin_id'])) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- مش مهم أوي لو حابب تلغية -->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/users.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
@@ -57,17 +58,15 @@ if (empty($_SESSION['admin_id'])) {
             <div class="un-order-list-sect">
                 <span class="un-title">التقارير</span>
                 <ul class="sect">
-                    <li><a href="#">نظرة عامة</a></li>
-                    <li><a href="#">التحاليل</a></li>
-                    <li><a href="#">أدارة مالية</a></li>
+                    <li><a href="dashboard.php">نظرة عامة</a></li>
+                    <li><a href="crypto.php">أدارة مالية</a></li>
                 </ul>
             </div>
             <div class="un-order-list-app">
                 <span class="un-title">التطبيقات</span>
                 <ul class="app">
-                    <li><a href="./products.php">الطلبات</a></li>
-                    <li><a href="#">الفاتورة</a></li>
-                    <li><a href="#">الاشتراكات</a></li>
+                    <li><a href="orders.php">الطلبات</a></li>
+                    <li><a href="add_links.php">أدارة اللينكات</a></li>
                 </ul>
             </div>
             <div class="un-order-list-page">
@@ -75,13 +74,13 @@ if (empty($_SESSION['admin_id'])) {
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الخدمات</a></li>
-                    <li><a href="#">المنتجات</a></li>
-                    <li><a href="#">اراء العملاء</a></li>
+                    <li><a href="#">الباقات</a></li>
+                    <li><a href="products.php">المنتجات</a></li>
+                    <li><a href="review-costm.php">اراء العملاء</a></li>
                     <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
-                    <li><a href="#">الضمان</a></li>
-                    <li><a href="#">الأسئلة الشائعة</a></li>
+                    <li><a href="warranty.php">الضمان</a></li>
+                    <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
                 </ul>
             </div>
             <div class="un-order-list-spp">
@@ -118,11 +117,6 @@ if (empty($_SESSION['admin_id'])) {
                     </ul>
                 </div>
                 <div class="flex-se">
-                    <!-- <div class="for-search">
-                        <label for="search">
-                            <input type="search" name="search" id="search" placeholder="بحث ...">
-                        </label>
-                    </div> -->
                     <ul>
                         <li>
                             <button class="toggle-menu" aria-label="Toggle Menu">
@@ -185,9 +179,8 @@ if (empty($_SESSION['admin_id'])) {
                                                 <div class="dropdown">
                                                     <button class="dropdown-btn" onclick="toggleDropdown(this)"><i class="bi bi-three-dots"></i></button>
                                                     <div class="dropdown-content">
-                                                        <button onclick="editUser('.$user['id'].')">تعديل</button>
+                                                        <button onclick="showUserDetails('.$user['id'].')" class="btn btn-primary">عرض</button>
                                                         <button onclick="toggleBanUser('.$user['id'].', '.$user['banned'].')">'.($user['banned'] ? 'فك الحظر' : 'حظر').'</button>
-                                                        <button onclick="toggleUserStatus('.$user['id'].', '.$user['verified'].')">'.($user['verified'] ? 'تعطيل' : 'تفعيل').'</button>
                                                     </div>
                                                 </div>
                                             </td>';
@@ -212,13 +205,41 @@ if (empty($_SESSION['admin_id'])) {
             </div>
         </section>
     </main>
+    <!--  -->
+    <!--  -->
+    <!--  -->
+    <!-- Modal -->
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="userDetailsModal" tabindex="-1" role="dialog" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="userDetailsModalLabel">تفاصيل المستخدم وطلباته</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="userDetailsContent">
+                <!-- سيتم تحميل المحتوى هنا عبر AJAX -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
     </div>
     <!--  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../assets/js/users.js"></script>
     <script src="../assets/js/dark-mode.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleBtn = document.querySelector('.toggle-menu');
@@ -257,5 +278,37 @@ if (empty($_SESSION['admin_id'])) {
             });
         });
     </script>
+<script>
+// دالة لعرض تفاصيل المستخدم
+function showUserDetails(userId) {
+  // تحديث URL بدون إعادة تحميل الصفحة
+  history.pushState(null, null, '?user_id=' + userId);
+  
+  // جلب بيانات المستخدم عبر AJAX
+  $.ajax({
+    url: '../api/get_user_data.php', // ستنشئ هذا الملف لاحقاً
+    type: 'GET',
+    data: {id: userId},
+    success: function(response) {
+      $('#userDetailsContent').html(response);
+      $('#userDetailsModal').modal('show');
+    },
+    error: function() {
+      $('#userDetailsContent').html('<p>حدث خطأ أثناء جلب البيانات</p>');
+      $('#userDetailsModal').modal('show');
+    }
+  });
+}
+
+// عند تحميل الصفحة، تحقق من وجود user_id في URL
+$(document).ready(function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get('user_id');
+  
+  if (userId) {
+    showUserDetails(userId);
+  }
+});
+</script>
 </body>
 </html>

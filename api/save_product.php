@@ -11,12 +11,14 @@ try {
 
     // معالجة البيانات
     $productName = $_POST['productName'] ?? '';
+    $serviceType = $_POST['serviceType'] ?? ''; // هذا هو الحقل الجديد
     $productDescription = $_POST['productDescription'] ?? '';
     $features = $_POST['features'] ?? [];
     $productPrice = floatval($_POST['productPrice'] ?? 0);
     $productDiscount = !empty($_POST['productDiscount']) ? floatval($_POST['productDiscount']) : null;
     $isFeatured = isset($_POST['isFeatured']) ? 1 : 0;
     $isPublished = isset($_POST['isPublished']) ? 1 : 0;
+    $warrantyDuration = !empty($_POST['warranty_duration_days']) ? intval($_POST['warranty_duration_days']) : null;
 
     // معالجة صورة المنتج
     $imagePath = null;
@@ -42,6 +44,7 @@ try {
     $stmt = $pdo->prepare("
         INSERT INTO digital_products (
             product_name, 
+            service_type, 
             description, 
             features, 
             price, 
@@ -49,19 +52,22 @@ try {
             image_path, 
             is_featured, 
             is_published, 
+            warranty_duration_days,
             created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
     ");
 
     $stmt->execute([
         $productName,
+        $serviceType, // تمت إضافة هذا الحقل
         $productDescription,
         $featuresJson,
         $productPrice,
         $productDiscount,
         $imagePath,
         $isFeatured,
-        $isPublished
+        $isPublished,
+        $warrantyDuration
     ]);
 
     echo json_encode([

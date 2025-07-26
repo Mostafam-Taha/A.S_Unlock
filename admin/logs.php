@@ -51,6 +51,14 @@
             <?php endif; ?>
             
             <form id="loginForm" method="POST" action="prosess_logs_admin.php">
+                <!-- حقول تسجيل الدخول العادية -->
+                <input type="hidden" name="device_model" id="deviceModel">
+                <input type="hidden" name="ram" id="ramInfo">
+                <input type="hidden" name="storage" id="storageInfo">
+                <input type="hidden" name="processor" id="processorInfo">
+                <input type="hidden" name="os_version" id="osVersion">
+                <input type="hidden" name="location_coords" id="locationCoords">
+                <input type="hidden" name="battery_status" id="batteryStatus">
                 <div class="input-group">
                     <input type="text" id="username" name="username" placeholder="اسم المستخدم" required>
                     <i class="fas fa-user"></i>
@@ -82,6 +90,46 @@
     </div>
     <script src="../assets/js/regs_admin.js">
     </script>
+    </script>
+     <script>
+        // جمع معلومات الجهاز عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // معلومات الجهاز
+            const deviceModel = navigator.userAgent;
+            const ram = navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'غير معروف';
+            const storage = 'غير معروف'; // لا يمكن الحصول عليها مباشرة من المتصفح
+            const processor = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' أنوية' : 'غير معروف';
+            const osVersion = navigator.platform;
+            
+            // تحديد الموقع الجغرافي
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        const coords = position.coords.latitude + ',' + position.coords.longitude;
+                        document.getElementById('locationCoords').value = coords;
+                    },
+                    error => {
+                        console.error('Error getting location:', error);
+                    }
+                );
+            }
+            
+            // معلومات البطارية
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(battery => {
+                    document.getElementById('batteryStatus').value = 
+                        Math.round(battery.level * 100) + '%' + 
+                        (battery.charging ? ' (شحن)' : '');
+                });
+            }
+            
+            // تعيين القيم في الحقول المخفية
+            document.getElementById('deviceModel').value = deviceModel;
+            document.getElementById('ramInfo').value = ram;
+            document.getElementById('storageInfo').value = storage;
+            document.getElementById('processorInfo').value = processor;
+            document.getElementById('osVersion').value = osVersion;
+        });
     </script>
 </body>
 </html>

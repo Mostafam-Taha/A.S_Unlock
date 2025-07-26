@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إحصائيات الموقع</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-5">إحصائيات الموقع</h1>
+        
+        <!-- سريع الإطلاع على الإحصائيات -->
+        <div class="row mb-4" id="quickStatsContainer">
+            <!-- سيتم ملؤها بواسطة JavaScript -->
+        </div>
+        
+        <!-- المخططات البيانية -->
+        <div class="row">
+            <!-- Line Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">نمو المستخدمين (خطي)</h4>
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Bar Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">المنتجات الأكثر مبيعاً (أعمدة)</h4>
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Doughnut Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">حالة الطلبات (دونات)</h4>
+                    <div class="chart-container">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Polar Area Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">طرق الدفع (قطبي)</h4>
+                    <div class="chart-container">
+                        <canvas id="polarAreaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Area Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">الإيرادات الشهرية (منطقة)</h4>
+                    <div class="chart-container">
+                        <canvas id="areaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Heatmap Chart -->
+            <div class="col-md-6">
+                <div class="stat-card">
+                    <h4 class="text-center">نشاط الطلبات حسب الساعة (خريطة حرارية)</h4>
+                    <div class="chart-container">
+                        <canvas id="heatmapChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- JavaScript لإنشاء المخططات -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // جلب البيانات من الخادم
+            fetch('stats.php')
+                .then(response => response.json())
+                .then(data => {
+                    // عرض الإحصائيات السريعة
+                    displayQuickStats(data.quickStats);
+                    
+                    // Line Chart - نمو المستخدمين
+                    createLineChart(data.userGrowth);
+                    
+                    // Bar Chart - المنتجات الأكثر مبيعاً
+                    createBarChart(data.topProducts);
+                    
+                    // Doughnut Chart - حالة الطلبات
+                    createDoughnutChart(data.orderStatus);
+                    
+                    // Polar Area Chart - طرق الدفع
+                    createPolarAreaChart(data.paymentMethods);
+                    
+                    // Area Chart - الإيرادات الشهرية
+                    createAreaChart(data.monthlyRevenue);
+                    
+                    // Heatmap Chart - نشاط الطلبات حسب الساعة
+                    createHeatmapChart(data.orderActivity);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+                
+            function displayQuickStats(stats) {
+                const container = document.getElementById('quickStatsContainer');
+                
+                // تأكد من أن جميع القيم موجودة وتعيين قيم افتراضية إذا لم تكن موجودة
+                const total_users = stats.total_users || 0;
+                const total_products = stats.total_products || 0;
+                const total_orders = stats.total_orders || 0;
+                let total_revenue = 0;
+                
+                if (stats.total_revenue !== null && stats.total_revenue !== undefined) {
+                    total_revenue = parseFloat(stats.total_revenue).toFixed(2);
+                }
+                
+                container.innerHTML = `
+                    <div class="col-md-3">
+                        <div class="stat-card text-center">
+                            <div class="icon-container mb-3">
+                                <i class="fas fa-users fa-3x text-primary"></i>
+                            </div>
+                            <h5>المستخدمون</h5>
+                            <h3 class="text-primary">${total_users}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card text-center">
+                            <div class="icon-container mb-3">
+                                <i class="fas fa-box-open fa-3x text-success"></i>
+                            </div>
+                            <h5>المنتجات</h5>
+                            <h3 class="text-success">${total_products}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card text-center">
+                            <div class="icon-container mb-3">
+                                <i class="fas fa-shopping-cart fa-3x text-info"></i>
+                            </div>
+                            <h5>الطلبات</h5>
+                            <h3 class="text-info">${total_orders}</h3>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stat-card text-center">
+                            <div class="icon-container mb-3">
+                                <i class="fas fa-money-bill-wave fa-3x text-warning"></i>
+                            </div>
+                            <h5>الإيرادات</h5>
+                            <h3 class="text-warning">${total_revenue}</h3>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            function createLineChart(data) {
+                const labels = data.map(item => item.month);
+                const counts = data.map(item => item.count);
+                
+                const lineCtx = document.getElementById('lineChart').getContext('2d');
+                const lineChart = new Chart(lineCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'المستخدمون الجدد',
+                            data: counts,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            tension: 0.3,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            function createBarChart(data) {
+                const labels = data.map(item => item.name);
+                const sales = data.map(item => item.sales);
+                
+                const barCtx = document.getElementById('barChart').getContext('2d');
+                const barChart = new Chart(barCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'عدد المبيعات',
+                            data: sales,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(153, 102, 255, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            function createDoughnutChart(data) {
+                const labels = data.map(item => item.status);
+                const counts = data.map(item => item.count);
+                
+                const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+                const doughnutChart = new Chart(doughnutCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: counts,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            function createPolarAreaChart(data) {
+                const labels = data.map(item => item.payment_method);
+                const counts = data.map(item => item.count);
+                
+                const polarAreaCtx = document.getElementById('polarAreaChart').getContext('2d');
+                const polarAreaChart = new Chart(polarAreaCtx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: counts,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.7)',
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(255, 206, 86, 0.7)',
+                                'rgba(75, 192, 192, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            function createAreaChart(data) {
+                const labels = data.map(item => item.month);
+                const revenues = data.map(item => item.revenue);
+                
+                const areaCtx = document.getElementById('areaChart').getContext('2d');
+                const areaChart = new Chart(areaCtx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'الإيرادات',
+                            data: revenues,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+            
+            function createHeatmapChart(data) {
+                // ننشئ مصفوفة تحتوي على جميع الساعات (0-23)
+                const hours = Array.from({length: 24}, (_, i) => i);
+                const hourCounts = {};
+                
+                // نملأ الكائن بقيم الصفر أولاً
+                hours.forEach(hour => {
+                    hourCounts[hour] = 0;
+                });
+                
+                // نملأ الكائن بالقيم الفعلية من البيانات
+                data.forEach(item => {
+                    hourCounts[item.hour] = item.count;
+                });
+                
+                // نحول الكائن إلى مصفوفة
+                const counts = hours.map(hour => hourCounts[hour]);
+                
+                const heatmapCtx = document.getElementById('heatmapChart').getContext('2d');
+                const heatmapChart = new Chart(heatmapCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: hours.map(h => `${h}:00`),
+                        datasets: [{
+                            label: 'عدد الطلبات',
+                            data: counts,
+                            backgroundColor: hours.map(hour => {
+                                // نحدد اللون حسب عدد الطلبات
+                                const count = hourCounts[hour];
+                                if (count > 20) return 'rgba(255, 99, 132, 0.9)';
+                                if (count > 10) return 'rgba(255, 159, 64, 0.8)';
+                                if (count > 5) return 'rgba(255, 205, 86, 0.7)';
+                                return 'rgba(75, 192, 192, 0.6)';
+                            }),
+                            borderColor: hours.map(hour => {
+                                const count = hourCounts[hour];
+                                if (count > 20) return 'rgba(255, 99, 132, 1)';
+                                if (count > 10) return 'rgba(255, 159, 64, 1)';
+                                if (count > 5) return 'rgba(255, 205, 86, 1)';
+                                return 'rgba(75, 192, 192, 1)';
+                            }),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

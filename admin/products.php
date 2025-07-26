@@ -56,31 +56,29 @@ if (empty($_SESSION['admin_id'])) {
             <div class="un-order-list-sect">
                 <span class="un-title">التقارير</span>
                 <ul class="sect">
-                    <li><a href="#">نظرة عامة</a></li>
-                    <li><a href="#">التحاليل</a></li>
-                    <li><a href="#">أدارة مالية</a></li>
+                    <li><a href="dashboard.php">نظرة عامة</a></li>
+                    <li><a href="crypto.php">أدارة مالية</a></li>
                 </ul>
             </div>
             <div class="un-order-list-app">
                 <span class="un-title">التطبيقات</span>
                 <ul class="app">
                     <li><a href="orders.php">الطلبات</a></li>
-                    <li><a href="#">الفاتورة</a></li>
-                    <li><a href="#">الاشتراكات</a></li>
+                    <li><a href="add_links.php">أدارة اللينكات</a></li>
                 </ul>
             </div>
             <div class="un-order-list-page">
                 <span class="un-title">الصفحات</span>
                 <ul class="page">
-                    <li><a href="users.php">المستخدمين</a></li>
+                    <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الخدمات</a></li>
+                    <li><a href="#">الباقات</a></li>
                     <li><a href="#">المنتجات</a></li>
-                    <li><a href="#">اراء العملاء</a></li>
+                    <li><a href="review-costm.php">اراء العملاء</a></li>
                     <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
-                    <li><a href="#">الضمان</a></li>
-                    <li><a href="#">الأسئلة الشائعة</a></li>
+                    <li><a href="warranty.php">الضمان</a></li>
+                    <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
                 </ul>
             </div>
             <div class="un-order-list-spp">
@@ -176,7 +174,7 @@ if (empty($_SESSION['admin_id'])) {
                         }
                         ?>
 
-                        <div class="prod-table">
+                        <div class="prod-table" style="width: 100%; overflow-x: auto;">
                             <table>
                                 <thead>
                                     <tr>
@@ -259,6 +257,24 @@ if (empty($_SESSION['admin_id'])) {
                     </div>
 
                     <div class="form-group">
+                        <label>مدة الضمان</label>
+                        <div id="warranty_duration_days" class="features-container">
+                            <div class="feature-item">
+                                <input type="number" name="warranty_duration_days" placeholder="مدة الضمان" class="custom-input" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>نوع الخدمة</label>
+                        <div id="" class="features-container">
+                            <div class="feature-item">
+                                <input type="text" name="serviceType" placeholder="نوع الخدمة" class="custom-input">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label>مميزات المنتج</label>
                         <div id="featuresContainer" class="features-container">
                             <div class="feature-item">
@@ -271,14 +287,12 @@ if (empty($_SESSION['admin_id'])) {
                     <div class="form-row">
                         <div class="form-group">
                             <label for="productPrice">سعر المنتج</label>
-                            <input type="number" id="productPrice" name="productPrice" step="0.01" required
-                                class="custom-input">
+                            <input type="number" id="productPrice" name="productPrice" min="0" step="0.01" required class="custom-input">
                         </div>
 
                         <div class="form-group">
                             <label for="productDiscount">خصم المنتج (اختياري)</label>
-                            <input type="number" id="productDiscount" name="productDiscount" step="0.01"
-                                class="custom-input">
+                            <input type="number" id="productDiscount" name="productDiscount" min="0" step="0.01" class="custom-input">
                         </div>
                     </div>
 

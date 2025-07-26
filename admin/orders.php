@@ -75,17 +75,15 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="un-order-list-sect">
                 <span class="un-title">التقارير</span>
                 <ul class="sect">
-                    <li><a href="#">نظرة عامة</a></li>
-                    <li><a href="#">التحاليل</a></li>
-                    <li><a href="#">أدارة مالية</a></li>
+                    <li><a href="dashboard.php">نظرة عامة</a></li>
+                    <li><a href="crypto.php">أدارة مالية</a></li>
                 </ul>
             </div>
             <div class="un-order-list-app">
                 <span class="un-title">التطبيقات</span>
                 <ul class="app">
-                    <li><a href="#">الطلبات</a></li>
-                    <li><a href="#">الفاتورة</a></li>
-                    <li><a href="#">الاشتراكات</a></li>
+                    <li><a href="orders.php">الطلبات</a></li>
+                    <li><a href="add_links.php">أدارة اللينكات</a></li>
                 </ul>
             </div>
             <div class="un-order-list-page">
@@ -93,13 +91,13 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الخدمات</a></li>
+                    <li><a href="#">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
-                    <li><a href="#">اراء العملاء</a></li>
+                    <li><a href="review-costm.php">اراء العملاء</a></li>
                     <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
-                    <li><a href="#">الضمان</a></li>
-                    <li><a href="#">الأسئلة الشائعة</a></li>
+                    <li><a href="warranty.php">الضمان</a></li>
+                    <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
                 </ul>
             </div>
             <div class="un-order-list-spp">
@@ -182,7 +180,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <?php foreach ($orders as $order): ?>
                                     <tr>
                                         <td>#FD<?php echo str_pad($order['id'], 2, '0', STR_PAD_LEFT); ?></td>
-                                        <td><a class="users" href="users.php?id=<?php echo $order['user_id']; ?>"><?php echo htmlspecialchars($order['user_name']); ?></a></td>
+                                        <td><a class="users" href="users.php?user_id=<?php echo $order['user_id']; ?>"><?php echo htmlspecialchars($order['user_name']); ?></a></td>
                                         <td><?php echo date('Y-m-d H:i', strtotime($order['created_at'])); ?></td>
                                         <td><?php echo number_format($order['amount'], 2); ?> جنيه</td>
                                         <td>

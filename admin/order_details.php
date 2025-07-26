@@ -61,6 +61,7 @@ $product_features = json_decode($order['features'], true);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تفاصيل الطلب #<?php echo $order['id']; ?></title>
+    <link rel="icon" type="image/x-icon" href="../assets/image/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <style>
         body {

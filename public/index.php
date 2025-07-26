@@ -24,12 +24,12 @@
 
     <!-- Links -->
     <link rel="icon" type="image/x-icon" href="../assets/image/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
-
     <title>A.S UNLOCK</title>
 </head>
 <body>
@@ -50,7 +50,7 @@
             <ul class="links">
                 <li><a href="#" class="fexid-btn" style="color: #1976D2;">الرئيسية</a></li>
                 <li><a href="products.php">المنتجات</a></li>
-                <li><a href="client/download.php">التحميلات</a></li>
+                <li><a href="../client/download.php">التحميلات</a></li>
                 <li><a href="#">الضمان</a></li>
                 <li><a href="#">فريق العمل</a></li>
             </ul>
@@ -106,12 +106,12 @@
                 </div>
             </div>
             <div class="card">
-                <div class="se-svg"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-                        class="bi bi-wrench-adjustable" viewBox="0 0 16 16">
-                        <path d="M16 4.5a4.5 4.5 0 0 1-1.703 3.526L13 5l2.959-1.11q.04.3.041.61" />
-                        <path
-                            d="M11.5 9c.653 0 1.273-.139 1.833-.39L12 5.5 11 3l3.826-1.53A4.5 4.5 0 0 0 7.29 6.092l-6.116 5.096a2.583 2.583 0 1 0 3.638 3.638L9.908 8.71A4.5 4.5 0 0 0 11.5 9m-1.292-4.361-.596.893.809-.27a.25.25 0 0 1 .287.377l-.596.893.809-.27.158.475-1.5.5a.25.25 0 0 1-.287-.376l.596-.893-.809.27a.25.25 0 0 1-.287-.377l.596-.893-.809.27-.158-.475 1.5-.5a.25.25 0 0 1 .287.376M3 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
-                    </svg></div>
+                <div class="se-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-wrench-adjustable-circle" viewBox="0 0 16 16">
+                        <path d="M12.496 8a4.5 4.5 0 0 1-1.703 3.526L9.497 8.5l2.959-1.11q.04.3.04.61"/>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-1 0a7 7 0 1 0-13.202 3.249l1.988-1.657a4.5 4.5 0 0 1 7.537-4.623L7.497 6.5l1 2.5 1.333 3.11c-.56.251-1.18.39-1.833.39a4.5 4.5 0 0 1-1.592-.29L4.747 14.2A7 7 0 0 0 15 8m-8.295.139a.25.25 0 0 0-.288-.376l-1.5.5.159.474.808-.27-.595.894a.25.25 0 0 0 .287.376l.808-.27-.595.894a.25.25 0 0 0 .287.376l1.5-.5-.159-.474-.808.27.596-.894a.25.25 0 0 0-.288-.376l-.808.27z"/>
+                    </svg>
+                </div>
                 <div class="se-text">
                     <h3>صيانة دورية</h3>
                     <p>نقدم صيانة ومتابعة للخدمة بعد التنفيذ للحفاظ على الجودة والاستقرار.</p>
@@ -143,11 +143,9 @@
                 </div>
             </div>
             <div class="card">
-                <div class="se-svg"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-telephone"
-                        viewBox="0 0 16 16">
-                        <path
-                            d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
-                    </svg></div>
+                <div class="se-svg">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path fill="#1976d2" d="M164.9 24.6c-7.7-18.6-28-28.5-47.4-23.2l-88 24C12.1 30.2 0 46 0 64C0 311.4 200.6 512 448 512c18 0 33.8-12.1 38.6-29.5l24-88c5.3-19.4-4.6-39.7-23.2-47.4l-96-40c-16.3-6.8-35.2-2.1-46.3 11.6L304.7 368C234.3 334.7 177.3 277.7 144 207.3L193.3 167c13.7-11.2 18.4-30 11.6-46.3l-40-96z"/></svg>
+                </div>
                 <div class="se-text">
                     <h3>دعم فوري</h3>
                     <p>دعم مباشر عبر تيليجرام على مدار الساعة لحل أي مشكلة بأسرع وقت ممكن.</p>
@@ -175,81 +173,66 @@
                 <p style="color: oklch(44.59% 0.00005 271.152);">تشكيلة مختارة من أفضل منتجاتنا</p>
             </div>
             <div class="grid-pr">
-                <div class="card-pr">
-                    <div class="top-prod-card">
-                        <div class="sec-one-pr">
-                            <div class="img">
-                                <img src="../assets/image/tabletA9+.png" alt="Not Found Tablet A9" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="sec-two-pr">
-                            <h3>تهكير تابلت +A9</h3>
-                            <div class="price-pr">
-                                <span><del>80 جنية</del></span>
-                                <h1>حسب الخدمة</h1>
-                            </div>
-                            <button class="btn-product">طلب الخدمة</button>
-                        </div>
-                        <div class="check-product">
-                            <ul class="scll">
-                                <li>أعلى جودة <span><i class="bi bi-check-lg"></i></span></li>
+                                <?php
+                require_once '../includes/config.php';
+
+                try {
+                    // استعلام لاسترجاع المنتجات المميزة
+                    $stmt = $pdo->prepare("SELECT * FROM digital_products WHERE is_featured = 1 AND is_published = 1");
+                    $stmt->execute();
+                    $featuredProducts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // عرض البيانات في شكل بطاقات
+                    foreach ($featuredProducts as $product) {
+                        // فك تشفير ميزات JSON إذا كانت موجودة
+                        $features = json_decode($product['features'], true) ?? [];
+                        
+                        // عرض السعر مع الخصم إذا كان موجوداً
+                        $priceDisplay = $product['price'];
+                        $discountDisplay = '';
+                        if ($product['discount'] > 0) {
+                            $discountDisplay = '<span><del>' . $product['price'] . ' جنية</del></span>';
+                            $priceDisplay = $product['price'] - $product['discount'];
+                        }
+                        
+                        echo '<div class="card-pr">
+                                <div class="top-prod-card">
+                                    <div class="sec-one-pr">
+                                        <div class="img">
+                                            <img src="../uploads/' . htmlspecialchars($product['image_path']) . '" alt="' . htmlspecialchars($product['product_name']) . '" loading="lazy">
+                                        </div>
+                                    </div>
+                                    <div class="sec-two-pr">
+                                        <h3>' . htmlspecialchars($product['product_name']) . '</h3>
+                                        <div class="price-pr">
+                                            ' . $discountDisplay . '
+                                            <h1>' . $priceDisplay . ' جنية</h1>
+                                        </div>
+                                        <button class="btn-product"><a href="products.php?service_type=JavaScript">طلب الخدمة </a></button>
+                                    </div>
+                                    <div class="check-product">
+                                        <ul class="scll">';
+                        
+                        if (!empty($features)) {
+                            foreach ($features as $feature) {
+                                echo '<li>' . htmlspecialchars($feature) . ' <span><i class="bi bi-check-lg"></i></span></li>';
+                            }
+                        } else {
+                            echo '<li>أعلى جودة <span><i class="bi bi-check-lg"></i></span></li>
                                 <li>أسرع وقت <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>أحسن سعر <span><i class="bi bi-check-lg"></i></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="card-pr">
-                    <div class="top-prod-card">
-                        <div class="sec-one-pr">
-                            <div class="img">
-                                <img src="../assets/image/CEO.jpeg" alt="Not Found YouTube Pr..." loading="lazy">
-                            </div>
-                        </div>
-                        <div class="sec-two-pr">
-                            <h3>يوتيوب بريميوم</h3>
-                            <div class="price-pr">
-                                <span><del>80 جنية</del></span>
-                                <h1>49 جنية</h1>
-                            </div>
-                            <button class="btn-product">طلب الخدمة</button>
-                        </div>
-                        <div class="check-product">
-                            <ul class="scll">
-                                <li>فورى <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>شخصي <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>عائلي <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>آمن <span><i class="bi bi-check-lg"></i></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="card-pr">
-                    <div class="top-prod-card">
-                        <div class="sec-one-pr">
-                            <div class="img">
-                                <img src="../assets/image/509.png" alt="Not Found Tablet 509" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="sec-two-pr">
-                            <h3>تهكير تابلت SM-T509</h3>
-                            <div class="price-pr">
-                                <span><del>80 جنية</del></span>
-                                <h1>49 جنية</h1>
-                            </div>
-                            <button class="btn-product">طلب الخدمة</button>
-                        </div>
-                        <div class="check-product">
-                            <ul class="scll">
-                                <li>أعلى جودة <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>أسرع وقت <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>أحسن سعر <span><i class="bi bi-check-lg"></i></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                                <li>أحسن سعر <span><i class="bi bi-check-lg"></i></span></li>';
+                        }
+                        
+                        echo '</ul>
+                                    </div>
+                                </div>
+                            </div>';
+                    }
+                    
+                } catch (PDOException $e) {
+                    echo '<div class="error">حدث خطأ في جلب البيانات: ' . htmlspecialchars($e->getMessage()) . '</div>';
+                }
+                ?>
             </div>
         </div>
     </section>
@@ -282,6 +265,123 @@
                         <span class="job">CEO</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section - Customer opinions -->
+    <section class="testimonials">
+        <div class="title">
+            <h1>آراء العملاء</h1>
+            <p>نخبة من الخبراء والمتخصصين فى مجال التكنولوجيا</p>
+        </div>
+        <div class="contanier">
+            <div class="testimonials-container middle">
+                <?php
+                require_once '../includes/config.php';
+                
+                try {
+                    $stmt = $pdo->query("SELECT * FROM items");
+                    $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    if (count($items) > 0) {
+                        foreach ($items as $item) {
+                            $imagePath = !empty($item['image_path']) ? $item['image_path'] : 'default.webp';
+                            $hasAudio = !empty($item['audio_path']);
+                            ?>
+                            <div class="testimonial-card">
+                                <div class="client-img-container">
+                                    <img src="../uploads/<?php echo htmlspecialchars($imagePath); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="client-img">
+                                </div>
+                                <div class="testimonial-content">
+                                    <h3><?php echo htmlspecialchars($item['name']); ?></h3>
+                                    <p><?php echo htmlspecialchars($item['description']); ?></p>
+                                    
+                                    <?php if ($hasAudio): ?>
+                                    <div class="custom-audio-player" data-audio-src="../uploads/<?php echo htmlspecialchars($item['audio_path']); ?>">
+                                        <button class="play-btn" style="background-color: #1976D2;">
+                                            <svg class="play-icon" width="16" height="16" viewBox="0 0 16 16">
+                                                <path d="M4 2L14 8L4 14V2Z" fill="white"/>
+                                            </svg>
+                                            <svg class="stop-icon" width="16" height="16" viewBox="0 0 16 16" style="display:none;">
+                                                <rect width="12" height="12" x="2" y="2" fill="white"/>
+                                            </svg>
+                                        </button>
+                                        <div class="progress-bar">
+                                            <div class="progress"></div>
+                                        </div>
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        echo '<div class="empty-state">لا توجد عناصر لعرضها</div>';
+                    }
+                } catch (PDOException $e) {
+                    echo '<div class="error-message">حدث خطأ في جلب البيانات: ' . htmlspecialchars($e->getMessage()) . '</div>';
+                }
+                ?>
+            </div>
+        </div>
+
+    </section>
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">الأسئلة الشائعة</h2>
+            <div class="faq-container">
+                <?php
+                require_once '../includes/config.php';
+
+                try {
+                    // استعلام لاسترجاع الأسئلة المنشورة فقط
+                    $stmt = $pdo->query("SELECT * FROM questions WHERE is_published = 1 ORDER BY created_at DESC");
+                    $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    if (count($questions) > 0) {
+                        foreach ($questions as $question) {
+                            ?>
+                            <div class="faq-card">
+                                <div class="faq-question">
+                                    <div class="question-text"><?php echo htmlspecialchars($question['question']); ?></div>
+                                    <div class="arrow-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 9l6 6 6-6"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <p><?php echo htmlspecialchars($question['answer']); ?></p>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <div class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; text-align: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <p style="margin-top: 20px; color: #666; font-size: 1.2rem;">لا توجد أسئلة متاحة حالياً</p>
+                        </div>
+                        <?php
+                    }
+                } catch (PDOException $e) {
+                    ?>
+                    <div class="error-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; text-align: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <p style="margin-top: 20px; color: #ff4444; font-size: 1.2rem;">حدث خطأ أثناء جلب البيانات</p>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
         </div>
     </section>
@@ -363,11 +463,11 @@
                 <div class="quick-links">
                     <ul class="links">
                         <li><a href="#">الرئيسية</a></li>
-                        <li><a href="product.php">المنتجات</a></li>
+                        <li><a href="products.php">المنتجات</a></li>
                         <li><a href="../client/download.php">التحميلات</a></li>
-                        <li><a href="#">الضمان</a></li>
-                        <li><a href="#">فريق العمل</a></li>
-                        <li><a href="#">تواصل معنا</a></li>
+                        <li><a href="../client/guarantees.php">الضمان</a></li>
+                        <li><a href="../team/team.php">فريق العمل</a></li>
+                        <li><a href="https://wa.me/201069062005?text=السلام%20عليكم%20ورحمة%20الله%20وبركاته%0Aعاوز%20استفسر%20عن%20">تواصل معنا</a></li>
                     </ul>
                 </div>
                 <div class="quick-social">
@@ -375,11 +475,10 @@
                         <span>asunlockhelp@gmail.com</span>
                         <span class="span-phone">+20 106 906 2005</span>
                     </div>
-                    <ul class="links">
-                        <li><a href="https://www.youtube.com/@as_unlock" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg></a></li>
-                        <li><a href="https://www.youtube.com/@as_unlock" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a></li>
-                        <li><a href="https://t.me/as_unlock" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telegram" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/></svg></a></li>
-                        <li><a href="https://wa.me/201069062005?text=مرحبًا%20اريد%20الاستفسار%20عن" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg></a></li>
+                    <ul class="links social-links">
+                        <!--  -->
+                        <!-- === -->
+                        <!--  -->
                     </ul>
                 </div>
                 <div class="footer-content">
@@ -388,14 +487,26 @@
             </div>
         </footer>
     </main>
-<script src="../assets/js/script.js"></script>
-<script>
-    document.getElementById('message').addEventListener('scroll', function() {
-        this.scrollTop = 0;
-    });
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/js/public_links.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LP7KNPTDYH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-    // كود تعديل تاريخ السنة للفوتر تمام!
-    document.getElementById("year").textContent = new Date().getFullYear();
+        gtag('config', 'G-LP7KNPTDYH');
+    </script>
+
+    <script>
+        document.getElementById('message').addEventListener('scroll', function() {
+            this.scrollTop = 0;
+        });
+
+        // كود تعديل تاريخ السنة للفوتر تمام!
+        document.getElementById("year").textContent = new Date().getFullYear();
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -421,6 +532,65 @@
                     hamburger.classList.remove('active');
                     navbar.classList.remove('active');
                     document.body.style.overflow = 'auto';
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentAudio = null;
+            let currentPlayer = null;
+            
+            document.querySelectorAll('.custom-audio-player').forEach(player => {
+                const audio = new Audio(player.dataset.audioSrc);
+                const playBtn = player.querySelector('.play-btn');
+                const playIcon = player.querySelector('.play-icon');
+                const stopIcon = player.querySelector('.stop-icon');
+                const progressBar = player.querySelector('.progress');
+                
+                playBtn.addEventListener('click', function() {
+                    // إذا كان هناك صوت مشغّل حالياً وغير هذا الصوت
+                    if (currentAudio && currentAudio !== audio) {
+                        currentAudio.pause();
+                        if (currentPlayer) {
+                            currentPlayer.querySelector('.play-icon').style.display = 'block';
+                            currentPlayer.querySelector('.stop-icon').style.display = 'none';
+                            currentPlayer.querySelector('.progress').style.width = '0%';
+                        }
+                    }
+                    
+                    if (audio.paused) {
+                        audio.play();
+                        playIcon.style.display = 'none';
+                        stopIcon.style.display = 'block';
+                        currentAudio = audio;
+                        currentPlayer = player;
+                    } else {
+                        audio.pause();
+                        playIcon.style.display = 'block';
+                        stopIcon.style.display = 'none';
+                        currentAudio = null;
+                        currentPlayer = null;
+                    }
+                });
+                
+                audio.addEventListener('timeupdate', function() {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    progressBar.style.width = progress + '%';
+                });
+                
+                audio.addEventListener('ended', function() {
+                    playIcon.style.display = 'block';
+                    stopIcon.style.display = 'none';
+                    progressBar.style.width = '0%';
+                    currentAudio = null;
+                    currentPlayer = null;
+                });
+                
+                // النقر على شريط التقدم للانتقال إلى جزء معين
+                player.querySelector('.progress-bar').addEventListener('click', function(e) {
+                    const percent = e.offsetX / this.offsetWidth;
+                    audio.currentTime = percent * audio.duration;
                 });
             });
         });

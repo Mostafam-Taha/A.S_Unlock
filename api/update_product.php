@@ -8,14 +8,13 @@ try {
         throw new Exception('الطلب غير مسموح به');
     }
 
-    // التحقق من وجود معرف المنتج
     $productId = $_POST['product_id'] ?? null;
     if (!$productId) {
         throw new Exception('معرف المنتج غير موجود');
     }
 
-    // معالجة البيانات الأساسية
     $productName = $_POST['product_name'] ?? '';
+    $serviceType = $_POST['service_type'] ?? '';
     $description = $_POST['description'] ?? '';
     $price = floatval($_POST['price'] ?? 0);
     $discount = !empty($_POST['discount']) ? floatval($_POST['discount']) : null;
@@ -24,11 +23,9 @@ try {
     $isFeatured = isset($_POST['is_featured']) ? 1 : 0;
     $isSpecialOffer = isset($_POST['is_special_offer']) ? 1 : 0;
     
-    // معالجة المميزات
     $features = $_POST['features'] ?? [];
     $featuresJson = json_encode(array_values($features));
     
-    // معالجة صورة المنتج
     $imagePath = $_POST['current_image'] ?? null;
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/products/';
@@ -36,7 +33,6 @@ try {
             mkdir($uploadDir, 0755, true);
         }
 
-        // حذف الصورة القديمة إذا وجدت
         if ($imagePath && file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -50,10 +46,10 @@ try {
         }
     }
     
-    // تحديث المنتج في قاعدة البيانات
     $stmt = $pdo->prepare("
         UPDATE digital_products SET
             product_name = ?,
+            service_type = ?, -- تم إضافة هذا الحقل
             description = ?,
             price = ?,
             discount = ?,
@@ -69,6 +65,7 @@ try {
     
     $stmt->execute([
         $productName,
+        $serviceType,
         $description,
         $price,
         $discount,
@@ -81,7 +78,6 @@ try {
         $productId
     ]);
     
-    // معالجة بيانات الخطة
     $planType = $_POST['plan_type'] ?? null;
     $planName = $_POST['plan_name'] ?? '';
     $planPrice = !empty($_POST['plan_price']) ? floatval($_POST['plan_price']) : 0;

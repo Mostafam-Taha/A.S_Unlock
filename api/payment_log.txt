@@ -1,0 +1,42 @@
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php85FB.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php7BBE.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
