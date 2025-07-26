@@ -528,6 +528,18 @@ a {
 }
 
 @media(max-width: 425px) {
+    .download-staps .tab-staps .index-bor .text-stap {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        right: -21px;
+    }
+
+    .download-staps {
+        margin: 24PX;
+    }
+
     .download-staps {
         margin-left: 12px;
     }

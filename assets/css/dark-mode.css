@@ -13,6 +13,10 @@
     transition: background-color 0.35s ease, color 0.35s ease;
 }
 
+.dark-mode section {
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
 .dark-mode svg {
     color: var(--text-color);
 }
@@ -32,40 +36,51 @@
 .dark-mode h5,
 .dark-mode h6 {
     color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+
 }
 
 .dark-mode p {
-    color: var(--text-color);
+    color: var(--text-color) !important;
+    transition: background-color 0.35s ease, color 0.35s ease;
+
 }
 
 .dark-mode span {
     color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .dark-mode a {
     color: var(--text-color);
+
 }
 
 .dark-mode li {
     color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .dark-mode th {
     color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .dark-mode td {
-    color: var(--text-color);
+    color: var(--text-color) !important;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .dark-mode input {
     background: none;
     outline: none;
+    color: #dfdfdf !important;
     border: var(--border-color) 1px solid;
 }
 
 .dark-mode select {
     background: none;
+    border: var(--border-color) 1px solid;
 }
 
 .dark-mode label {
@@ -74,17 +89,68 @@
 
 .dark-mode textarea {
     background: none;
+    color: var(--text-color) !important;
     border: var(--border-color) 1px solid;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 .dark-mode hr {
     background-color: var(--border-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode b, strong {
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Bootstrap */
+.dark-mode .modal-header {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+/* Dashboard/Dashboard(Over View) */
+.dark-mode .product .contanier {
+    background: var(--bg-color);
+}
+
+.dark-mode .py-5 {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .container-fluid {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .stat-card {
+    background: var(--card-bg);
+}
+
+.dark-mode .chart-container {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .data-card {
+    background: var(--card-bg);
+}
+
+.dark-mode .table>:not(caption)>*>* {
+    background: var(--card-bg);
+    border: none;
+}
+
+.dark-mode .row {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .card-body .align-items-center {
+    background: var(--card-bg);    
 }
 
 /* Dashboard/ Product */
-
 .dark-mode .header-top {
     background-color: var(--card-bg);
+    border-bottom: var(--border-color) 1px solid;
 }
 
 .dark-mode .header-top .ht-sei .flex-pro-net .menu-profile hr {
@@ -118,8 +184,12 @@
 }
 
 .dark-mode .view-btn {
-    background-color: #888888;
+    background-color: #FFF3E01f;
 } 
+
+.dark-mode .prod-table a {
+    background-color: #e0e0e00d;
+}
 
 .dark-mode .product-management-system .modal-content {
     background-color: var(--card-bg);
@@ -166,4 +236,127 @@
     background-color: var(--card-bg);
     border: var(--border-color) 1px solid;
 }
-/* أضف المزيد من العناصر حسب حاجة الموقع */
+
+/* Dashboard/ Orders */
+/* Status */
+.dark-mode .status-pending {
+    color: #FF9800;
+    background-color: #FFF3E01f;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.dark-mode .status-verified {
+    color: #2196F3;
+    background-color: #E3F2FD1f;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.dark-mode .status-completed {
+    color: #4CAF50;
+    background-color: #e8f5e91f;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+.dark-mode .status-rejected {
+    color: #F44336;
+    background-color: #FFEBEE1f;
+    padding: 8px 10px;
+    border-radius: 10px;
+}
+
+/* Dashboard/Review Costm */
+.dark-mode .modal-content {
+    background: var(--card-bg);
+}
+
+/* Dashboard/ File Manager*/
+.dark-mode .main-content {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .your-storage strong {
+    color: var(--text-color);
+}
+
+.dark-mode .file-manager .contanier .file-manager-two {
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .file-manager .contanier .file-manager-two .progress-circle-bg {
+    stroke: var(--hover-color);
+}
+
+.dark-mode .file-manager .contanier .file-manager-two .progress-text {
+    color: var(--text-color);
+}
+
+.dark-mode .file-manager-for strong {
+    color: var(--text-color);
+}
+
+.dark-mode .win-upload .upload {
+    background-color: var(--card-bg);
+    border: var(--border-color) 1px solid;
+    box-shadow: 0px 1px 3px 0px var(--hover-color);
+}
+
+.dark-mode .win-upload .upload .row-two .links input,
+.dark-mode .win-upload .upload .upload-files-drag-link,
+.dark-mode .win-upload .upload .row-two .links textarea {
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .win-upload .upload .row-one .input-upload label {
+    border: var(--border-color) dashed 1px;
+}
+
+.dark-mode .win-upload .upload .btn-drow {
+    border-top: var(--border-color) 1px solid;
+}
+
+.dark-mode .done {
+    background: var(--hover-color);
+}
+.dark-mode .file-details-modal .modal-content {
+    background: var(--card-bg);
+}
+
+.dark-mode .file-details-modal .info-row {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .file-details-modal .btn {
+    background: var(--hover-color);
+    color: var(--text-color);
+}
+
+/* Dashboard/ Warranty */
+.dark-mode .whatsapp-popup {
+    background: var(--card-bg);
+}
+
+.dark-mode #whatsapp-message {
+    border: var(--border-color) 1px solid;
+    color: var(--text-color);
+}
+
+.dark-mode #cancel-whatsapp {
+    background: var(--hover-color);
+}
+
+/* Dashboard/ add_links */
+.dark-mode .detail-link-ober {
+    background-color: var(--card-bg);
+} 
+
+.dark-mode .detail-link-ober .fun-flex h4 {
+    color: var(--text-color);
+}
+
+.dark-mode .dark-mode .modal-header {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .modal-header .btn-close {
+    color: var(--text-color) !important;
+}

@@ -534,61 +534,6 @@ a {
     stroke: url(#gradient) !important;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* أنماط نافذة تفاصيل الملف */
 .file-details-modal {
     position: fixed;
@@ -689,38 +634,6 @@ a {
     color: #333;
     border: 1px solid #ddd;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .file-details-modal {
     position: fixed;
@@ -848,4 +761,8 @@ a {
 
 textarea.form-control {
     min-height: 80px;
+}
+
+.file-manager .contanier .file-manager-three {
+    display: none;   
 }

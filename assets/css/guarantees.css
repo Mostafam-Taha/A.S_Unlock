@@ -1,0 +1,222 @@
+:root {
+    --primary-blue: #1976D2;
+    --secondary-blue: #42A5F5;
+    --success-color: #4CAF50;
+    --info-color: #2196F3;
+    --warning-color: #FF9800;
+    --danger-color: #F44336;
+    --dark-color: #23234a;
+    --light-color: #f8f9fa;
+    --border-color: #e9ecef;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    background-color: var(--light-color);
+    color: #333;
+    line-height: 1.8;
+    background: White;
+}
+
+.gradient-header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: white;
+    padding: 5rem 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.gradient-header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(30deg);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.feature-icon.speed {
+    background: linear-gradient(45deg, var(--success-color), #66BB6A);
+}
+
+.feature-icon.guarantee {
+    background: linear-gradient(45deg, var(--info-color), #64B5F6);
+}
+
+.feature-icon.support {
+    background: linear-gradient(45deg, var(--warning-color), #FFB74D);
+}
+
+.feature-icon.refund {
+    background: linear-gradient(45deg, var(--danger-color), #EF5350);
+}
+
+.section-title {
+    text-align: center;
+    color: var(--primary-blue);
+    position: relative;
+    padding-bottom: 15px;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+    border-radius: 3px;
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    height: 100%;
+    background-color: white;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.term-item {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.term-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.term-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.term-icon.terms {
+    background: linear-gradient(45deg, #9C27B0, #E91E63);
+}
+
+.term-icon.process {
+    background: linear-gradient(45deg, #3F51B5, #2196F3);
+}
+
+.term-icon.exceptions {
+    background: linear-gradient(45deg, #FF5722, #FF9800);
+}
+
+.term-icon.duration {
+    background: linear-gradient(45deg, #009688, #4CAF50);
+}
+
+.compensation-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    color: white;
+}
+
+.compensation-icon.voucher {
+    background: linear-gradient(45deg, #673AB7, #9C27B0);
+}
+
+.compensation-icon.redo {
+    background: linear-gradient(45deg, #00BCD4, #009688);
+}
+
+.compensation-icon.cash {
+    background: linear-gradient(45deg, #FF5722, #F44336);
+}
+
+.faq-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s ease;
+}
+
+.faq-item:hover {
+    background-color: rgba(25, 118, 210, 0.05);
+}
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.feature-list p {
+    position: relative;
+    padding-right: 25px;
+    margin-bottom: 0.5rem;
+}
+
+.feature-list p::before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--success-color);
+}
+
+@media (max-width: 768px) {
+    .gradient-header {
+        padding: 3rem 0;
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+    }
+}

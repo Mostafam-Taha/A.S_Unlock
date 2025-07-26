@@ -1,0 +1,205 @@
+/* dark-mode.css */
+.dark-mode {
+    --bg-color: #0d0d0d;
+    --text-color: #dfdfdf;;
+    --border-color: #1a1a1a ;
+    --card-bg: #121212;
+    --hover-color: #3a3a3a;
+}
+
+.dark-mode body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode section {
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode svg {
+    color: var(--text-color);
+}
+
+.dark-mode i {
+    color: var(--text-color);
+}
+
+.dark-mode button {
+    color: var(--text-color);
+}
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+
+}
+
+.dark-mode p {
+    color: var(--text-color) !important;
+    transition: background-color 0.35s ease, color 0.35s ease;
+
+}
+
+.dark-mode span {
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode a {
+    color: var(--text-color);
+
+}
+
+.dark-mode li {
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode th {
+    color: var(--text-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode td {
+    color: var(--text-color) !important;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode input {
+    background: none !important;
+    outline: none;
+    color: #dfdfdf !important;
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode select {
+    background: none;
+}
+
+.dark-mode label {
+    color: var(--text-color);
+}
+
+.dark-mode textarea {
+    background: none;
+    color: var(--text-color) !important;
+    border: var(--border-color) 1px solid;
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+.dark-mode hr {
+    background-color: var(--border-color);
+    transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* ================ */
+/* Index */
+/* ================ */
+/* Public/Products */
+.dark-mode {
+    background-color: var(--bg-color);
+    transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
+}
+
+.dark-mode .header {
+    background-color: var(--bg-color);
+}
+
+.dark-mode .offic {
+    border-bottom: var(--border-color) 1px solid;
+}
+
+.dark-mode .products-shop-con .shorts-prot .choose-select select,
+.dark-mode .product .container .grid-pr .top-prod-card {
+    color: var(--text-color);
+    border: var(--border-color) 1px solid;
+    background: var(--card-bg);
+}
+
+.dark-mode .header .navbar {
+    background: var(--bg-color);
+}
+
+.dark-mode .plan-price {
+    color: var(--text-color) !important;
+}
+
+.dark-mode .plan-card {
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .products-shop-con .shorts-prot .choose-select .link-select a {
+    color: var(--text-color);
+    transition: color 0.35s ease-in-out;
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+
+/* Public/CheckOut */
+.dark-mode .checkout-container,
+.dark-mode .border-0,
+.dark-mode .align-items-center,
+.dark-mode .mb-4,
+.dark-mode .payment-method {
+    background: var(--card-bg);
+}
+
+.dark-mode .border-0 {
+    border: var(--border-color) 1px solid !important;
+}
+
+.dark-mode .rounded {
+    border: none!important;
+}
+
+.dark-mode .card .py-4 .row {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .input-group-text {
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+
+/* Client/ Download */
+.dark-mode .download-files .container .downloads-file .device-down .card-download {
+    border: var(--border-color) 1px solid;
+    background: var(--card-bg);
+}
+
+.dark-mode .download-files .container .downloads-file .device-down .card-download .size-type span {
+    color: var(--text-color);
+}
+
+.dark-mode .contact-us-team .container .massage-user .text-user,
+.dark-mode .contact-us-team .container .massage-team .text-team {
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+    color: var(--text-color);
+}
+
+.dark-mode .form-text {
+    color: #3a3a3a;
+}
+
+/* guarantees */
+
+.dark-mode .text-center {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .display-3{
+    background: none !important;
+}
+
+.dark-mode .term-item {
+    background-color: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}

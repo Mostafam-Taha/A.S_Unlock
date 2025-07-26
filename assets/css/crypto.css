@@ -1,0 +1,97 @@
+.chart-container {
+    position: relative;
+    height: 250px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    background: white;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 220px;
+    }
+    
+    .stat-card {
+        padding: 12px;
+    }
+    
+    .stat-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .stat-card h3, .stat-card h4 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        height: 200px;
+    }
+    
+    .stat-card h4 {
+        font-size: 1rem;
+    }
+    
+    .stat-card h3, .stat-card h4 {
+        font-size: 1.2rem;
+    }
+}
+
+.chart-container {
+        box-shadow: none !important;
+        padding: 0 !important;
+}
+
+.screen-size-warning {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .screen-size-warning {
+        display: block;
+        background-color: #fff3cd;
+        color: #856404;
+        padding: 10px;
+        text-align: center;
+        margin: 10px 0;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .container, .container-lg, .container-md, .container-sm {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .container, .container-md, .container-sm {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 576px) {
+    .container, .container-sm {
+        max-width: 100%;
+    }
+}

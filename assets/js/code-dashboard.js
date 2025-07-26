@@ -132,19 +132,27 @@ function updatePlanIcon(planType) {
     
     iconContainer.innerHTML = `<i class="bi ${iconClass}"></i>`;
 }
-
-// حذف المنتج
 async function deleteProduct(productId) {
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
-    try {
-            const response = await fetch(`../api/delete_product.php?id=${productId}`, { method: 'DELETE' });
-        const result = await response.json();
-        
-        if (result.success) {
-            alert('تم حذف المنتج بنجاح');
-            closeDetailsModal();
-                // تحديث الجدول
-                document.querySelector(`tr[data-product-id="${productId}"]`).remove();
+        try {
+            const response = await fetch(`../api/delete_product.php?id=${productId}`, { 
+                method: 'DELETE' 
+            });
+            const result = await response.json();
+            
+            if (result.success) {
+                alert('تم حذف المنتج بنجاح');
+                closeDetailsModal();
+                
+                // تحديث الجدول - مع التحقق من وجود العنصر أولاً
+                const row = document.querySelector(`tr[data-product-id="${productId}"]`);
+                if (row) {
+                    row.remove();
+                } else {
+                    console.warn('لم يتم العثور على الصف المطلوب، قد تحتاج لإعادة تحميل الصفحة');
+                    // يمكنك إضافة إعادة تحميل للصفحة إذا لزم الأمر
+                    // window.location.reload();
+                }
             } else {
                 alert('حدث خطأ: ' + result.message);
             }
@@ -154,7 +162,6 @@ async function deleteProduct(productId) {
         }
     }
 }
-
 // حفظ البيانات الإضافية
 async function saveAdditionalData(productId) {
     const planType = document.getElementById('planType').value;

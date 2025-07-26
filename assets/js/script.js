@@ -1,22 +1,22 @@
-document.addEventListener('DOMContentLoaded', function() {
-  const homeSection = document.querySelector('.home .container');
-  
-  setTimeout(() => {
-    homeSection.classList.add('visible');
-  }, 300);
+document.addEventListener('DOMContentLoaded', function () {
+    const homeSection = document.querySelector('.home .container');
 
-  window.addEventListener('scroll', function() {
-    const sectionPosition = homeSection.getBoundingClientRect().top;
-    const screenPosition = window.innerHeight / 1.3;
-    
-    if(sectionPosition < screenPosition) {
-      homeSection.classList.add('visible');
-    }
-  });
+    setTimeout(() => {
+        homeSection.classList.add('visible');
+    }, 300);
+
+    window.addEventListener('scroll', function () {
+        const sectionPosition = homeSection.getBoundingClientRect().top;
+        const screenPosition = window.innerHeight / 1.3;
+
+        if (sectionPosition < screenPosition) {
+            homeSection.classList.add('visible');
+        }
+    });
 });
 
 // تأثير قسم Services
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // إنشاء مراقب للعناصر
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -46,29 +46,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // تاثير قسم Product
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const productSection = document.querySelector('.product');
-    
+
     // إنشاء مراقب متقدم
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const titleProd = entry.target.querySelector('.title-prod');
                 const cards = entry.target.querySelectorAll('.card-pr');
-                
+
                 // تفعيل تأثير العنوان
                 if (titleProd) {
                     titleProd.querySelector('h1').classList.add('visible');
                     titleProd.querySelector('p').classList.add('visible');
                 }
-                
+
                 // تفعيل تأثير البطاقات بشكل متدرج
                 cards.forEach((card, index) => {
                     setTimeout(() => {
                         card.classList.add('visible');
                     }, index * 200); // تأخير 200ms بين كل بطاقة
                 });
-                
+
                 // إيقاف المراقبة بعد التنفيذ لتحسين الأداء
                 observer.unobserve(entry.target);
             }
@@ -84,13 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // تأثير قسم Team
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const teamObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const title = entry.target.querySelector('.title-te');
                 const members = entry.target.querySelectorAll('.grid-team');
-                
+
                 // تأثير العنوان
                 if (title) {
                     title.querySelector('h1').classList.add('visible');
@@ -98,14 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
                         title.querySelector('p').classList.add('visible');
                     }, 300);
                 }
-                
+
                 // تأثير أعضاء الفريق
                 members.forEach((member, index) => {
                     setTimeout(() => {
                         member.classList.add('visible');
                     }, index * 200 + 500); // تأخير إضافي بعد العنوان
                 });
-                
+
                 observer.unobserve(entry.target);
             }
         });
@@ -121,3 +121,39 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // انتهاء صفحة index.php بفضل الله
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.title, .testimonial-card').forEach(el => {
+        observer.observe(el);
+    });
+});
+
+// FAQ 
+document.addEventListener('DOMContentLoaded', function() {
+    const faqCards = document.querySelectorAll('.faq-card');
+    
+    faqCards.forEach(card => {
+        const question = card.querySelector('.faq-question');
+        
+        question.addEventListener('click', () => {
+            faqCards.forEach(otherCard => {
+                if (otherCard !== card && otherCard.classList.contains('active')) {
+                    otherCard.classList.remove('active');
+                }
+            });
+            
+            card.classList.toggle('active');
+        });
+    });
+});

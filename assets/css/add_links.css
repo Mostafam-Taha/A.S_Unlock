@@ -1,0 +1,72 @@
+:root {
+    --br-primary-color: linear-gradient(90deg, #1976D2, #42A5F5);
+    --br-color-h-p: #1976D2;
+    --br-sacn-color: #23234a;
+    --br-links-color: #495057;
+    --br-border-color: #dfe1e5;
+    --br-btn-padding: 7px 22px;
+    --br-box-shadow: 0px 0px 0px 5px #1976d254;
+    --br-dir-none: none;
+    --br-font-w-text: 400;
+    --br-matgin-width: 0 100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Tajawal", sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Tajawal", sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+    font-weight: 500;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    color: var(--br-sacn-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--br-sacn-color);
+}
+
+.detail-link-ober {
+    background-color: #FFFFFF;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 20px -21.5px;
+    margin: 20px 0;
+}
+
+.detail-link-ober .fun-flex h4 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--br-sacn-color);
+}
+
+.detail-link-ober .fun-flex p{
+    font-size: 14px;
+    color: var(--br-links-color);
+}

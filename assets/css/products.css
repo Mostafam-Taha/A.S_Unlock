@@ -69,6 +69,7 @@ a {
     padding: 15px 0 40px 0;
 }
 
+
 .products-shop-con .offic h1 {
     font-size: 28px;
     font-weight: 400;
@@ -99,6 +100,26 @@ a {
     cursor: pointer;
 }
 
+.products-shop-con .shorts-prot .choose-select .link-select {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    transition: all .35s ease-in-out;
+}
+
+.products-shop-con .shorts-prot .choose-select .link-select a {
+    padding: 8px 22px;
+    border: #ddd 1px solid;
+    border-radius: 10px;
+    font-size: 13.3333px;
+    margin-left: 10px;
+    transition: all .35s ease-in-out;
+}
+
+.products-shop-con .shorts-prot .choose-select .link-select a:focus {
+    box-shadow: var(--br-box-shadow);
+    border: var(--br-color-h-p) 1px solid;
+}
 
 /*  */
 /* تنسيقات المودال */
@@ -344,6 +365,11 @@ a {
     color: #9C27B0;
 }
 
+@media (max-width: 1350px) {
+    .products-shop-con .shorts-prot, .products-shop-con .mathar, .offic {
+        margin: 0 32px;
+    }
+}
 
 @media(max-width: 1120px) {
     .products-shop-con .mathar,

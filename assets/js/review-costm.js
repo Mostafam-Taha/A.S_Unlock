@@ -1,94 +1,129 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const cardInboxes = document.querySelectorAll('.card-inbox');
-    const viewDateSection = document.querySelector('.view-date');
-    const usernameElement = viewDateSection.querySelector('.username h3');
-    const descriptionElement = viewDateSection.querySelector('.dis span');
-    const imageElement = viewDateSection.querySelector('.img img');
-    const deleteBtn = viewDateSection.querySelector('.delete-btn');
-    const featureBtn = viewDateSection.querySelector('.feature-btn');
-
-    cardInboxes.forEach(card => {
-        card.addEventListener('click', function() {
-            // تحديث البيانات في قسم view-date
-            usernameElement.textContent = this.dataset.name;
-            descriptionElement.textContent = this.dataset.description;
-            
-            // تحديث الصورة إذا كانت موجودة
-            if (this.dataset.image) {
-                imageElement.src = this.dataset.image;
-                imageElement.parentElement.style.display = 'block';
-            } else {
-                imageElement.parentElement.style.display = 'none';
-            }
-            
-            // تحديث تاريخ الإنشاء بصيغة أفضل
-            const createdAt = new Date(this.dataset.created);
-            // يمكنك إضافة منطق لعرض التاريخ بشكل أجمل هنا
-            
-            // تحديث أزرار الحذف والتمييز بمعرف العنصر
-            deleteBtn.dataset.id = this.dataset.id;
-            featureBtn.dataset.id = this.dataset.id;
-            
-            // تحديث حالة زر التمييز
-            if (this.dataset.featured === '1') {
-                featureBtn.innerHTML = '<i class="bi bi-star-fill"></i> إلغاء التمييز';
-            } else {
-                featureBtn.innerHTML = '<i class="bi bi-star"></i> تمييز';
-            }
-            
-            // إضافة تأثير مرئي للبطاقة المحددة
-            cardInboxes.forEach(c => c.classList.remove('active'));
-            this.classList.add('active');
+    document.querySelectorAll('.view-item').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const itemId = this.getAttribute('data-id');
+            fetchItemDetails(itemId);
         });
     });
 
-    // يمكنك هنا إضافة معالجات الأحداث لأزرار الحذف والتمييز
-    deleteBtn.addEventListener('click', function() {
-        const itemId = this.dataset.id;
-        if (itemId) {
+    document.querySelectorAll('.delete-item').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const itemId = this.getAttribute('data-id');
             if (confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
-                // إرسال طلب حذف إلى السيرفر
-                fetch(`delete_item.php?id=${itemId}`, { method: 'POST' })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // إزالة البطاقة من القائمة
-                            document.querySelector(`.card-inbox[data-id="${itemId}"]`).remove();
-                            // إعادة تعيين قسم العرض
-                            resetViewDate();
-                        }
-                    });
+                deleteItem(itemId);
             }
-        }
+        });
     });
 
-    featureBtn.addEventListener('click', function() {
-        const itemId = this.dataset.id;
-        if (itemId) {
-            fetch(`toggle_feature.php?id=${itemId}`, { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        // تحديث حالة الزر والبطاقة
-                        const card = document.querySelector(`.card-inbox[data-id="${itemId}"]`);
-                        card.dataset.featured = data.is_featured;
-                        
-                        if (data.is_featured) {
-                            this.innerHTML = '<i class="bi bi-star-fill"></i> إلغاء التمييز';
-                        } else {
-                            this.innerHTML = '<i class="bi bi-star"></i> تمييز';
-                        }
-                    }
-                });
-        }
+    document.querySelectorAll('.featured-icon').forEach(icon => {
+        icon.addEventListener('click', function() {
+            const itemId = this.closest('tr').getAttribute('data-id');
+            toggleFeatured(itemId, this);
+        });
     });
 
-    function resetViewDate() {
-        usernameElement.textContent = 'اسم المستخدم';
-        descriptionElement.textContent = 'وصف';
-        imageElement.src = '';
-        imageElement.parentElement.style.display = 'none';
-        deleteBtn.dataset.id = '';
-        featureBtn.dataset.id = '';
-    }
+    document.getElementById('saveItem').addEventListener('click', saveItemChanges);
 });
+
+function fetchItemDetails(itemId) {
+    fetch(`../api/get_item.php?id=${itemId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const item = data.item;
+                document.getElementById('itemId').value = item.id;
+                document.getElementById('itemName').value = item.name;
+                document.getElementById('itemDescription').value = item.description;
+                document.getElementById('isFeatured').checked = item.is_featured == 1;
+
+                const imageContainer = document.getElementById('itemImageContainer');
+                imageContainer.innerHTML = '';
+                if (item.image_path) {
+                    const img = document.createElement('img');
+                    img.src = item.image_path;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '200px';
+                    imageContainer.appendChild(img);
+                }
+
+                const audioContainer = document.getElementById('itemAudioContainer');
+                audioContainer.innerHTML = '';
+                if (item.audio_path) {
+                    const audio = document.createElement('audio');
+                    audio.controls = true;
+                    audio.src = item.audio_path;
+                    audioContainer.appendChild(audio);
+                }
+
+                const modal = new bootstrap.Modal(document.getElementById('itemModal'));
+                modal.show();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function saveItemChanges() {
+    const formData = new FormData();
+    formData.append('id', document.getElementById('itemId').value);
+    formData.append('name', document.getElementById('itemName').value);
+    formData.append('description', document.getElementById('itemDescription').value);
+    formData.append('is_featured', document.getElementById('isFeatured').checked ? 1 : 0);
+    
+    const imageFile = document.getElementById('itemImage').files[0];
+    if (imageFile) formData.append('image', imageFile);
+    
+    const audioFile = document.getElementById('itemAudio').files[0];
+    if (audioFile) formData.append('audio', audioFile);
+
+    fetch('../api/update_item.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('تم حفظ التغييرات بنجاح');
+            location.reload();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function deleteItem(itemId) {
+    fetch(`../api/delete_item.php?id=${itemId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('تم حذف العنصر بنجاح');
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function toggleFeatured(itemId, iconElement) {
+    fetch(`../api/toggle_featured.php?id=${itemId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                if (data.is_featured) {
+                    iconElement.classList.remove('bi-star');
+                    iconElement.classList.add('bi-star-fill', 'text-warning');
+                } else {
+                    iconElement.classList.remove('bi-star-fill', 'text-warning');
+                    iconElement.classList.add('bi-star');
+                }
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
