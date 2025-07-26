@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2025 at 06:03 PM
+-- Generation Time: Jul 26, 2025 at 05:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -244,7 +244,9 @@ INSERT INTO `login_attempts` (`attempt_id`, `admin_id`, `username`, `ip_address`
 (61, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '30.3992,31.24', '100% (شحن)', '2025-07-19 20:44:51', 1),
 (62, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '30.0434,31.2352', '100% (شحن)', '2025-07-20 20:56:35', 1),
 (63, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '30.0434,31.2352', '100% (شحن)', '2025-07-21 12:37:56', 1),
-(64, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '', '100% (شحن)', '2025-07-22 13:43:09', 1);
+(64, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '', '100% (شحن)', '2025-07-22 13:43:09', 1),
+(65, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '29.9714,31.4808', '100% (شحن)', '2025-07-25 11:17:09', 1),
+(66, 1, 'mostafamtaha1', '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36 Edg/138.0.0.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Sa', NULL, '4 GB', 'غير معروف', '4 أنوية', 'Win32', '30.0012,31.4324', '100% (شحن)', '2025-07-26 03:13:54', 1);
 
 -- --------------------------------------------------------
 
@@ -257,6 +259,8 @@ CREATE TABLE `orders` (
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `plan_id` int(11) NOT NULL,
+  `plan_name` varchar(255) NOT NULL,
+  `plan_price` decimal(10,2) NOT NULL,
   `payment_method` enum('vodafone_cash','instapay') NOT NULL,
   `phone_number` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -272,89 +276,91 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `user_id`, `product_id`, `plan_id`, `payment_method`, `phone_number`, `email`, `subscription_email`, `receipt_image`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 12, 46, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810429_1.png', 150.00, 'completed', '2025-06-25 17:00:29', '2025-07-14 18:04:35'),
-(2, 1, 12, 46, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810434_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:00:34', NULL),
-(3, 1, 12, 46, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810613_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'pending', '2025-07-06 17:03:33', NULL),
-(4, 1, 11, 46, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810638_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'completed', '2025-07-06 17:03:58', '2025-07-14 18:04:55'),
-(5, 1, 12, 46, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810647_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'pending', '2025-07-06 17:04:07', NULL),
-(6, 2, 12, 47, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1751811677_cane-test.a0001.net_profile.php_page=settings.png', 150.00, 'pending', '2025-07-06 17:21:17', NULL),
-(7, 2, 12, 47, 'vodafone_cash', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1751813383_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:49:43', NULL),
-(8, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751813758_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:55:58', NULL),
-(9, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751814661_127.0.0.1_5500_22.png', 150.00, 'pending', '2025-07-06 18:11:13', NULL),
-(10, 1, 12, 47, 'vodafone_cash', '01121561532', 'mostafamta347@gmail.com', NULL, '1751814746_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 18:12:39', NULL),
-(11, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751815123_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 18:18:48', NULL),
-(12, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825352_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'verified', '2025-07-06 21:09:15', '2025-07-10 00:04:24'),
-(13, 1, 10, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825419_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-06-10 21:10:21', '2025-07-14 18:05:42'),
-(14, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825693_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-06-24 21:14:57', '2025-07-14 18:06:36'),
-(15, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825752_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:15:56', NULL),
-(16, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825859_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:17:41', NULL),
-(17, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826025_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:20:27', NULL),
-(18, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826134_127.0.0.1_5500_22.png', 150.00, 'pending', '2025-07-06 21:22:18', NULL),
-(19, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826237_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:24:00', NULL),
-(20, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826293_127.0.0.1_5500_22.png', 150.00, 'completed', '2025-06-10 21:24:57', '2025-07-14 18:05:53'),
-(21, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826551_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:29:13', NULL),
-(22, 1, 12, 47, 'vodafone_cash', '01003350412', 'mostafamta347@gmail.com', NULL, '1751826880_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:34:42', NULL),
-(23, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751827477_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:44:41', NULL),
-(24, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751827862_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:51:06', NULL),
-(25, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751828060_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-15 21:54:23', '2025-07-14 18:07:02'),
-(26, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829791_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:23:15', NULL),
-(27, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829845_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:24:07', NULL),
-(28, 1, 12, 46, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829993_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:26:38', NULL),
-(29, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830289_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-07 22:31:31', '2025-07-14 18:07:37'),
-(30, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830376_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2023-04-11 22:32:58', '2025-07-14 18:07:55'),
-(31, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830497_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:35:07', NULL),
-(32, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831312_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:48:38', NULL),
-(33, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831478_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:51:23', NULL),
-(34, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831711_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-04-20 22:55:15', '2025-07-14 18:08:53'),
-(35, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831940_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:59:03', NULL),
-(36, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751832286_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 23:04:51', NULL),
-(37, 1, 12, 47, 'vodafone_cash', '01056421221', 'mostafamta347@gmail.com', NULL, '1751832412_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-20 23:06:56', '2025-07-14 18:09:09'),
-(38, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751833025_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 23:17:08', NULL),
-(39, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751917841_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-07 22:50:44', NULL),
-(40, 1, 12, 47, 'vodafone_cash', '01121561532', 'mostafamta347@gmail.com', NULL, '1751918025_pexels-googledeepmind-25626431.jpg', 150.00, 'pending', '2025-07-07 22:53:48', NULL),
-(41, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919297_bg.png', 150.00, 'verified', '2025-07-07 23:15:02', '2025-07-09 04:14:51'),
-(42, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919505_bg.png', 150.00, 'pending', '2025-07-07 23:18:29', NULL),
-(43, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919695_bg.png', 150.00, 'pending', '2025-07-07 23:21:39', NULL),
-(44, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919783_bg.png', 150.00, 'pending', '2025-07-07 23:23:06', NULL),
-(45, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919911_bg.png', 150.00, 'pending', '2025-07-07 23:25:14', NULL),
-(46, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920029_bg.png', 150.00, 'pending', '2025-07-07 23:27:12', NULL),
-(47, 1, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920111_bg.png', 150.00, 'completed', '2025-07-07 23:28:34', '2025-07-10 00:04:12'),
-(48, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920239_bg.png', 150.00, 'pending', '2025-07-07 23:30:42', NULL),
-(49, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920239_bg.png', 150.00, 'pending', '2025-07-07 23:31:42', NULL),
-(50, 1, 12, 47, 'vodafone_cash', '01003350412', 'mostafamta347@gmail.com', NULL, '1751920401_bg.png', 150.00, 'rejected', '2025-07-07 23:33:23', '2025-07-10 00:04:02'),
-(51, 1, 12, 47, 'vodafone_cash', '01056421221', 'mostafamta347@gmail.com', NULL, '1751920680_bg.png', 150.00, 'pending', '2025-07-07 23:38:03', NULL),
-(52, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920992_download.png', 150.00, 'pending', '2025-07-07 23:43:16', NULL),
-(53, 1, 12, 47, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751921187_download.png', 150.00, 'completed', '2025-07-07 23:46:29', '2025-07-09 18:39:28'),
-(54, 1, 12, 47, 'vodafone_cash', '01003504114', 'admin@gmail.com', NULL, '1752370982_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-13 04:43:06', NULL),
-(55, 3, 12, 47, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752459523_2.png', 150.00, 'completed', '2025-07-14 05:18:48', '2025-07-14 17:26:19'),
-(56, 3, 12, 47, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752460582_pexels-googledeepmind-25626431.jpg', 150.00, 'pending', '2025-07-14 05:36:27', NULL),
-(57, 3, 12, 47, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752460729_cane-test.a0001.net_shop-checkout.php.png', 150.00, 'pending', '2025-07-14 05:38:57', NULL),
-(58, 3, 12, 47, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752462012_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:00:19', NULL),
-(59, 3, 12, 47, 'instapay', '01003350412', 'hk303792mmmm@gmail.com', NULL, '1752462047_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:00:54', NULL),
-(60, 3, 12, 47, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752462108_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:01:51', NULL),
-(61, 2, 12, 47, 'vodafone_cash', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752486081_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 12:41:28', NULL),
-(62, 2, 12, 47, 'instapay', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752486456_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'verified', '2025-07-14 12:47:45', '2025-07-14 16:52:33'),
-(63, 2, 12, 46, 'instapay', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752518794_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'verified', '2025-07-14 21:53:33', '2025-07-15 19:04:48'),
-(64, 3, 12, 45, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752573885_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'completed', '2025-07-15 13:05:02', '2025-07-15 13:06:21'),
-(65, 5, 12, 47, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752596297_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'pending', '2025-07-15 19:20:57', NULL),
-(66, 5, 12, 47, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752635938_localhost_A.S_Unlock_public_products.php.png', 150.00, 'pending', '2025-07-16 06:21:27', NULL),
-(67, 5, 29, 58, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752721473_vodafone-cash.png', 70.00, 'completed', '2025-07-17 06:04:39', '2025-07-20 01:04:22'),
-(68, 5, 22, 53, 'instapay', '01121561532', 'admin@gmail.com', NULL, '1752723075_Team 4841324322.jpeg', 120.00, 'pending', '2025-07-17 06:31:18', NULL),
-(69, 5, 21, 56, 'instapay', '01056421221', 'admin@gmail.com', NULL, '1752723409_vodafone-cash.png', 70.00, 'rejected', '2025-07-17 06:36:52', '2025-07-20 03:05:46'),
-(70, 5, 21, 56, 'vodafone_cash', '01003350412', 'admin@gmail.com', NULL, '1752723512_vodafone-cash.png', 70.00, 'completed', '2025-07-17 06:38:35', '2025-07-20 01:11:09'),
-(71, 1, 29, 58, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752961518_ultraviewer.png', 70.00, 'completed', '2025-07-20 00:45:21', '2025-07-20 01:00:22'),
-(72, 1, 29, 58, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752961708_ultraviewer.png', 70.00, 'completed', '2025-07-20 00:48:31', '2025-07-20 01:11:37'),
-(73, 1, 29, 58, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752963202_vodafone-cash.png', 70.00, 'completed', '2025-07-20 01:13:26', '2025-07-20 01:13:38'),
-(74, 1, 21, 56, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752978390_ultraviewer.png', 70.00, 'pending', '2025-07-20 05:28:59', NULL),
-(75, 1, 21, 56, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752978829_ultraviewer.png', 70.00, 'pending', '2025-07-20 05:33:57', NULL),
-(76, 1, 22, 53, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752979569_ultraviewer.png', 120.00, 'pending', '2025-07-20 05:46:23', NULL),
-(77, 1, 22, 53, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752980194_ultraviewer.png', 120.00, 'pending', '2025-07-20 05:56:37', NULL),
-(78, 3, 21, 55, 'vodafone_cash', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018589_ultraviewer.png', 70.00, 'pending', '2025-07-20 16:36:37', NULL),
-(79, 3, 21, 56, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018716_ultraviewer.png', 70.00, 'pending', '2025-07-20 16:38:40', NULL),
-(80, 3, 21, 56, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018825_vodafone-cash.png', 70.00, 'pending', '2025-07-20 16:40:32', NULL),
-(81, 3, 29, 58, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', 'mostafamtaha66@gmail.com', '1753050330_localhost_A.S_Unlock_public_products.php.png', 70.00, 'completed', '2025-07-21 01:25:37', '2025-07-21 04:12:39'),
-(82, 3, 32, 61, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', 'mostafamta347@gmail.com', '1753060823_cane-test.a0001.net_order_order_details.php_order_id=17&i=1.png', 100.00, 'completed', '2025-04-08 04:20:27', '2025-07-22 16:53:15');
+INSERT INTO `orders` (`id`, `user_id`, `product_id`, `plan_id`, `plan_name`, `plan_price`, `payment_method`, `phone_number`, `email`, `subscription_email`, `receipt_image`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 12, 46, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810429_1.png', 150.00, 'completed', '2025-06-25 17:00:29', '2025-07-14 18:04:35'),
+(2, 1, 12, 46, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810434_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:00:34', NULL),
+(3, 1, 12, 46, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810613_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'pending', '2025-07-06 17:03:33', NULL),
+(4, 1, 11, 46, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810638_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'completed', '2025-07-06 17:03:58', '2025-07-14 18:04:55'),
+(5, 1, 12, 46, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751810647_cane-test.a0001.net_shop.php_i=1&limit=all&sort=default (1).png', 150.00, 'pending', '2025-07-06 17:04:07', NULL),
+(6, 2, 12, 47, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1751811677_cane-test.a0001.net_profile.php_page=settings.png', 150.00, 'pending', '2025-07-06 17:21:17', NULL),
+(7, 2, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1751813383_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:49:43', NULL),
+(8, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751813758_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 17:55:58', NULL),
+(9, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751814661_127.0.0.1_5500_22.png', 150.00, 'pending', '2025-07-06 18:11:13', NULL),
+(10, 1, 12, 47, '', 0.00, 'vodafone_cash', '01121561532', 'mostafamta347@gmail.com', NULL, '1751814746_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 18:12:39', NULL),
+(11, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751815123_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 18:18:48', NULL),
+(12, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825352_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'verified', '2025-07-06 21:09:15', '2025-07-10 00:04:24'),
+(13, 1, 10, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825419_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-06-10 21:10:21', '2025-07-14 18:05:42'),
+(14, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825693_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-06-24 21:14:57', '2025-07-14 18:06:36'),
+(15, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825752_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:15:56', NULL),
+(16, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751825859_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:17:41', NULL),
+(17, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826025_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:20:27', NULL),
+(18, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826134_127.0.0.1_5500_22.png', 150.00, 'pending', '2025-07-06 21:22:18', NULL),
+(19, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826237_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:24:00', NULL),
+(20, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826293_127.0.0.1_5500_22.png', 150.00, 'completed', '2025-06-10 21:24:57', '2025-07-14 18:05:53'),
+(21, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751826551_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:29:13', NULL),
+(22, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003350412', 'mostafamta347@gmail.com', NULL, '1751826880_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:34:42', NULL),
+(23, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751827477_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:44:41', NULL),
+(24, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751827862_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 21:51:06', NULL),
+(25, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751828060_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-15 21:54:23', '2025-07-14 18:07:02'),
+(26, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829791_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:23:15', NULL),
+(27, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829845_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:24:07', NULL),
+(28, 1, 12, 46, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751829993_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:26:38', NULL),
+(29, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830289_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-07 22:31:31', '2025-07-14 18:07:37'),
+(30, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830376_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2023-04-11 22:32:58', '2025-07-14 18:07:55'),
+(31, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751830497_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:35:07', NULL),
+(32, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831312_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:48:38', NULL),
+(33, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831478_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:51:23', NULL),
+(34, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831711_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-04-20 22:55:15', '2025-07-14 18:08:53'),
+(35, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751831940_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 22:59:03', NULL),
+(36, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751832286_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 23:04:51', NULL),
+(37, 1, 12, 47, '', 0.00, 'vodafone_cash', '01056421221', 'mostafamta347@gmail.com', NULL, '1751832412_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'completed', '2025-05-20 23:06:56', '2025-07-14 18:09:09'),
+(38, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751833025_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-06 23:17:08', NULL),
+(39, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751917841_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-07 22:50:44', NULL),
+(40, 1, 12, 47, '', 0.00, 'vodafone_cash', '01121561532', 'mostafamta347@gmail.com', NULL, '1751918025_pexels-googledeepmind-25626431.jpg', 150.00, 'pending', '2025-07-07 22:53:48', NULL),
+(41, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919297_bg.png', 150.00, 'verified', '2025-07-07 23:15:02', '2025-07-09 04:14:51'),
+(42, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919505_bg.png', 150.00, 'pending', '2025-07-07 23:18:29', NULL),
+(43, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919695_bg.png', 150.00, 'pending', '2025-07-07 23:21:39', NULL),
+(44, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919783_bg.png', 150.00, 'pending', '2025-07-07 23:23:06', NULL),
+(45, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751919911_bg.png', 150.00, 'pending', '2025-07-07 23:25:14', NULL),
+(46, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920029_bg.png', 150.00, 'pending', '2025-07-07 23:27:12', NULL),
+(47, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920111_bg.png', 150.00, 'completed', '2025-07-07 23:28:34', '2025-07-10 00:04:12'),
+(48, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920239_bg.png', 150.00, 'pending', '2025-07-07 23:30:42', NULL),
+(49, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920239_bg.png', 150.00, 'pending', '2025-07-07 23:31:42', NULL),
+(50, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003350412', 'mostafamta347@gmail.com', NULL, '1751920401_bg.png', 150.00, 'rejected', '2025-07-07 23:33:23', '2025-07-10 00:04:02'),
+(51, 1, 12, 47, '', 0.00, 'vodafone_cash', '01056421221', 'mostafamta347@gmail.com', NULL, '1751920680_bg.png', 150.00, 'pending', '2025-07-07 23:38:03', NULL),
+(52, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751920992_download.png', 150.00, 'pending', '2025-07-07 23:43:16', NULL),
+(53, 1, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1751921187_download.png', 150.00, 'completed', '2025-07-07 23:46:29', '2025-07-09 18:39:28'),
+(54, 1, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'admin@gmail.com', NULL, '1752370982_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-13 04:43:06', NULL),
+(55, 3, 12, 47, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752459523_2.png', 150.00, 'completed', '2025-07-14 05:18:48', '2025-07-14 17:26:19'),
+(56, 3, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752460582_pexels-googledeepmind-25626431.jpg', 150.00, 'pending', '2025-07-14 05:36:27', NULL),
+(57, 3, 12, 47, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752460729_cane-test.a0001.net_shop-checkout.php.png', 150.00, 'pending', '2025-07-14 05:38:57', NULL),
+(58, 3, 12, 47, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752462012_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:00:19', NULL),
+(59, 3, 12, 47, '', 0.00, 'instapay', '01003350412', 'hk303792mmmm@gmail.com', NULL, '1752462047_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:00:54', NULL),
+(60, 3, 12, 47, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752462108_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 06:01:51', NULL),
+(61, 2, 12, 47, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752486081_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'pending', '2025-07-14 12:41:28', NULL),
+(62, 2, 12, 47, '', 0.00, 'instapay', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752486456_516ce7c930e539f73ad36ed32fa4f9d7.jpg', 150.00, 'verified', '2025-07-14 12:47:45', '2025-07-14 16:52:33'),
+(63, 2, 12, 46, '', 0.00, 'instapay', '01003504114', 'mostafamtaha66@gmail.com', NULL, '1752518794_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'verified', '2025-07-14 21:53:33', '2025-07-15 19:04:48'),
+(64, 3, 12, 45, '', 0.00, 'instapay', '01003504114', 'hk303792mmmm@gmail.com', NULL, '1752573885_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'completed', '2025-07-15 13:05:02', '2025-07-15 13:06:21'),
+(65, 5, 12, 47, '', 0.00, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752596297_localhost_A.S_Unlock_admin_dashboard.php.png', 150.00, 'pending', '2025-07-15 19:20:57', NULL),
+(66, 5, 12, 47, '', 0.00, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752635938_localhost_A.S_Unlock_public_products.php.png', 150.00, 'pending', '2025-07-16 06:21:27', NULL),
+(67, 5, 29, 58, '', 0.00, 'instapay', '01003504114', 'admin@gmail.com', NULL, '1752721473_vodafone-cash.png', 70.00, 'completed', '2025-07-17 06:04:39', '2025-07-20 01:04:22'),
+(68, 5, 22, 53, '', 0.00, 'instapay', '01121561532', 'admin@gmail.com', NULL, '1752723075_Team 4841324322.jpeg', 120.00, 'pending', '2025-07-17 06:31:18', NULL),
+(69, 5, 21, 56, '', 0.00, 'instapay', '01056421221', 'admin@gmail.com', NULL, '1752723409_vodafone-cash.png', 70.00, 'rejected', '2025-07-17 06:36:52', '2025-07-20 03:05:46'),
+(70, 5, 21, 56, '', 0.00, 'vodafone_cash', '01003350412', 'admin@gmail.com', NULL, '1752723512_vodafone-cash.png', 70.00, 'completed', '2025-07-17 06:38:35', '2025-07-20 01:11:09'),
+(71, 1, 29, 58, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752961518_ultraviewer.png', 70.00, 'completed', '2025-07-20 00:45:21', '2025-07-20 01:00:22'),
+(72, 1, 29, 58, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752961708_ultraviewer.png', 70.00, 'completed', '2025-07-20 00:48:31', '2025-07-20 01:11:37'),
+(73, 1, 29, 58, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752963202_vodafone-cash.png', 70.00, 'completed', '2025-07-20 01:13:26', '2025-07-20 01:13:38'),
+(74, 1, 21, 56, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752978390_ultraviewer.png', 70.00, 'pending', '2025-07-20 05:28:59', NULL),
+(75, 1, 21, 56, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752978829_ultraviewer.png', 70.00, 'pending', '2025-07-20 05:33:57', NULL),
+(76, 1, 22, 53, '', 0.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', NULL, '1752979569_ultraviewer.png', 120.00, 'pending', '2025-07-20 05:46:23', NULL),
+(77, 1, 22, 53, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', NULL, '1752980194_ultraviewer.png', 120.00, 'pending', '2025-07-20 05:56:37', NULL),
+(78, 3, 21, 55, '', 0.00, 'vodafone_cash', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018589_ultraviewer.png', 70.00, 'pending', '2025-07-20 16:36:37', NULL),
+(79, 3, 21, 56, '', 0.00, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018716_ultraviewer.png', 70.00, 'pending', '2025-07-20 16:38:40', NULL),
+(80, 3, 21, 56, '', 0.00, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', NULL, '1753018825_vodafone-cash.png', 70.00, 'pending', '2025-07-20 16:40:32', NULL),
+(81, 3, 29, 58, '', 0.00, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', 'mostafamtaha66@gmail.com', '1753050330_localhost_A.S_Unlock_public_products.php.png', 70.00, 'completed', '2025-07-21 01:25:37', '2025-07-21 04:12:39'),
+(82, 3, 32, 61, '', 0.00, 'instapay', '01121561532', 'hk303792mmmm@gmail.com', 'mostafamta347@gmail.com', '1753060823_cane-test.a0001.net_order_order_details.php_order_id=17&i=1.png', 100.00, 'completed', '2025-04-08 04:20:27', '2025-07-22 16:53:15'),
+(83, 1, 0, 2, '', 0.00, 'vodafone_cash', '01003504114', 'mostafamta347@gmail.com', 'mostafamta347@gmail.com', 'receipt_1753203823_5bd1a0d1.jpg', 120.00, 'pending', '2025-07-22 20:03:43', NULL),
+(84, 1, 0, 2, 'asdf', 120.00, 'instapay', '01003504114', 'mostafamta347@gmail.com', '', 'receipt_1753204214_1389d4ba.jpg', 120.00, 'pending', '2025-07-22 20:10:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -453,8 +459,8 @@ CREATE TABLE `plans` (
 
 INSERT INTO `plans` (`id`, `icon`, `name`, `price`, `discount`, `best_seller`, `created_at`, `updated_at`, `status`) VALUES
 (2, 'asdf', 'asdf', 120.00, 27, 1, '2025-07-22 15:38:08', NULL, 1),
-(3, 'شسيب', 'شسيب', 32.00, 21, 0, '2025-07-22 15:40:11', NULL, 1),
-(4, 'سيشب', 'شسيب', 321.00, 21, 1, '2025-07-22 15:44:08', NULL, 1);
+(3, 'شسيب', 'شسيب;[l\'', 32.28, 23, 0, '2025-07-22 15:40:11', '2025-07-22 16:33:08', 1),
+(5, 'fa-brands fa-youtube', 'd', 40.00, 0, 1, '2025-07-22 16:36:20', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -477,9 +483,13 @@ INSERT INTO `plan_features` (`id`, `plan_id`, `feature`) VALUES
 (3, 2, 'asdf'),
 (4, 2, 'adf'),
 (5, 2, 'asdf'),
-(6, 3, 'شيسب'),
-(7, 4, '20'),
-(8, 4, '02');
+(13, 3, 'شيسب'),
+(14, 3, 'alshfd'),
+(15, 3, 'hasdf'),
+(16, 3, 'jkahdf'),
+(17, 5, 'asdfasdf'),
+(18, 5, 'asdfsaf'),
+(19, 5, 'asdfasdf');
 
 -- --------------------------------------------------------
 
@@ -797,13 +807,13 @@ ALTER TABLE `links`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `attempt_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `persons`
@@ -827,13 +837,13 @@ ALTER TABLE `person_social_links`
 -- AUTO_INCREMENT for table `plans`
 --
 ALTER TABLE `plans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `plan_features`
 --
 ALTER TABLE `plan_features`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `product_plans`
