@@ -1,7 +1,9 @@
 <?php
 session_start();
+require_once '../includes/check_maintenance.php';
+
 if (!isset($_SESSION['order_success'])) {
-    header('Location: ../client/download.php');
+    header('Location: ../client/download.php#download-staps');
     exit;
 }
 

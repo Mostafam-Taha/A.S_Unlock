@@ -62,7 +62,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/css/orders.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
 
-    <title>Dashboard</title>
+    <title>Orders</title>
 </head>
 
 <body>
@@ -90,11 +90,10 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <span class="un-title">الصفحات</span>
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
-                    <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الباقات</a></li>
+                    <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
-                    <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
                     <li><a href="warranty.php">الضمان</a></li>
                     <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
@@ -214,7 +213,9 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 ?>
                                             </span>
                                         </td>
-                                        <td><a href="order_details.php?id=<?php echo $order['id']; ?>">عرض</a></td>
+                                        <td>
+                                            <a href="<?php echo (!empty($order['plan_name'])) ? 'order_bauc.php' : 'order_details.php'; ?>?id=<?php echo $order['id']; ?>">عرض</a>
+                                        </td>
                                     </tr>
                                     <?php endforeach; ?>
                                 </tbody>

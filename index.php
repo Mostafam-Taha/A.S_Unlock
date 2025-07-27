@@ -28,6 +28,7 @@
     <!-- Links -->
     <link rel="icon" type="image/x-icon" href="./assets/image/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
@@ -242,55 +243,6 @@
                 }
                 ?>
                 <!--  -->
-                <!-- <div class="card-pr">
-                    <div class="top-prod-card">
-                        <div class="sec-one-pr">
-                            <div class="img">
-                                <img src="./assets/image/CEO.jpeg" alt="Not Found YouTube Pr..." loading="lazy">
-                            </div>
-                        </div>
-                        <div class="sec-two-pr">
-                            <h3>يوتيوب بريميوم</h3>
-                            <div class="price-pr">
-                                <span><del>80 جنية</del></span>
-                                <h1>49 جنية</h1>
-                            </div>
-                            <button class="btn-product">طلب الخدمة</button>
-                        </div>
-                        <div class="check-product">
-                            <ul class="scll">
-                                <li>فورى <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>شخصي <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>عائلي <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>آمن <span><i class="bi bi-check-lg"></i></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-pr">
-                    <div class="top-prod-card">
-                        <div class="sec-one-pr">
-                            <div class="img">
-                                <img src="./assets/image/509.png" alt="Not Found Tablet 509" loading="lazy">
-                            </div>
-                        </div>
-                        <div class="sec-two-pr">
-                            <h3>تهكير تابلت SM-T509</h3>
-                            <div class="price-pr">
-                                <span><del>80 جنية</del></span>
-                                <h1>49 جنية</h1>
-                            </div>
-                            <button class="btn-product">طلب الخدمة</button>
-                        </div>
-                        <div class="check-product">
-                            <ul class="scll">
-                                <li>أعلى جودة <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>أسرع وقت <span><i class="bi bi-check-lg"></i></span></li>
-                                <li>أحسن سعر <span><i class="bi bi-check-lg"></i></span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </section>
@@ -343,26 +295,96 @@
                     $stmt = $pdo->query("SELECT * FROM items");
                     $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     
-                    // عرض كل عنصر في بطاقة شهادة
-                    foreach ($items as $item) {
-                        // التحقق من وجود صورة
-                        $imagePath = !empty($item['image_path']) ? $item['image_path'] : 'default.webp';
-                        
+                    if (count($items) > 0) {
+                        // عرض كل عنصر في بطاقة شهادة
+                        foreach ($items as $item) {
+                            // التحقق من وجود صورة
+                            $imagePath = !empty($item['image_path']) ? $item['image_path'] : 'default.webp';
+                            
+                            echo '
+                            <div class="testimonial-card">
+                                <div class="client-img-container">
+                                    <img src="./uploads/' . htmlspecialchars($imagePath) . '" alt="' . htmlspecialchars($item['name']) . '" class="client-img">
+                                </div>
+                                <div class="testimonial-content">
+                                    <h3>' . htmlspecialchars($item['name']) . '</h3>
+                                    <p>' . htmlspecialchars($item['description']) . '</p>
+                                </div>
+                            </div>';
+                        }
+                    } else {
+                        // عرض رسالة عدم وجود عملاء مع أيقونة
                         echo '
-                        <div class="testimonial-card">
-                            <div class="client-img-container">
-                                <img src="./uploads/' . htmlspecialchars($imagePath) . '" alt="' . htmlspecialchars($item['name']) . '" class="client-img">
+                        <div class="no-clients-message">
+                            <div class="empty-icon">
+                                <i class="fas fa-users-slash"></i>
                             </div>
-                            <div class="testimonial-content">
-                                <h3>' . htmlspecialchars($item['name']) . '</h3>
-                                <p>' . htmlspecialchars($item['description']) . '</p>
-                            </div>
+                            <h3>لا يوجد عملاء</h3>
                         </div>';
                     }
                     
                 } catch (PDOException $e) {
                     // في حالة حدوث خطأ، عرض رسالة خطأ
                     echo '<div class="error-message">حدث خطأ في جلب البيانات: ' . htmlspecialchars($e->getMessage()) . '</div>';
+                }
+                ?>
+            </div>
+        </div>
+    </section>
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">الأسئلة الشائعة</h2>
+            <div class="faq-container">
+                <?php
+                require_once './includes/config.php';
+
+                try {
+                    // استعلام لاسترجاع الأسئلة المنشورة فقط
+                    $stmt = $pdo->query("SELECT * FROM questions WHERE is_published = 1 ORDER BY created_at DESC");
+                    $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    if (count($questions) > 0) {
+                        foreach ($questions as $question) {
+                            ?>
+                            <div class="faq-card">
+                                <div class="faq-question">
+                                    <div class="question-text"><?php echo htmlspecialchars($question['question']); ?></div>
+                                    <div class="arrow-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M6 9l6 6 6-6"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="faq-answer">
+                                    <p><?php echo htmlspecialchars($question['answer']); ?></p>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else {
+                        ?>
+                        <div class="empty-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; text-align: center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.5;">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <p style="margin-top: 20px; color: #666; font-size: 1.2rem;">لا توجد أسئلة متاحة حالياً</p>
+                        </div>
+                        <?php
+                    }
+                } catch (PDOException $e) {
+                    ?>
+                    <div class="error-state" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; text-align: center;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        <p style="margin-top: 20px; color: #ff4444; font-size: 1.2rem;">حدث خطأ أثناء جلب البيانات</p>
+                    </div>
+                    <?php
                 }
                 ?>
             </div>

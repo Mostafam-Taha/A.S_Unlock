@@ -1,3 +1,7 @@
+<?php
+
+require_once '../includes/check_maintenance.php';
+?>
 <!DOCTYPE html>
 <html lang="ar">
 
@@ -101,7 +105,7 @@
                                     </select>
                                     <a href="product.php">الباقات المميزة</a>
                                 </div>
-                                <div><span><a href="index.html" style="color: #1976D2;"> الرئيسية </a></span>/ <span style="margin: 0 8px 0 0;">المنتجات</span></div>
+                                <!-- <div><span><a href="index.html" style="color: #1976D2;"> الرئيسية </a></span>/ <span style="margin: 0 8px 0 0;">المنتجات</span></div> -->
                             </div>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 <?php
-require_once '../includes/config.php'; // استيراد ملف الاتصال بقاعدة البيانات
+require_once '../includes/config.php';
+require_once '../includes/check_maintenance.php';
 
 // استعلام لاسترجاع الملفات من قاعدة البيانات
 $stmt = $pdo->query("SELECT * FROM uploads WHERE status = 'completed' ORDER BY upload_date DESC");

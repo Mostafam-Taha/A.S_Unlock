@@ -81,10 +81,6 @@
                 
                 <button type="submit" class="login-btn">تسجيل الدخول</button>
             </form>
-            
-            <div class="login-footer">
-                <p>ليس لديك حساب؟ <a href="regs.php">إنشاء حساب جديد</a></p>
-            </div>
         </div>
         <div class="login-image-section"></div>
     </div>

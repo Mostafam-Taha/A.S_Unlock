@@ -142,6 +142,15 @@
     border: var(--border-color) 1px solid;
 }
 
+.dark-mode .modal-content {
+    background: var(--bg-color);
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .modal-content .plan-feature i {
+    color: #4CAF50;
+}
+
 /* Public/CheckOut */
 .dark-mode .checkout-container,
 .dark-mode .border-0,
@@ -168,6 +177,14 @@
     border: var(--border-color) 1px solid;
 }
 
+.dark-mode .form-check-input {
+    /* background-color: var(--bs-form-check-bg) !important; */
+    background-image: var(--bs-form-check-bg-image) !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: contain !important ;
+}
+
 /* Client/ Download */
 .dark-mode .download-files .container .downloads-file .device-down .card-download {
     border: var(--border-color) 1px solid;
@@ -190,7 +207,6 @@
 }
 
 /* guarantees */
-
 .dark-mode .text-center {
     background-color: var(--card-bg);
 }

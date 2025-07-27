@@ -150,11 +150,10 @@ if (empty($_SESSION['admin_id'])) {
                 <span class="un-title">الصفحات</span>
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
-                    <li><a href="#">الموظفين</a></li>
-                    <li><a href="#">الباقات</a></li>
+                    <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
-                    <li><a href="#">اضافة وظيفة جديدة</a></li>
                     <li><a href="download.php">تحميلات</a></li>
                     <li><a href="warranty.php">الضمان</a></li>
                     <li><a href="common-questions.php">الأسئلة الشائعة</a></li>
@@ -180,7 +179,7 @@ if (empty($_SESSION['admin_id'])) {
                     <div class="logo-profile"><img src="../assets/image/favicon.ico" alt="Not Image Profile" loading="lazy" id="profileImage"></div>
                     <div class="menu-profile">
                         <ul>
-                            <li><a href="#">الملف الشخصي <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" /></svg></a></li>
+                            <li><a href="profile-admin.php">الملف الشخصي <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16"><path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z" /></svg></a></li>
                             <li><a href="login_attempts.php">تحليل<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07" /></svg></a></li>
                         </ul>
                         <hr>
@@ -215,7 +214,6 @@ if (empty($_SESSION['admin_id'])) {
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-xl-3 col-md-6">
                     <div class="stat-card">
@@ -225,11 +223,11 @@ if (empty($_SESSION['admin_id'])) {
                                     <div class="text-primary text-uppercase fw-bold mb-1">
                                         المستخدمون
                                     </div>
-                                    <div class="h2 mb-0 fw-bold"><?php echo number_format($users_stats['total_users']); ?></div>
+                                    <div class="h2 mb-0 fw-bold"><?php echo isset($users_stats['total_users']) ? number_format((float)$users_stats['total_users']) : 0; ?></div>
                                     <div class="mt-2 small">
                                         <span class="text-success fw-bold">
                                             <i class="fas fa-users me-1"></i>
-                                            <?php echo number_format($users_stats['email_users']); ?> عبر البريد
+                                            <?php echo isset($users_stats['email_users']) ? number_format((float)$users_stats['email_users']) : 0; ?> عبر البريد
                                         </span>
                                     </div>
                                 </div>
@@ -249,10 +247,10 @@ if (empty($_SESSION['admin_id'])) {
                                     <div class="text-success text-uppercase fw-bold mb-1">
                                         التحميلات
                                     </div>
-                                    <div class="h2 mb-0 fw-bold"><?php echo number_format($uploads_stats['total_uploads']); ?></div>
+                                    <div class="h2 mb-0 fw-bold"><?php echo isset($uploads_stats['total_uploads']) ? number_format((float)$uploads_stats['total_uploads']) : 0; ?></div>
                                     <div class="mt-2 small">
                                         <span class="text-muted">
-                                            <?php echo number_format($uploads_stats['file_uploads']); ?> ملفات
+                                        <?php echo isset($uploads_stats['file_uploads']) ? number_format((float)$uploads_stats['file_uploads']) : 0; ?> ملفات
                                         </span>
                                     </div>
                                 </div>
@@ -272,14 +270,18 @@ if (empty($_SESSION['admin_id'])) {
                                     <div class="text-info text-uppercase fw-bold mb-1">
                                         الطلبات
                                     </div>
-                                    <div class="h2 mb-0 fw-bold"><?php echo number_format(array_sum($order_counts)); ?></div>
+                                    <div class="h2 mb-0 fw-bold"><?php echo isset($order_counts) ? number_format((float)array_sum($order_counts)) : 0; ?></div>
                                     <div class="mt-2 small">
                                         <span class="text-success fw-bold">
                                             <i class="fas fa-check-circle me-1"></i>
                                             <?php 
                                                 $completed = 0;
-                                                foreach($orders_stats as $os) {
-                                                    if($os['status'] == 'completed') $completed = $os['order_count'];
+                                                if(isset($orders_stats)) {
+                                                    foreach($orders_stats as $os) {
+                                                        if(isset($os['status']) && $os['status'] == 'completed') {
+                                                            $completed = isset($os['order_count']) ? (float)$os['order_count'] : 0;
+                                                        }
+                                                    }
                                                 }
                                                 echo number_format($completed);
                                             ?> مكتملة
@@ -302,11 +304,11 @@ if (empty($_SESSION['admin_id'])) {
                                     <div class="text-warning text-uppercase fw-bold mb-1">
                                         الإيرادات
                                     </div>
-                                    <div class="h2 mb-0 fw-bold">$<?php echo number_format(array_sum($order_amounts), 2); ?></div>
+                                    <div class="h2 mb-0 fw-bold">$<?php echo isset($order_amounts) ? number_format((float)array_sum($order_amounts), 2) : '0.00'; ?></div>
                                     <div class="mt-2 small">
                                         <span class="text-success fw-bold">
                                             <i class="fas fa-arrow-up me-1"></i> 
-                                            <?php echo ($plans_stats) ? number_format(max($plan_revenues), 2) : '0.00'; ?> أعلى خطة
+                                            <?php echo (isset($plans_stats) && isset($plan_revenues)) ? number_format((float)max($plan_revenues), 2) : '0.00'; ?> أعلى خطة
                                         </span>
                                     </div>
                                 </div>
@@ -473,25 +475,26 @@ if (empty($_SESSION['admin_id'])) {
                         </div>
                     </div>
                 </div>
+
                 
                 <div class="col-md-4 card-show">
                     <div class="data-card">
                         <h5 class="mb-4"><i class="fas fa-file-alt me-2 text-info"></i>تفاصيل التحميلات</h5>
                         <div class="d-flex justify-content-between mb-3">
                             <span>إجمالي الملفات:</span>
-                            <strong><?php echo number_format($uploads_stats['file_uploads']); ?></strong>
+                            <strong><?php echo isset($uploads_stats['file_uploads']) ? number_format((float)$uploads_stats['file_uploads']) : 0; ?></strong>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>إجمالي الروابط:</span>
-                            <strong><?php echo number_format($uploads_stats['link_uploads']); ?></strong>
+                            <strong><?php echo isset($uploads_stats['link_uploads']) ? number_format((float)$uploads_stats['link_uploads']) : 0; ?></strong>
                         </div>
                         <div class="d-flex justify-content-between mb-3">
                             <span>الحجم الكلي:</span>
-                            <strong><?php echo round($uploads_stats['total_file_size'] / (1024 * 1024), 2); ?> MB</strong>
+                            <strong><?php echo isset($uploads_stats['total_file_size']) ? round((float)$uploads_stats['total_file_size'] / (1024 * 1024), 2) : '0.00'; ?> MB</strong>
                         </div>
                         <div class="d-flex justify-content-between">
                             <span>متوسط حجم الملف:</span>
-                            <strong><?php echo round($uploads_stats['avg_file_size'] / 1024, 2); ?> KB</strong>
+                            <strong><?php echo isset($uploads_stats['avg_file_size']) ? round((float)$uploads_stats['avg_file_size'] / 1024, 2) : '0.00'; ?> KB</strong>
                         </div>
                     </div>
                 </div>

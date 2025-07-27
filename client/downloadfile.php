@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/config.php';
+require_once '../includes/check_maintenance.php';
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);

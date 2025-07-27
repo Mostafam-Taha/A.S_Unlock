@@ -1,4 +1,7 @@
+<?php
 
+require_once '../includes/check_maintenance.php';
+?>
 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">

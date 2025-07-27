@@ -90,118 +90,150 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>استعادة كلمة المرور</title>
-    <!-- Bootstrap RTL -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- UIverse Animation -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6c63ff;
-            --secondary-color: #4d44db;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
+            --br-primary-color: linear-gradient(90deg, #1976D2, #42A5F5);
+            --br-color-h-p: #1976D2;
+            --br-sacn-color: #23234a;
+            --br-links-color: #495057;
+            --br-border-color: #dfe1e5;
+            --br-btn-padding: 7px 22px;
+            --br-box-shadow: 0px 0px 0px 5px #1976d254;
+            --br-dir-none: none;
+            --br-font-w-text: 400;
+            --br-matgin-width: 0 100px;
+            
+    
             --success-color: #28a745;
             --error-color: #dc3545;
             --warning-color: #ffc107;
-            --border-radius: 12px;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
             --transition: all 0.3s ease;
         }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-            min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Tajawal", sans-serif;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Tajawal", sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0;
+            padding: 0;
+            color: var(--br-sacn-color);
+            font-weight: 500;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+            color: var(--br-sacn-color);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--br-sacn-color);
+        }
+
         .password-container {
             max-width: 500px;
-            margin: 0 auto;
+            width: 100%;
             background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            border-radius: 15px;
             overflow: hidden;
             transition: var(--transition);
+            margin: 20px;
         }
-        
-        .password-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-        
+
         .password-header {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            background: var(--br-primary-color);
             color: white;
             padding: 1.5rem;
             text-align: center;
         }
-        
+
         .password-header h2 {
-            font-weight: 700;
+            font-weight: 500;
             margin-bottom: 0;
         }
-        
+
         .password-body {
             padding: 2rem;
         }
-        
+
         .form-control {
             border-radius: var(--border-radius);
             padding: 0.75rem 1.25rem;
-            border: 1px solid #e0e0e0;
+            border: 1px solid var(--br-border-color);
             transition: var(--transition);
+            font-family: "Tajawal", sans-serif;
         }
-        
+
         .form-control:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 0.25rem rgba(108, 99, 255, 0.25);
+            border-color: var(--br-color-h-p);
+            box-shadow: var(--br-box-shadow);
         }
-        
+
         .input-group-text {
             background-color: transparent;
             border-right: none;
+            color: var(--br-color-h-p);
         }
-        
+
         .btn-primary {
-            background-color: var(--primary-color);
+            background: var(--br-primary-color);
             border: none;
             border-radius: var(--border-radius);
-            padding: 0.75rem;
-            font-weight: 600;
+            padding: var(--br-btn-padding);
+            font-weight: 500;
             transition: var(--transition);
+            height: 45px;
         }
-        
+
         .btn-primary:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
+            opacity: 0.9;
         }
-        
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-        
+
         .security-question {
             background-color: #f8f9fa;
             border-radius: var(--border-radius);
             padding: 1rem;
             margin: 1.5rem 0;
-            font-weight: 600;
-            border-left: 4px solid var(--primary-color);
+            font-weight: 500;
+            border-left: 4px solid var(--br-color-h-p);
         }
-        
+
         .alert {
             border-radius: var(--border-radius);
+            font-family: "Tajawal", sans-serif;
         }
-        
+
         .password-strength {
             height: 5px;
             background-color: #e9ecef;
@@ -209,20 +241,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
             margin-top: 0.5rem;
             overflow: hidden;
         }
-        
+
         .password-strength-bar {
             height: 100%;
             width: 0%;
             background-color: var(--error-color);
             transition: var(--transition);
         }
-        
-        /* UIverse inspired button animation */
+
+
         .btn-uiverse {
             position: relative;
             overflow: hidden;
         }
-        
+
         .btn-uiverse::after {
             content: '';
             position: absolute;
@@ -236,11 +268,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
             transform: scale(1, 1) translate(-50%);
             transform-origin: 50% 50%;
         }
-        
+
         .btn-uiverse:focus:not(:active)::after {
             animation: ripple 1s ease-out;
         }
-        
+
         @keyframes ripple {
             0% {
                 transform: scale(0, 0);
@@ -251,21 +283,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
                 opacity: 0;
             }
         }
-        
-        /* Floating animation */
-        .floating {
-            animation: floating 3s ease-in-out infinite;
+
+        .text-muted {
+            color: var(--br-links-color) !important;
         }
-        
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+
+        .text-decoration-none {
+            color: var(--br-color-h-p);
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="container py-5">
+    <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="password-container animate__animated animate__fadeIn">
@@ -349,24 +379,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['new_password'])) {
                 
                 <?php if (!$showPasswordForm && empty($_SESSION['reset_question'])): ?>
                 <div class="text-center mt-4 animate__animated animate__fadeInUp">
-                    <p class="text-muted">تذكرت كلمة المرور؟ <a href="login.php" class="text-decoration-none">تسجيل الدخول</a></p>
+                    <p class="text-muted">تذكرت كلمة المرور؟ <a href="logs.php" class="text-decoration-none">تسجيل الدخول</a></p>
                 </div>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
-    <!-- Floating decorative elements -->
-    <div class="position-fixed bottom-0 start-0" style="z-index: -1;">
-        <div class="floating" style="width: 150px; height: 150px; background: radial-gradient(circle, rgba(108,99,255,0.1) 0%, rgba(255,255,255,0) 70%);"></div>
-    </div>
-    <div class="position-fixed top-0 end-0" style="z-index: -1;">
-        <div class="floating" style="width: 200px; height: 200px; background: radial-gradient(circle, rgba(108,99,255,0.05) 0%, rgba(255,255,255,0) 70%); animation-delay: 1s;"></div>
-    </div>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Password strength meter -->
     <script>
         document.getElementById('new_password').addEventListener('input', function() {
             const password = this.value;

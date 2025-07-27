@@ -1,5 +1,6 @@
 <?php
 require_once '../includes/config.php';
+require_once '../includes/check_maintenance.php';
 
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']);
@@ -203,7 +204,7 @@ if (isset($_GET['id'])) {
                 
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" id="shareLink" 
-                           value="<?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/share.php?id=' . $id; ?>" 
+                           value="<?php echo (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/client/share.php?id=' . $id; ?>" 
                            readonly>
                     <button class="btn btn-outline-secondary" type="button" onclick="copyShareLink()">نسخ الرابط</button>
                 </div>
@@ -218,7 +219,7 @@ if (isset($_GET['id'])) {
                 </div>
                 
                 <?php if ($file['file_path']): ?>
-                    <a href="download.php?id=<?php echo $id; ?>" class="btn btn-primary mt-3">
+                    <a href="downloadfile.php?id=<?php echo $id; ?>" class="btn btn-primary mt-3">
                         <i class="bi bi-download"></i> تحميل الملف
                     </a>
                 <?php else: ?>
