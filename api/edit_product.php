@@ -9,6 +9,7 @@ if (!$productId) {
 }
 
 try {
+    // جلب بيانات المنتج الأساسية
     $stmt = $pdo->prepare("
         SELECT 
             d.*
@@ -25,12 +26,22 @@ try {
     
     // تحويل المميزات من JSON إلى مصفوفة
     $product['features'] = json_decode($product['features'], true) ?: [];
+    
+    // جلب خطط المنتج
+    $stmt = $pdo->prepare("SELECT * FROM product_plans WHERE product_id = ? ORDER BY id");
+    $stmt->execute([$productId]);
+    $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    // تحويل مميزات كل خطة من JSON إلى مصفوفة
+    foreach ($plans as &$plan) {
+        $plan['plan_features'] = json_decode($plan['plan_features'], true) ?: [];
+    }
+    unset($plan);
 
 } catch (PDOException $e) {
     die("خطأ في استرجاع بيانات المنتج: " . $e->getMessage());
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -93,12 +104,50 @@ try {
         .popular-plan { color: #FF9800; }
         .pro-plan { color: #9C27B0; }
         .other-plan { color: #607D8B; }
+         /* إضافة أنماط جديدة للخطط */
+        .plan-card {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .plan-header {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .plan-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .feature-item {
+            margin-bottom: 10px;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            display: none;
+        }
+        .plan-icon {
+            font-size: 2rem;
+            text-align: center;
+            margin: 15px 0;
+        }
+        .basic-plan { color: #4CAF50; }
+        .popular-plan { color: #FF9800; }
+        .pro-plan { color: #9C27B0; }
+        .other-plan { color: #607D8B; }
+        .add-plan-btn {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container py-5">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <div class="col-md-10 mx-auto">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h3 class="card-title">تعديل المنتج: <?= htmlspecialchars($product['product_name']) ?></h3>
@@ -141,7 +190,7 @@ try {
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="price" class="form-label">السعر</label>
+                                        <label for="price" class="form-label">السعر الأساسي</label>
                                         <input type="number" step="0.01" class="form-control" id="price" name="price" 
                                             value="<?= $product['price'] ?>" required>
                                     </div>
@@ -182,6 +231,74 @@ try {
                                 <button type="button" id="addFeature" class="btn btn-sm btn-primary mt-2">
                                     <i class="bi bi-plus"></i> إضافة ميزة
                                 </button>
+                            </div>
+                            
+                            <!-- قسم خطط المنتج -->
+                            <div class="mb-4">
+                                <h4 class="mb-3">خطط المنتج</h4>
+                                
+                                <button type="button" id="addPlan" class="btn btn-success add-plan-btn">
+                                    <i class="bi bi-plus-circle"></i> إضافة خطة جديدة
+                                </button>
+                                
+                                <div id="plansContainer">
+                                    <?php foreach ($plans as $index => $plan): ?>
+                                    <div class="plan-card mb-4" data-plan-id="<?= $plan['id'] ?>">
+                                        <input type="hidden" name="plan_ids[]" value="<?= $plan['id'] ?>">
+                                        
+                                        <div class="plan-header d-flex justify-content-between align-items-center">
+                                            <div class="plan-title">الخطة #<?= $index + 1 ?></div>
+                                            <button type="button" class="btn btn-sm btn-danger remove-plan">
+                                                <i class="bi bi-trash"></i> حذف الخطة
+                                            </button>
+                                        </div>
+                                        
+                                        <div class="row mb-3">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">نوع الخطة</label>
+                                                    <select class="form-select" name="plan_types[]" required>
+                                                        <option value="1" <?= $plan['plan_type'] === '1' ? 'selected' : '' ?>>أساسي</option>
+                                                        <option value="popular" <?= $plan['plan_type'] === 'popular' ? 'selected' : '' ?>>شائع</option>
+                                                        <option value="pro" <?= $plan['plan_type'] === 'pro' ? 'selected' : '' ?>>احترافي</option>
+                                                        <option value="custom" <?= $plan['plan_type'] === 'custom' ? 'selected' : '' ?>>مخصص</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">اسم الخطة</label>
+                                                    <input type="text" class="form-control" name="plan_names[]" 
+                                                        value="<?= htmlspecialchars($plan['plan_name']) ?>" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="form-label">سعر الخطة</label>
+                                                    <input type="number" step="0.01" class="form-control" name="plan_prices[]" 
+                                                        value="<?= $plan['plan_price'] ?>" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group mb-3" style="direction: ltr;">
+                                            <label class="form-label">مميزات الخطة</label>
+                                            <div class="plan-features-container">
+                                                <?php foreach ($plan['plan_features'] as $feature): ?>
+                                                <div class="feature-item input-group mb-2">
+                                                    <input type="text" class="form-control" name="plan_features[<?= $plan['id'] ?>][]" 
+                                                        value="<?= htmlspecialchars($feature) ?>">
+                                                    <button type="button" class="btn btn-danger remove-plan-feature"><i class="bi bi-trash"></i></button>
+                                                </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-primary mt-2 add-plan-feature" data-plan-id="<?= $plan['id'] ?>">
+                                                <i class="bi bi-plus"></i> إضافة ميزة
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
                             </div>
                             
                             <!-- خيارات المنتج -->
@@ -251,9 +368,85 @@ try {
             $('#featuresContainer').append(newFeature);
         });
         
+        // إضافة خطة جديدة
+        $('#addPlan').click(function() {
+            const planId = 'new_' + Date.now();
+            const newPlan = `
+                <div class="plan-card mb-4" data-plan-id="${planId}">
+                    <input type="hidden" name="plan_ids[]" value="${planId}">
+                    
+                    <div class="plan-header d-flex justify-content-between align-items-center">
+                        <div class="plan-title">خطة جديدة</div>
+                        <button type="button" class="btn btn-sm btn-danger remove-plan">
+                            <i class="bi bi-trash"></i> حذف الخطة
+                        </button>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">نوع الخطة</label>
+                                <select class="form-select" name="plan_types[]" required>
+                                    <option value="1">أساسي</option>
+                                    <option value="popular">شائع</option>
+                                    <option value="pro">احترافي</option>
+                                    <option value="custom" selected>مخصص</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">اسم الخطة</label>
+                                <input type="text" class="form-control" name="plan_names[]" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="form-label">سعر الخطة</label>
+                                <input type="number" step="0.01" class="form-control" name="plan_prices[]" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mb-3" style="direction: ltr;">
+                        <label class="form-label">مميزات الخطة</label>
+                        <div class="plan-features-container">
+                            <div class="feature-item input-group mb-2">
+                                <input type="text" class="form-control" name="plan_features[${planId}][]">
+                                <button type="button" class="btn btn-danger remove-plan-feature"><i class="bi bi-trash"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary mt-2 add-plan-feature" data-plan-id="${planId}">
+                            <i class="bi bi-plus"></i> إضافة ميزة
+                        </button>
+                    </div>
+                </div>
+            `;
+            $('#plansContainer').append(newPlan);
+        });
+        
+        // إضافة ميزة لخطة محددة
+        $(document).on('click', '.add-plan-feature', function() {
+            const planId = $(this).data('plan-id');
+            const newFeature = `
+                <div class="feature-item input-group mb-2">
+                    <input type="text" class="form-control" name="plan_features[${planId}][]">
+                    <button type="button" class="btn btn-danger remove-plan-feature"><i class="bi bi-trash"></i></button>
+                </div>
+            `;
+            $(this).siblings('.plan-features-container').append(newFeature);
+        });
+        
         // إزالة ميزة (استخدام event delegation)
         $(document).on('click', '.remove-feature, .remove-plan-feature', function() {
             $(this).closest('.feature-item').remove();
+        });
+        
+        // إزالة خطة
+        $(document).on('click', '.remove-plan', function() {
+            if (confirm('هل أنت متأكد من حذف هذه الخطة؟')) {
+                $(this).closest('.plan-card').remove();
+            }
         });
         
         // إرسال النموذج
@@ -269,7 +462,7 @@ try {
                 }
             });
             
-            $('input[name="plan_features[]"]').each(function() {
+            $('input[name^="plan_features["]').each(function() {
                 if ($(this).val().trim() === '') {
                     $(this).remove();
                 }
