@@ -12,7 +12,10 @@ require_once '../includes/check_maintenance.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="../assets/image/favicon.ico">
+    <link rel="stylesheet" href="../assets/css/dark-mode-index.css">
     <style>
+        .modal-header .btn-close {margin: 0;}
+
         :root {
             --primary-color: #1976D2;
             --secondary-color: #1976D2;
@@ -297,6 +300,7 @@ require_once '../includes/check_maintenance.php';
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <li style="display: none;" class="dark-mode-toggle"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16" /></svg></a></li>
     <div class="container">
         <div class="header">
             <h1>عروضنا المميزة</h1>
@@ -306,7 +310,7 @@ require_once '../includes/check_maintenance.php';
         <div class="cards-container">
             <?php
             require_once '../includes/config.php';
-            
+
             // جلب جميع الخطط مع ميزاتها
             $stmt = $pdo->query("
                 SELECT p.*, GROUP_CONCAT(pf.feature SEPARATOR '|||') as features 
@@ -317,23 +321,43 @@ require_once '../includes/check_maintenance.php';
                 ORDER BY p.best_seller DESC, p.price ASC
             ");
             $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
+            // فصل المنتج المميز عن باقي المنتجات
+            $bestSellerPlan = null;
+            $otherPlans = [];
+
+            foreach ($plans as $plan) {
+                if ($plan['best_seller'] && !$bestSellerPlan) {
+                    $bestSellerPlan = $plan;
+                } else {
+                    $otherPlans[] = $plan;
+                }
+            }
+
+            // إدخال المنتج المميز في منتصف المصفوفة
+            if ($bestSellerPlan) {
+                $middleIndex = intval(count($otherPlans) / 2);
+                array_splice($otherPlans, $middleIndex, 0, [$bestSellerPlan]);
+            }
+
+            $plans = $otherPlans;
+
             // ألوان لكل بطاقة (سيتم استخدام الأيقونة من DB بدلاً من الثوابت)
             $cardClasses = ['basic', 'popular', 'premium'];
-            
+
             $index = 0;
             foreach ($plans as $plan) {
                 $cardClass = $cardClasses[$index % count($cardClasses)];
                 $features = explode('|||', $plan['features']);
             ?>
             <div class="card <?php echo $cardClass; ?>">
-                <?php if($plan['best_seller']): ?>
+                <?php if ($plan['best_seller']): ?>
                 <div class="popular-tag">الأكثر طلباً</div>
                 <?php endif; ?>
                 
                 <div class="card-header <?php echo $cardClass; ?>">
                     <h2>
-                        <?php if($plan['icon']): ?>
+                        <?php if ($plan['icon']): ?>
                         <i class="<?php echo htmlspecialchars($plan['icon']); ?>"></i>
                         <?php else: ?>
                         <i class="fas fa-star"></i> <!-- أيقونة افتراضية إذا لم يتم تحديد أيقونة -->
@@ -341,8 +365,10 @@ require_once '../includes/check_maintenance.php';
                         <?php echo htmlspecialchars($plan['name']); ?>
                     </h2>
                     <div class="price-container">
-                        <?php if($plan['discount'] > 0): ?>
-                        <div class="original-price"><?php echo number_format($plan['price'] + ($plan['price'] * $plan['discount'] / 100), 2); ?> ج</div>
+                        <?php if ($plan['discount'] > 0): ?>
+                        <div class="original-price">
+                            <?php echo number_format($plan['price'] + ($plan['price'] * $plan['discount'] / 100), 2); ?> ج
+                        </div>
                         <?php endif; ?>
                         <div class="price"><?php echo number_format($plan['price'], 2); ?></div>
                         <div class="currency">ج</div>
@@ -388,6 +414,7 @@ require_once '../includes/check_maintenance.php';
                     <div id="paymentForm" class="d-none">
                         <h6>الخطة: <span id="selectedPlanName"></span></h6>
                         <h6>السعر: <span id="selectedPlanPrice"></span> ج</h6>
+                        <h6>حول المبلغ على هذا الرقم وصور الإصال 01069062005<span></span></h6>
                         
                         <form id="orderForm" enctype="multipart/form-data">
                             <input type="hidden" name="plan_id" id="planId">
@@ -396,8 +423,8 @@ require_once '../includes/check_maintenance.php';
                                 <label class="form-label">طريقة الدفع</label>
                                 <select class="form-select" name="payment_method" required>
                                     <option value="">اختر طريقة الدفع</option>
-                                    <option value="vodafone_cash">فودافون كاش</option>
-                                    <option value="instapay">انستا باي</option>
+                                    <option value="vodafone_cash">فودافون كاش 01069062005</option>
+                                    <option value="instapay">انستا باي 01069062005</option>
                                 </select>
                             </div>
                             
@@ -432,5 +459,6 @@ require_once '../includes/check_maintenance.php';
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/adds_products.js"></script>
+    <script src="../assets/js/dark-mode.js"></script>
 </body>
 </html>

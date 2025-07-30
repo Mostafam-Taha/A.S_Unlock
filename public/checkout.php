@@ -564,7 +564,7 @@ if ($user && $user['banned']) {
     <script>
         // تهيئة EmailJS بالمفتاح العام
         (function() {
-            emailjs.init('OL-bmAupqH0hzZS0X');
+            emailjs.init('ZzAOOr8mfUUIzGzCE');
         })();
     </script>
 </body>

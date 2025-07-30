@@ -1,6 +1,33 @@
 <?php
 
 require_once '../includes/check_maintenance.php';
+// Start session if not already started
+if (session_status() == PHP_SESSION_NONE) {
+    require_once '../includes/config.php';
+    session_start();
+}
+
+// Include your config file
+
+// Check if popup should be shown (once every 3 visits)
+if (!isset($_SESSION['visit_count'])) {
+    $_SESSION['visit_count'] = 0;
+}
+$_SESSION['visit_count']++;
+
+$show_popup = ($_SESSION['visit_count'] % 2 == 0);
+
+// Fetch a random published job with show_popup enabled
+$job = null;
+if ($show_popup) {
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM jobs WHERE is_published = 1 AND show_popup = 1 ORDER BY RAND() LIMIT 1");
+        $stmt->execute();
+        $job = $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -38,6 +65,7 @@ require_once '../includes/check_maintenance.php';
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap"rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/team.css">
+    <link rel="stylesheet" href="../assets/css/dark-mode-index.css">
 
     <title>A.S UNLOCK - Team</title>
 </head>
@@ -65,7 +93,9 @@ require_once '../includes/check_maintenance.php';
             </ul>
             <ul class="btn">
                 <li><a href="https://wa.me/201069062005?text=السلام%20عليكم%20ورحمة%20الله%20وبركاته%0Aعاوز%20استفسر%20عن%20" class="contact co-btn" target="_blank">أتصل بنا <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-telephone-fill" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" /></svg></a></li>
-                <li><a href="../public/login.php" class="login lo-btn">تسجيل الدخول <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" /><path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" /></svg></a></li>
+                <li><a href="../public/login.php" class="login lo-btn">تسجيل <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z" /><path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z" /></svg></a></li>
+                <li></li>
+                <li class="dark-mode-toggle"><a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half" viewBox="0 0 16 16"><path d="M8 15A7 7 0 1 0 8 1zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16" /></svg></a></li>
             </ul>
         </nav>
     </header>
@@ -331,11 +361,64 @@ require_once '../includes/check_maintenance.php';
             </div>
         </footer>
     </main>
+    <!-- Bootstrap Modal for Job Popup -->
+    <?php if ($show_popup && $job): ?>
+    <div class="modal fade" id="jobModal" tabindex="-1" aria-labelledby="jobModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jobModalLabel"><?= htmlspecialchars($job['title']) ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Category:</strong> <?= htmlspecialchars($job['category']) ?></p>
+                    <p><strong>Job Type:</strong> <?= htmlspecialchars($job['job_type']) ?></p>
+                    <p><strong>Experience:</strong> <?= htmlspecialchars($job['experience']) ?></p>
+                    <p><strong>Description:</strong> <?= htmlspecialchars($job['description']) ?></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="job-announcement.php?id=<?= $job['id'] ?>" class="btn btn-primary">View Full Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Bootstrap JS -->
+    <script src="../assets/js/dark-mode.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/public_links.js"></script>
     <script>
-    
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger');
+        const navbar = document.getElementById('navbar');
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navbar.classList.toggle('active');
+            
+            // منع التمرير عند فتح القائمة
+            if (navbar.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        const navLinks = document.querySelectorAll('.navbar a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navbar.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+    });
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fadeElements = document.querySelectorAll('.fade-in');
             
@@ -384,32 +467,12 @@ require_once '../includes/check_maintenance.php';
         gtag('config', 'G-LP7KNPTDYH');
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger');
-            const navbar = document.getElementById('navbar');
-            
-            hamburger.addEventListener('click', function() {
-                this.classList.toggle('active');
-                navbar.classList.toggle('active');
-                
-                // منع التمرير عند فتح القائمة
-                if (navbar.classList.contains('active')) {
-                    document.body.style.overflow = 'hidden';
-                } else {
-                    document.body.style.overflow = 'auto';
-                }
-            });
-            
-            // إغلاق القائمة عند النقر على رابط
-            const navLinks = document.querySelectorAll('.navbar a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    hamburger.classList.remove('active');
-                    navbar.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                });
-            });
-        });
+    // Automatically show the modal when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        var jobModal = new bootstrap.Modal(document.getElementById('jobModal'));
+        jobModal.show();
+    });
     </script>
+    <?php endif; ?>
 </body>
 </html>
