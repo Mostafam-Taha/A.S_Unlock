@@ -114,7 +114,7 @@ function getFileIcon($fileType) {
     <link rel="stylesheet" href="../assets/css/download.css">
     <link rel="stylesheet" href="../assets/css/dark-mode-index.css">
 
-    <title>A.S UNLOCK</title>
+    <title>A.S UNLOCK - Download</title>
 </head>
 <body class="dark-mode-index">
     <!-- Header -->

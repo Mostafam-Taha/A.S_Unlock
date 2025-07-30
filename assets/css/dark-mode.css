@@ -78,9 +78,18 @@
     border: var(--border-color) 1px solid;
 }
 
+.dark-mode .form-control {
+    color: var(--text-color);
+}
+
+.dark-mode .form-control:focus {
+    background-color: transparent;
+}
+
 .dark-mode select {
     background: none;
     border: var(--border-color) 1px solid;
+    color: var(--text-color);
 }
 
 .dark-mode label {
@@ -359,4 +368,18 @@
 
 .dark-mode .modal-header .btn-close {
     color: var(--text-color) !important;
+}
+
+/* Dashboard/ applications */
+.dark-mode .menu-jobs {
+    background-color: var(--card-bg);
+}
+
+/* Dashboard/ team_admininstrator */
+#socialLinksContainer .row {
+    background-color: var(--card-bg);
+}
+
+#jobForm .row {
+    background-color: var(--card-bg);
 }

@@ -141,12 +141,12 @@ a {
     background: white;
     margin: 10vh auto;
     padding: 25px;
-    border-radius: 10px;
-    width: 80%;
+    border-radius: 15px;
+    width: 90%;
     max-width: 1255px;
     box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
     position: relative;
-    max-height: 80vh;
+    max-height: 85vh;
     display: flex;
     flex-direction: column;
 }
@@ -269,13 +269,13 @@ a {
     margin-top: 20px;
     justify-content: center;
     flex-wrap: nowrap;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .plan-card {
     width: 100%;
     background: white;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 25px;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);

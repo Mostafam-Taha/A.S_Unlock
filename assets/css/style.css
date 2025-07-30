@@ -24,7 +24,7 @@ body {
     font-family: "Tajawal", sans-serif;
     margin: 0 auto;
     width: 100%;
-    max-width: 1600px;
+    /* max-width: 1600px; */
     box-sizing: border-box;
 }
 
@@ -49,6 +49,12 @@ p {
 a {
     text-decoration: none;
     color: var(--br-sacn-color);
+}
+
+.max_width-main,
+.max-width-main-fo {
+    margin: 0 auto;
+    max-width: 1600px;
 }
 
 .header,
@@ -720,6 +726,7 @@ a {
 .team .container .team-pers {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 .team .container .team-pers .grid-team {
@@ -1007,7 +1014,7 @@ section .wave {
 
 .contact .bold-title {
     position: relative;
-    top: -95px;
+    top: -65px;
     text-align: center;
     font-size: 82px;
     font-weight: 900;

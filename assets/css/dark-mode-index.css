@@ -142,13 +142,25 @@
     border: var(--border-color) 1px solid;
 }
 
-.dark-mode .modal-content {
-    background: var(--bg-color);
-    border: var(--border-color) 1px solid;
+.dark-mode .modal-content{
+    background-color: var(--card-bg);
 }
 
 .dark-mode .modal-content .plan-feature i {
     color: #4CAF50;
+}
+
+.dark-mode .cards-container .card {
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .modal-dialog .modal-content {
+    background: var(--bg-color);
+}
+
+.dark-mode .modal-dialog .modal-content .text-muted {
+    color: var(--text-color) !important;
 }
 
 /* Public/CheckOut */
@@ -218,4 +230,60 @@
 .dark-mode .term-item {
     background-color: var(--card-bg);
     border: var(--border-color) 1px solid;
+}
+
+/* Team/team.php */
+.dark-mode .hero-section .text-center {
+    background: none;
+}
+
+.dark-mode .hero-section::before {
+    background: none;
+}
+
+.dark-mode .team-section .container .text-center,
+.dark-mode .container .text-center
+.dark-mode .container .text-center {
+    background: none;
+    background-color: none;
+}
+
+.dark-mode .management-team .management-card {
+    background-color: var(--card-bg);
+}
+
+.dark-mode .management-team .management-card .management-social a {
+    background: var(--card-bg);
+    border: var(--border-color) 1px solid;
+}
+
+.dark-mode .assistant-team,
+.dark-mode .assistant-team::before {
+    background: none;
+}
+
+.dark-mode .assistant-team .assistant-card {
+    background: var(--card-bg);
+}
+
+.dark-mode .assistant-team .container .text-center {
+    background-color: #0d0d0d;
+}
+
+.dark-mode .contact-section .container .text-center {
+    background: none;
+}
+
+.dark-mode .contact-methods a {
+    color: var(--card-bg);
+}
+
+.dark-mode .contact-methods a .fas,
+.dark-mode .contact-methods a .fab {
+    color: var(--card-bg);
+    margin: 0 5px;
+}
+
+.dark-mode .social-floating a {
+    background-color: var(--card-bg);
 }

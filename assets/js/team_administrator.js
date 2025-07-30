@@ -306,7 +306,7 @@ $('#updatePersonBtn').click(function() {
                 alert('تم تحديث بيانات المستخدم بنجاح');
                 $('#personDetailsModal').modal('hide');
                 // إعادة تحميل البيانات أو تحديث الجدول
-                loadPersonsData();
+                // loadPersonsData();
             } else {
                 alert('حدث خطأ أثناء تحديث البيانات: ' + response.message);
             }

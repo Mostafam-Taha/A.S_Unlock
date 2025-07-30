@@ -132,36 +132,44 @@ function updatePlanIcon(planType) {
     
     iconContainer.innerHTML = `<i class="bi ${iconClass}"></i>`;
 }
+
+// حذف المنتج
 async function deleteProduct(productId) {
     if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
         try {
-            const response = await fetch(`../api/delete_product.php?id=${productId}`, { 
-                method: 'DELETE' 
+            const response = await fetch(`https://asunlock.ct.ws/api/delete_test.php?id=${productId}`, {
+                method: 'POST', // نستخدم POST بدلاً من DELETE لتجنب بعض القيود
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-HTTP-Method-Override': 'DELETE', // لتحديد أننا نريد DELETE
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ id: productId }),
+                credentials: 'include' // إذا كنت تستخدم جلسات أو كوكيز
             });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to delete product');
+            }
+            
             const result = await response.json();
             
             if (result.success) {
                 alert('تم حذف المنتج بنجاح');
                 closeDetailsModal();
-                
-                // تحديث الجدول - مع التحقق من وجود العنصر أولاً
                 const row = document.querySelector(`tr[data-product-id="${productId}"]`);
-                if (row) {
-                    row.remove();
-                } else {
-                    console.warn('لم يتم العثور على الصف المطلوب، قد تحتاج لإعادة تحميل الصفحة');
-                    // يمكنك إضافة إعادة تحميل للصفحة إذا لزم الأمر
-                    // window.location.reload();
-                }
+                if (row) row.remove();
             } else {
-                alert('حدث خطأ: ' + result.message);
+                throw new Error(result.message || 'Unknown error occurred');
             }
         } catch (error) {
             console.error('Error:', error);
-            alert('حدث خطأ أثناء حذف المنتج');
+            alert('حدث خطأ أثناء حذف المنتج: ' + error.message);
         }
     }
 }
+
 // حفظ البيانات الإضافية
 async function saveAdditionalData(productId) {
     const planType = document.getElementById('planType').value;

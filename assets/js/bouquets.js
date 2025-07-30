@@ -2,7 +2,7 @@ $(document).ready(function () {
     // إضافة حقل ميزة جديد عند النقر على زر +
     $(document).on('click', '.add-feature-btn', function () {
         const newFeature = `
-      <div class="input-group mb-2">
+      <div class="input-group mb-2" style="direction: ltr;">
         <input type="text" class="form-control feature-input" name="features[]" required>
         <button type="button" class="btn btn-danger remove-feature-btn">-</button>
       </div>

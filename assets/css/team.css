@@ -13,7 +13,7 @@
 
 /*  */
 *, ::after, ::before {
-    box-sizing: content-box;
+    box-sizing: inherit;
 }
 
 ol, ul {

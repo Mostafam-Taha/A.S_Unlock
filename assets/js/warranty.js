@@ -45,8 +45,8 @@ document.querySelectorAll('.whatsapp-btn').forEach(btn => {
 });
 
 function generateWhatsAppMessage(orderData) {
-    return `الضمان اتفعل وأي حاجة تواجهك كلمني على طول وأنا تحت أمرك 💙👀✨
-الضمان ساري لمدة ${orderData.warranty_duration} يوم من ${orderData.warranty_expiry_date}، علشان تكون متطمن 🔒✅.
+    return `الضمان اتفعل وأي حاجة تواجهك كلمني على طول وأنا تحت أمرك
+الضمان ساري لمدة ${orderData.warranty_duration} يوم من ${orderData.warranty_expiry_date}، علشان تكون متطمن.
 
 مع تحيات Ahmed Abd Elshafy
 
