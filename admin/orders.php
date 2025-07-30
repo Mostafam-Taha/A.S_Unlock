@@ -91,6 +91,8 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="add_team.php">ادارة الفريق index</a></li>
+                    <li><a href="applications.php">اضافة وظيفة</a></li>
                     <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
@@ -158,7 +160,7 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="function-flex-left">
                                 <label for="search-table-product">
                                     <i class="bi bi-search"></i>
-                                    <input type="search" name="search-table-product" id="search-table-product" placeholder="بحث عن المنتج...">
+                                    <input type="search" name="search-table-product" id="search-table-product" placeholder="بحث عن المنتج أو رقم الطلب...">
                                 </label>
                             </div>
                         </div>
@@ -328,6 +330,23 @@ $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
             document.addEventListener('click', function (e) {
                 if (!menuProfile.contains(e.target) && e.target !== profileImage) {
                     menuProfile.classList.remove('active');
+                }
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('search-table-product').addEventListener('keyup', function () {
+            let searchValue = this.value.trim().toLowerCase();
+            let rows = document.querySelectorAll('table tbody tr');
+
+            rows.forEach(function (row) {
+                let id = row.cells[0].textContent.toLowerCase(); // رقم الطلب
+                let name = row.cells[1].textContent.toLowerCase(); // اسم المستخدم
+
+                if (id.includes(searchValue) || name.includes(searchValue)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
                 }
             });
         });

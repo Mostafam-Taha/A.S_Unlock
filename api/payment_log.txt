@@ -82,3 +82,1011 @@ Array
         )
 
 )
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => vodafone-cash.png
+            [full_path] => vodafone-cash.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php1726.tmp
+            [error] => 0
+            [size] => 6070
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => admin@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php62BE.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamtaha66@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php60F.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php37FE.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php89AB.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpA4FF.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php36E0.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php6474.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamtaha66@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php2F24.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpA6FE.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php4E0C.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamtaha66@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php553A.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamtaha66@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php99C1.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpE736.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php23A4.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php77FA.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9409.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpFF6D.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpCC82.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpF0F3.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php1C1B.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 2
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafm@asfd
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpE30B.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 3
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php4DD7.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9466.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpAD1F.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpF135.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php434D.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php4609.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9775.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpBDBB.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpDCDD.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 3
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php1061.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafamta347@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php43E6.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpB677.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpB6A7.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpDF5E.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 3
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpFC5D.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 3
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php16BC.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 127.0.0.1_5500_22.png
+            [full_path] => 127.0.0.1_5500_22.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php7028.tmp
+            [error] => 0
+            [size] => 2863972
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => 
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 127.0.0.1_5500_22.png
+            [full_path] => 127.0.0.1_5500_22.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\php6FCA.tmp
+            [error] => 0
+            [size] => 2863972
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => asdf@asdf
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php5D09.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafm@asfd
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php2FE.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => instapay
+    [phone_number] => 01003504114
+    [email] => mostafamta347@gmail.com
+    [subscription_email] => mostafm@asfd
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php36C.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01121561532
+    [email] => hk303792mmmm@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\php9E57.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => instapay
+    [phone_number] => 01121561532
+    [email] => hk303792mmmm@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpE573.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 5
+    [payment_method] => instapay
+    [phone_number] => 01121561532
+    [email] => hk303792mmmm@gmail.com
+    [subscription_email] => localhost@gmail.com
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpE5E1.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01121561532
+    [email] => hk303792mmmm@gmail.com
+    [subscription_email] => mostafm@asfd
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpDB80.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)
+Array
+(
+    [plan_id] => 7
+    [payment_method] => vodafone_cash
+    [phone_number] => 01121561532
+    [email] => hk303792mmmm@gmail.com
+    [subscription_email] => mostafm@asfd
+)
+Array
+(
+    [receipt_image] => Array
+        (
+            [name] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [full_path] => 516ce7c930e539f73ad36ed32fa4f9d7.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\xampp\tmp\phpDB91.tmp
+            [error] => 0
+            [size] => 165054
+        )
+
+)

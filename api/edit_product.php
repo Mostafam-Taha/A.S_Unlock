@@ -196,8 +196,16 @@ try {
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="warranty_duration_days" class="form-label">مدة الضمان بالأيام (اختياري)</label>
+                                        <input type="number" class="form-control" id="warranty_duration_days" name="warranty_duration_days" 
+                                            value="<?= $product['warranty_duration_days'] ?? '' ?>" min="0">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="discount" class="form-label">الخصم (اختياري)</label>
@@ -259,8 +267,8 @@ try {
                                                     <label class="form-label">نوع الخطة</label>
                                                     <select class="form-select" name="plan_types[]" required>
                                                         <option value="1" <?= $plan['plan_type'] === '1' ? 'selected' : '' ?>>أساسي</option>
-                                                        <option value="popular" <?= $plan['plan_type'] === 'popular' ? 'selected' : '' ?>>شائع</option>
-                                                        <option value="pro" <?= $plan['plan_type'] === 'pro' ? 'selected' : '' ?>>احترافي</option>
+                                                        <option value="2" <?= $plan['plan_type'] === '2' ? 'selected' : '' ?>>شائع</option>
+                                                        <option value="3" <?= $plan['plan_type'] === '3' ? 'selected' : '' ?>>احترافي</option>
                                                         <option value="custom" <?= $plan['plan_type'] === 'custom' ? 'selected' : '' ?>>مخصص</option>
                                                     </select>
                                                 </div>
@@ -388,8 +396,8 @@ try {
                                 <label class="form-label">نوع الخطة</label>
                                 <select class="form-select" name="plan_types[]" required>
                                     <option value="1">أساسي</option>
-                                    <option value="popular">شائع</option>
-                                    <option value="pro">احترافي</option>
+                                    <option value="2">شائع</option>
+                                    <option value="3">احترافي</option>
                                     <option value="custom" selected>مخصص</option>
                                 </select>
                             </div>

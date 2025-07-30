@@ -11,6 +11,7 @@ if (empty($_SESSION['admin_id'])) {
 
 <!DOCTYPE html>
 <html dir="rtl" lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,14 +41,12 @@ if (empty($_SESSION['admin_id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- مش مهم أوي لو حابب تلغية -->
     <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <link rel="stylesheet" href="../assets/css/users.css">
+    <link rel="stylesheet" href="../assets/css/review-costm.css">
     <link rel="stylesheet" href="../assets/css/dark-mode.css">
 
-    <title>Dashboard - Users</title>
+    <title>Dashboard - Team_administrator</title>
 </head>
-
 <body>
     <!-- Header -->
     <header class="header" id="mainHeader">
@@ -130,74 +129,40 @@ if (empty($_SESSION['admin_id'])) {
         </div>
         <!-- Dashboard Body -->
         <!-- Section Body -->
-        <!-- #Users -->
+        <!-- #Customer opinions -->
         <section class="product">
             <div class="contanier">
-                <h3>الطلبات</h3>
+                <h3 style="margin: 15px 0;">إدارة الفريق (index)</h3>
                 <div class="detail-order">
                     <div class="function-top-flex">
                         <div class="flex-top">
-                            <div class="function-flex-right">
-                                <!-- <button class="btn-plus" id="openProductModal" class="custom-btn"><i class="bi bi-plus"></i> اضافة مستخدم</button> -->
+                            <div class="function-flex-right" style="position: relative;">
+                                <button class="btn-plus bi bi-plus-lg plus-add" id="addTeam" data-bs-toggle="modal" data-bs-target="#teamModal"></button>
                             </div>
                             <div class="function-flex-left">
-                                <label for="search-table-product">
-                                    <i class="bi bi-search"></i>
-                                    <input type="search" name="search-table-product" id="search-table-product" placeholder="بحث عن المنتج...">
-                                </label>
                             </div>
                         </div>
                         <div class="prod-table">
-                            <table>
+                            <table id="itemsTableTeam">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>الاسم</th>
-                                        <th>البريد الإلكتروني</th>
-                                        <th>جوجل</th>
-                                        <th>حالة التحقق</th>
-                                        <th>تاريخ الإنشاء</th>
-                                        <th>الحالة</th>
+                                        <th>التاريخ</th>
+                                        <th>المسمى الوظيفي</th>
                                         <th>الإجراءات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    try {
-                                        $stmt = $pdo->query("SELECT * FROM users ORDER BY created_at DESC");
-                                        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                        
-                                        foreach ($users as $user) {
-                                            echo "<tr>";
-                                            echo "<td>#".htmlspecialchars($user['id'])."</td>";
-                                            echo "<td>".htmlspecialchars($user['name'] ?? 'غير معروف')."</td>";
-                                            echo "<td>".htmlspecialchars($user['email'])."</td>";
-                                            echo "<td>".(!empty($user['google_id']) ? 'نعم' : 'لا')."</td>";
-                                            echo "<td>".($user['verified'] ? 'مفعل' : 'غير مفعل')."</td>";
-                                            echo "<td>".date('Y-m-d H:i', strtotime($user['created_at']))."</td>";
-                                            echo "<td>".($user['banned'] ? 'محظور' : 'نشط')."</td>";
-                                            echo '<td>
-                                                <div class="dropdown">
-                                                    <button class="dropdown-btn" onclick="toggleDropdown(this)"><i class="bi bi-three-dots"></i></button>
-                                                    <div class="dropdown-content">
-                                                        <button onclick="showUserDetails('.$user['id'].')" class="btn btn-primary">عرض</button>
-                                                        <button onclick="toggleBanUser('.$user['id'].', '.$user['banned'].')">'.($user['banned'] ? 'فك الحظر' : 'حظر').'</button>
-                                                    </div>
-                                                </div>
-                                            </td>';
-
-
-
-                                            echo "</tr>";
-                                        }
-                                        
-                                        if (empty($users)) {
-                                            echo "<tr><td colspan='7' style='text-align:center;'>لا توجد بيانات متاحة</td></tr>";
-                                        }
-                                    } catch (PDOException $e) {
-                                        echo "<tr><td colspan='7' style='text-align:center;color:red;'>خطأ في جلب البيانات: ".htmlspecialchars($e->getMessage())."</td></tr>";
-                                    }
-                                    ?>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td> 
+                                            <a href='#' class='delete-item'>حذف</a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -206,26 +171,35 @@ if (empty($_SESSION['admin_id'])) {
             </div>
         </section>
     </main>
-    <!--  -->
-    <!--  -->
-    <!--  -->
-    <!-- Modal -->
-    <!-- Bootstrap Modal -->
-    <div class="modal fade" id="userDetailsModal" tabindex="-1" role="dialog" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+    <!-- Win -->
+    <!-- Teams Bootstrap -->
+    <div class="modal fade" id="teamModal" tabindex="-1" aria-labelledby="teamModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="userDetailsModalLabel">تفاصيل المستخدم وطلباته</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="userDetailsContent">
-                <!-- سيتم تحميل المحتوى هنا عبر AJAX -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-            </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="teamModalLabel">إضافة عضو جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="teamForm" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="teamImage" class="form-label">رفع صورة</label>
+                        <input type="file" class="form-control" id="teamImage" name="teamImage" accept="image/*" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="teamName" class="form-label">الاسم</label>
+                        <input type="text" class="form-control" id="teamName" name="teamName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="jobTitle" class="form-label">المسمى الوظيفي</label>
+                        <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="saveTeam">حفظ</button>
+                </div>
             </div>
         </div>
     </div>
@@ -234,13 +208,11 @@ if (empty($_SESSION['admin_id'])) {
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
     </div>
     <!--  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="../assets/js/users.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/add_team.js"></script>
     <script src="../assets/js/dark-mode.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const toggleBtn = document.querySelector('.toggle-menu');
@@ -279,37 +251,5 @@ if (empty($_SESSION['admin_id'])) {
             });
         });
     </script>
-<script>
-// دالة لعرض تفاصيل المستخدم
-function showUserDetails(userId) {
-  // تحديث URL بدون إعادة تحميل الصفحة
-  history.pushState(null, null, '?user_id=' + userId);
-  
-  // جلب بيانات المستخدم عبر AJAX
-  $.ajax({
-    url: '../api/get_user_data.php', // ستنشئ هذا الملف لاحقاً
-    type: 'GET',
-    data: {id: userId},
-    success: function(response) {
-      $('#userDetailsContent').html(response);
-      $('#userDetailsModal').modal('show');
-    },
-    error: function() {
-      $('#userDetailsContent').html('<p>حدث خطأ أثناء جلب البيانات</p>');
-      $('#userDetailsModal').modal('show');
-    }
-  });
-}
-
-// عند تحميل الصفحة، تحقق من وجود user_id في URL
-$(document).ready(function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get('user_id');
-  
-  if (userId) {
-    showUserDetails(userId);
-  }
-});
-</script>
 </body>
 </html>

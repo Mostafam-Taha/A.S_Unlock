@@ -73,6 +73,8 @@ if (empty($_SESSION['admin_id'])) {
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="add_team.php">ادارة الفريق index</a></li>
+                    <li><a href="applications.php">اضافة وظيفة</a></li>
                     <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
@@ -189,105 +191,105 @@ if (empty($_SESSION['admin_id'])) {
     <!-- Win -->
     <!-- Modal -->
     <div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="addPersonModalLabel">إضافة خطة جديدة</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="addPlanForm">
-            <div class="mb-3">
-                <label for="planIcon" class="form-label">أيقونة الخطة</label>
-                <input type="text" class="form-control" id="planIcon" placeholder='مثال: &lt;i class="bi bi-star"&gt;&lt;/i&gt;'>
-            </div>
-            <div class="mb-3">
-                <label for="planName" class="form-label">اسم الخطة</label>
-                <input type="text" class="form-control" id="planName" required>
-            </div>
-            <div class="mb-3">
-                <label for="planPrice" class="form-label">سعر الخطة</label>
-                <input type="number" class="form-control" id="planPrice" step="0.01" required>
-            </div>
-            <div class="mb-3">
-                <label for="planDiscount" class="form-label">خصم الخطة (%)</label>
-                <input type="number" class="form-control" id="planDiscount" min="0" max="100" value="0">
-            </div>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="bestSeller">
-                <label class="form-check-label" for="bestSeller">الخطة الأكثر مبيعًا</label>
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label">مميزات الخطة</label>
-                <div id="featuresContainer">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control feature-input" name="features[]" required>
-                    <button type="button" class="btn btn-success add-feature-btn">+</button>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPersonModalLabel">إضافة خطة جديدة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <form id="addPlanForm">
+                        <div class="mb-3">
+                            <label for="planIcon" class="form-label">أيقونة الخطة</label>
+                            <input type="text" class="form-control" id="planIcon" placeholder='مثال: &lt;i class="bi bi-star"&gt;&lt;/i&gt;'>
+                        </div>
+                        <div class="mb-3">
+                            <label for="planName" class="form-label">اسم الخطة</label>
+                            <input type="text" class="form-control" id="planName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="planPrice" class="form-label">سعر الخطة</label>
+                            <input type="number" class="form-control" id="planPrice" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="planDiscount" class="form-label">خصم الخطة (%)</label>
+                            <input type="number" class="form-control" id="planDiscount" min="0" max="100" value="0">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="bestSeller">
+                            <label class="form-check-label" for="bestSeller">الخطة الأكثر مبيعًا</label>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">مميزات الخطة</label>
+                            <div id="featuresContainer">
+                                <div class="input-group mb-2" style="direction: ltr;">
+                                    <input type="text" class="form-control feature-input" name="features[]" required>
+                                    <button type="button" class="btn btn-success add-feature-btn">+</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="savePlanBtn">حفظ الخطة</button>
                 </div>
             </div>
-            </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-            <button type="button" class="btn btn-primary" id="savePlanBtn">حفظ الخطة</button>
-        </div>
-        </div>
-    </div>
     </div>
 
     <div class="modal fade" id="planModal" tabindex="-1" role="dialog" aria-labelledby="planModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="planModalLabel">تعديل بيانات الخطة</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="planForm">
-                    <input type="hidden" id="planId" name="id">
-                    
-                    <div class="form-group">
-                        <label for="name">اسم الخطة</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="price">سعر الباقة</label>
-                        <input type="number" step="0.01" class="form-control" id="price" name="price" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="discount">الخصم (%)</label>
-                        <input type="number" class="form-control" id="discount" name="discount">
-                    </div>
-                    
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="best_seller" name="best_seller">
-                        <label class="form-check-label" for="best_seller">مميز</label>
-                    </div>
-                    
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="status" name="status" checked>
-                        <label class="form-check-label" for="status">منشور</label>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="features">مميزات الخطة (كل ميزة في سطر)</label>
-                        <textarea class="form-control" id="features" name="features" rows="5"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                <button type="button" class="btn btn-primary" id="savePlan">حفظ التغييرات</button>
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="planModalLabel">تعديل بيانات الخطة</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="planForm">
+                        <input type="hidden" id="planId" name="id">
+                        
+                        <div class="form-group">
+                            <label for="name">اسم الخطة</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="price">سعر الباقة</label>
+                            <input type="number" step="0.01" class="form-control" id="price" name="price" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="discount">الخصم (%)</label>
+                            <input type="number" class="form-control" id="discount" name="discount">
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="best_seller" name="best_seller">
+                            <label class="form-check-label" for="best_seller">مميز</label>
+                        </div>
+                        
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="status" name="status" checked>
+                            <label class="form-check-label" for="status">منشور</label>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="features">مميزات الخطة (كل ميزة في سطر)</label>
+                            <textarea class="form-control" id="features" name="features" rows="5"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                    <button type="button" class="btn btn-primary" id="savePlan">حفظ التغييرات</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>

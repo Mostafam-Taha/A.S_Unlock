@@ -23,6 +23,7 @@ try {
     $isPublished = isset($_POST['is_published']) ? 1 : 0;
     $isFeatured = isset($_POST['is_featured']) ? 1 : 0;
     $isSpecialOffer = isset($_POST['is_special_offer']) ? 1 : 0;
+    $warrantyDurationDays = !empty($_POST['warranty_duration_days']) ? (int)$_POST['warranty_duration_days'] : null;
     
     $features = $_POST['features'] ?? [];
     $featuresJson = json_encode(array_values(array_filter($features)));
@@ -51,7 +52,7 @@ try {
     // بدء المعاملة
     $pdo->beginTransaction();
     
-    // تحديث بيانات المنتج الأساسية
+    // تحديث بيانات المنتج الأساسية (تم إضافة حقل warranty_duration_days هنا)
     $stmt = $pdo->prepare("
         UPDATE digital_products SET
             product_name = ?,
@@ -65,6 +66,7 @@ try {
             is_published = ?,
             is_featured = ?,
             is_special_offer = ?,
+            warranty_duration_days = ?,
             updated_at = NOW()
         WHERE id = ?
     ");
@@ -81,6 +83,7 @@ try {
         $isPublished,
         $isFeatured,
         $isSpecialOffer,
+        $warrantyDurationDays,
         $productId
     ]);
     

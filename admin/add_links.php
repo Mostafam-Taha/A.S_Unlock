@@ -76,6 +76,8 @@ if (empty($_SESSION['admin_id'])) {
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="add_team.php">ادارة الفريق index</a></li>
+                    <li><a href="applications.php">اضافة وظيفة</a></li>
                     <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>

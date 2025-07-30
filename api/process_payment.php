@@ -8,6 +8,10 @@ ini_set('display_errors', 1);
 
 $response = ['success' => false, 'message' => ''];
 
+// إعدادات Telegram
+define('TELEGRAM_BOT_TOKEN', '8403544536:AAHqqOWipI-PXZ0e3Ndy_H28x2gX50ldOeQ');
+define('TELEGRAM_CHAT_ID', '@asorders');
+
 try {
     if(!isset($_SESSION['user_id'])) {
         throw new Exception('يجب تسجيل الدخول أولاً');
@@ -44,16 +48,6 @@ try {
         throw new Exception('حدث خطأ أثناء رفع الملف');
     }
 
-    // جلب سعر الخطة من قاعدة البيانات
-    $stmt = $pdo->prepare("SELECT price FROM plans WHERE id = ?");
-    $stmt->execute([$_POST['plan_id']]);
-    $plan = $stmt->fetch();
-
-    if(!$plan) {
-        throw new Exception('الخطة غير موجودة');
-    }
-
-    // حفظ البيانات في جدول الطلبات
     // جلب بيانات الخطة من قاعدة البيانات
     $stmt = $pdo->prepare("SELECT name, price FROM plans WHERE id = ?");
     $stmt->execute([$_POST['plan_id']]);
@@ -62,6 +56,11 @@ try {
     if(!$plan) {
         throw new Exception('الخطة غير موجودة');
     }
+
+    // جلب بيانات المستخدم
+    $stmt = $pdo->prepare("SELECT name, email FROM users WHERE id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch();
 
     // حفظ البيانات في جدول الطلبات
     $stmt = $pdo->prepare("
@@ -75,19 +74,47 @@ try {
     $success = $stmt->execute([
         $_SESSION['user_id'],
         $_POST['plan_id'],
-        $plan['name'],  // اسم الخطة
-        $plan['price'], // سعر الخطة
+        $plan['name'],
+        $plan['price'],
         $_POST['payment_method'],
         $_POST['phone_number'],
         $_POST['email'],
         $_POST['subscription_email'] ?? null,
         $filename,
-        $plan['price'], // يمكنك استخدام نفس سعر الخطة أو قيمة أخرى
+        $plan['price'],
     ]);
 
     if(!$success) {
         throw new Exception('فشل في حفظ البيانات');
     }
+
+    // إرسال إشعار Telegram
+    $orderId = $pdo->lastInsertId();
+    $message = "🛒 *طلب جديد* 🛒\n\n";
+    $message .= "📌 *رقم الطلب:* $orderId\n";
+    $message .= "👤 *المستخدم:* " . $user['name'] . "\n";
+    $message .= "📧 *البريد:* " . $user['email'] . "\n";
+    $message .= "📱 *رقم الهاتف:* " . $_POST['phone_number'] . "\n";
+    $message .= "📦 *الخطة:* " . $plan['name'] . "\n";
+    $message .= "💰 *السعر:* " . $plan['price'] . " ج\n";
+    $message .= "💳 *طريقة الدفع:* " . $_POST['payment_method'] . "\n";
+    $message .= "⏰ *وقت الطلب:* " . date('Y-m-d H:i:s') . "\n";
+
+    $telegramUrl = "https://api.telegram.org/bot" . TELEGRAM_BOT_TOKEN . "/sendMessage";
+    $postData = [
+        'chat_id' => TELEGRAM_CHAT_ID,
+        'text' => $message,
+        'parse_mode' => 'Markdown'
+    ];
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $telegramUrl);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // فقط لأغراض التطوير
+    $result = curl_exec($ch);
+    curl_close($ch);
 
     $response['success'] = true;
     $response['message'] = 'تم حفظ الطلب بنجاح';

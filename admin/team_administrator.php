@@ -73,6 +73,8 @@ if (empty($_SESSION['admin_id'])) {
                 <ul class="page">
                     <li><a href="./users.php">المستخدمين</a></li>
                     <li><a href="team_administrator.php">الموظفين</a></li>
+                    <li><a href="add_team.php">ادارة الفريق index</a></li>
+                    <li><a href="applications.php">اضافة وظيفة</a></li>
                     <li><a href="bouquets.php">الباقات</a></li>
                     <li><a href="products.php">المنتجات</a></li>
                     <li><a href="review-costm.php">اراء العملاء</a></li>
@@ -197,166 +199,166 @@ if (empty($_SESSION['admin_id'])) {
     <!-- Win -->
     <!-- نافذة Bootstrap Modal -->
     <div class="modal fade" id="addPersonModal" tabindex="-1" aria-labelledby="addPersonModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="addPersonModalLabel">إضافة شخص جديد</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="addPersonForm">
-            <!-- صورة المستخدم -->
-            <div class="mb-3">
-                <label for="userImage" class="form-label">صورة المستخدم</label>
-                <input type="file" class="form-control" id="userImage" name="userImage" accept="image/*">
-            </div>
-            
-            <!-- نوع الشخص -->
-            <div class="mb-3">
-                <label for="personType" class="form-label">النوع</label>
-                <select class="form-select" id="personType" name="personType" required>
-                <option value="">اختر النوع</option>
-                <option value="ادارة">ادارة</option>
-                <option value="العمل المساعد">العمل المساعد</option>
-                </select>
-            </div>
-            
-            <!-- اسم الشخص -->
-            <div class="mb-3">
-                <label for="personName" class="form-label">اسم الشخص</label>
-                <input type="text" class="form-control" id="personName" name="personName" required>
-            </div>
-            
-            <!-- الوظيفة -->
-            <div class="mb-3">
-                <label for="personJob" class="form-label">الوظيفة</label>
-                <input type="text" class="form-control" id="personJob" name="personJob" required>
-            </div>
-            
-            <!-- الوصف -->
-            <div class="mb-3">
-                <label for="personDescription" class="form-label">الوصف</label>
-                <textarea class="form-control" id="personDescription" name="personDescription" rows="3"></textarea>
-            </div>
-            
-            <!-- المهارات -->
-            <div class="mb-3">
-                <label class="form-label">المهارات</label>
-                <div id="skillsContainer">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control skill-input" name="skills[]" placeholder="أدخل المهارة">
-                    <button type="button" class="btn btn-outline-primary add-skill-btn">
-                    <i class="bi bi-plus-lg"></i>
-                    </button>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPersonModalLabel">إضافة شخص جديد</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+                <div class="modal-body">
+                    <form id="addPersonForm">
+                        <!-- صورة المستخدم -->
+                        <div class="mb-3">
+                            <label for="userImage" class="form-label">صورة المستخدم</label>
+                            <input type="file" class="form-control" id="userImage" name="userImage" accept="image/*">
+                        </div>
+                        
+                        <!-- نوع الشخص -->
+                        <div class="mb-3">
+                            <label for="personType" class="form-label">النوع</label>
+                            <select class="form-select" id="personType" name="personType" required>
+                                <option value="">اختر النوع</option>
+                                <option value="ادارة">ادارة</option>
+                                <option value="العمل المساعد">العمل المساعد</option>
+                            </select>
+                        </div>
+                        
+                        <!-- اسم الشخص -->
+                        <div class="mb-3">
+                            <label for="personName" class="form-label">اسم الشخص</label>
+                            <input type="text" class="form-control" id="personName" name="personName" required>
+                        </div>
+                        
+                        <!-- الوظيفة -->
+                        <div class="mb-3">
+                            <label for="personJob" class="form-label">الوظيفة</label>
+                            <input type="text" class="form-control" id="personJob" name="personJob" required>
+                        </div>
+                        
+                        <!-- الوصف -->
+                        <div class="mb-3">
+                            <label for="personDescription" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="personDescription" name="personDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <!-- المهارات -->
+                        <div class="mb-3" style="direction: ltr;">
+                            <label class="form-label">المهارات</label>
+                            <div id="skillsContainer">
+                            <div class="input-group mb-2">
+                                <input type="text" class="form-control skill-input" name="skills[]" placeholder="أدخل المهارة">
+                                <button type="button" class="btn btn-outline-primary add-skill-btn">
+                                <i class="bi bi-plus-lg"></i>
+                                </button>
+                            </div>
+                            </div>
+                        </div>
+                        
+                        <!-- وسائل التواصل -->
+                        <div class="mb-3">
+                            <label class="form-label">وسائل التواصل</label>
+                            <div id="socialLinksContainer">
+                            <div class="row mb-2">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="socialIcons[]" placeholder="أيقونة (مثال: bi bi-facebook)">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="url" class="form-control" name="socialLinks[]" placeholder="رابط وسيلة التواصل">
+                                </div>
+                            </div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="addSocialLinkBtn">
+                                <i class="bi bi-plus-lg"></i> إضافة رابط آخر
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="savePersonBtn">حفظ</button>
                 </div>
             </div>
-            
-            <!-- وسائل التواصل -->
-            <div class="mb-3">
-                <label class="form-label">وسائل التواصل</label>
-                <div id="socialLinksContainer">
-                <div class="row mb-2">
-                    <div class="col-md-6">
-                    <input type="text" class="form-control" name="socialIcons[]" placeholder="أيقونة (مثال: bi bi-facebook)">
-                    </div>
-                    <div class="col-md-6">
-                    <input type="url" class="form-control" name="socialLinks[]" placeholder="رابط وسيلة التواصل">
-                    </div>
-                </div>
-                </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="addSocialLinkBtn">
-                <i class="bi bi-plus-lg"></i> إضافة رابط آخر
-                </button>
-            </div>
-            </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-            <button type="button" class="btn btn-primary" id="savePersonBtn">حفظ</button>
-        </div>
-        </div>
-    </div>
     </div>
     <!-- نافذة عرض وتعديل بيانات المستخدم -->
-<div class="modal fade" id="personDetailsModal" tabindex="-1" aria-labelledby="personDetailsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="personDetailsModalLabel">تفاصيل المستخدم</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editPersonForm">
-                    <input type="hidden" id="editPersonId" name="editPersonId">
-                    
-                    <!-- صورة المستخدم -->
-                    <div class="mb-3">
-                        <label for="editUserImage" class="form-label">صورة المستخدم</label>
-                        <div class="d-flex align-items-center">
-                            <img id="editUserImagePreview" src="../uploads/default_avatar.jpg" class="img-thumbnail me-3" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy">
-                            <input type="file" class="form-control" id="editUserImage" name="editUserImage" accept="image/*">
+    <div class="modal fade" id="personDetailsModal" tabindex="-1" aria-labelledby="personDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="personDetailsModalLabel">تفاصيل المستخدم</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPersonForm">
+                        <input type="hidden" id="editPersonId" name="editPersonId">
+                        
+                        <!-- صورة المستخدم -->
+                        <div class="mb-3">
+                            <label for="editUserImage" class="form-label">صورة المستخدم</label>
+                            <div class="d-flex align-items-center">
+                                <img id="editUserImagePreview" src="../uploads/default_avatar.jpg" class="img-thumbnail me-3" style="width: 100px; height: 100px; object-fit: cover;" loading="lazy">
+                                <input type="file" class="form-control" id="editUserImage" name="editUserImage" accept="image/*">
+                            </div>
                         </div>
-                    </div>
-                    
-                    <!-- نوع الشخص -->
-                    <div class="mb-3">
-                        <label for="editPersonType" class="form-label">النوع</label>
-                        <select class="form-select" id="editPersonType" name="editPersonType" required>
-                            <option value="">اختر النوع</option>
-                            <option value="ادارة">ادارة</option>
-                            <option value="العمل المساعد">العمل المساعد</option>
-                        </select>
-                    </div>
-                    
-                    <!-- اسم الشخص -->
-                    <div class="mb-3">
-                        <label for="editPersonName" class="form-label">اسم الشخص</label>
-                        <input type="text" class="form-control" id="editPersonName" name="editPersonName" required>
-                    </div>
-                    
-                    <!-- الوظيفة -->
-                    <div class="mb-3">
-                        <label for="editPersonJob" class="form-label">الوظيفة</label>
-                        <input type="text" class="form-control" id="editPersonJob" name="editPersonJob" required>
-                    </div>
-                    
-                    <!-- الوصف -->
-                    <div class="mb-3">
-                        <label for="editPersonDescription" class="form-label">الوصف</label>
-                        <textarea class="form-control" id="editPersonDescription" name="editPersonDescription" rows="3"></textarea>
-                    </div>
-                    
-                    <!-- المهارات -->
-                    <div class="mb-3">
-                        <label class="form-label">المهارات</label>
-                        <div id="editSkillsContainer">
-                            <!-- سيتم إضافة حقول المهارات ديناميكيًا هنا -->
+                        
+                        <!-- نوع الشخص -->
+                        <div class="mb-3">
+                            <label for="editPersonType" class="form-label">النوع</label>
+                            <select class="form-select" id="editPersonType" name="editPersonType" required>
+                                <option value="">اختر النوع</option>
+                                <option value="ادارة">ادارة</option>
+                                <option value="العمل المساعد">العمل المساعد</option>
+                            </select>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="editAddSkillBtn">
-                            <i class="bi bi-plus-lg"></i> إضافة مهارة جديدة
-                        </button>
-                    </div>
-                    
-                    <!-- وسائل التواصل -->
-                    <div class="mb-3">
-                        <label class="form-label">وسائل التواصل</label>
-                        <div id="editSocialLinksContainer">
-                            <!-- سيتم إضافة حقول وسائل التواصل ديناميكيًا هنا -->
+                        
+                        <!-- اسم الشخص -->
+                        <div class="mb-3">
+                            <label for="editPersonName" class="form-label">اسم الشخص</label>
+                            <input type="text" class="form-control" id="editPersonName" name="editPersonName" required>
                         </div>
-                        <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="editAddSocialLinkBtn">
-                            <i class="bi bi-plus-lg"></i> إضافة رابط آخر
-                        </button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
-                <button type="button" class="btn btn-primary" id="updatePersonBtn">تحديث البيانات</button>
+                        
+                        <!-- الوظيفة -->
+                        <div class="mb-3">
+                            <label for="editPersonJob" class="form-label">الوظيفة</label>
+                            <input type="text" class="form-control" id="editPersonJob" name="editPersonJob" required>
+                        </div>
+                        
+                        <!-- الوصف -->
+                        <div class="mb-3">
+                            <label for="editPersonDescription" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="editPersonDescription" name="editPersonDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <!-- المهارات -->
+                        <div class="mb-3" style="direction: ltr;">
+                            <label class="form-label">المهارات</label>
+                            <div id="editSkillsContainer">
+                                <!-- سيتم إضافة حقول المهارات ديناميكيًا هنا -->
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="editAddSkillBtn">
+                                <i class="bi bi-plus-lg"></i> إضافة مهارة جديدة
+                            </button>
+                        </div>
+                        
+                        <!-- وسائل التواصل -->
+                        <div class="mb-3">
+                            <label class="form-label">وسائل التواصل</label>
+                            <div id="editSocialLinksContainer">
+                                <!-- سيتم إضافة حقول وسائل التواصل ديناميكيًا هنا -->
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-secondary mt-2" id="editAddSocialLinkBtn">
+                                <i class="bi bi-plus-lg"></i> إضافة رابط آخر
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                    <button type="button" class="btn btn-primary" id="updatePersonBtn">تحديث البيانات</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
     <div class="screen-size-warning">
         ⚠️ عذراً، الموقع لا يعمل بشكل صحيح على شاشات أصغر من 600px<br>
         الرجاء استخدام جهاز بشاشة أكبر أو تكبير نافذة المتصفح
