@@ -258,14 +258,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     loadJobsTable();
 });
@@ -318,7 +310,6 @@ function renderJobsTable(jobs) {
                         data-id="${job.id}">
                     ${job.is_published ? 'إخفاء' : 'نشر'}
                 </button>
-                <button class="btn btn-sm btn-primary edit-job" data-id="${job.id}">تعديل</button>
                 <button class="btn btn-sm btn-danger delete-job" data-id="${job.id}">حذف</button>
             </td>`;
         tbody.appendChild(row);
