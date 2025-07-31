@@ -228,6 +228,35 @@ function addTableEventListeners() {
 
 }
 
+$(document).ready(function() {
+    $(document).on('click', '.delete-job', function(e) {
+        e.preventDefault();
+        
+        var jobId = $(this).data('id');
+        
+        // تأكيد الحذف
+        if (confirm('هل أنت متأكد من أنك تريد حذف هذه الوظيفة؟')) {
+            $.ajax({
+                url: '../api/delete_job.php',
+                type: 'POST',
+                data: { id: jobId },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        $(this).closest('tr').remove();
+                        alert('تم حذف الوظيفة بنجاح');
+                        location.reload();
+                    } else {
+                        alert('حدث خطأ أثناء حذف الوظيفة: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert('حدث خطأ في الاتصال بالخادم: ' + error);
+                }
+            });
+        }
+    });
+});
 
 
 
